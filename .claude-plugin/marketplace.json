@@ -1,0 +1,23 @@
+{
+  "name": "mrt-tna-japan",
+  "owner": {
+    "name": "seungmochoi-hue",
+    "url": "https://github.com/seungmochoi-hue"
+  },
+  "metadata": {
+    "description": "마이리얼트립 T&A 일본팀 Claude Code 스킬 마켓플레이스",
+    "version": "1.0.0",
+    "repository": "https://github.com/seungmochoi-hue/mrt-tna-japan-plugin"
+  },
+  "plugins": [
+    {
+      "name": "mrt-tna-japan",
+      "description": "마이리얼트립 T&A 일본팀 업무 자동화 스킬 모음",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/gmail-triage"
+      ]
+    }
+  ]
+}
