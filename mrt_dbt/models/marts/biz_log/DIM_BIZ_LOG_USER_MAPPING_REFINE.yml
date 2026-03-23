@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: DIM_BIZ_LOG_USER_MAPPING_REFINE
+    description: |
+      DIM_BIZ_LOG_USER_MAPPING(일별 스냅샷)을 입력으로 받아,
+      PID별 user_id 변경 시점을 감지하고 유효 기간(start_ts_kst ~ end_ts_kst)을 부여하는
+      SCD Type 2 스타일 정제 매핑 테이블.
+      MART_OVERSEAS_RENTALCAR_SALE_D, MART_INSURANCE_SALE_D 등에서
+      timestamp 범위 조인으로 특정 시점의 PID-user_id 역추적에 사용.
+      grain: pid + user_id_num.
+    config:
+      tags: [ "BIZ_LOG", "DIM" ]
+    columns:
+      - name: pid
+        data_type: string
+        description: 브라우저/앱 식별자.
+      - name: user_id
+        data_type: string
+        description: 해당 구간에서의 로그인 사용자 ID.
+      - name: user_id_num
+        data_type: string
+        description: |
+          구간 식별자. CONCAT(user_id, '-', running_sum) 형식.
+          동일 PID에서 같은 user_id가 재등장해도 running_sum이 다르므로 고유 구간 식별 가능.
+          예: user_id 100이 1번째 구간이면 '100-1', 3번째 구간에서 재등장하면 '100-3'.
+      - name: running_sum
+        data_type: integer
+        description: |
+          PID 내 user_id 변경 횟수의 누적 합산.
+          이전 row와 user_id가 다르면 1, 같으면 0을 누적 합산(SUM OVER)하여 산출.
+          첫 번째 구간은 1부터 시작.
+      - name: min_start_ts_kst
+        data_type: timestamp
+        description: "해당 구간 내 가장 이른 이벤트 시각(KST). MIN(min_event_timestamp_kst) 기준."
+      - name: start_ts_kst
+        data_type: timestamp
+        description: |
+          구간 유효 시작 시각(KST).
+          첫 번째 구간(running_sum=1)은 2021-01-01 고정으로 과거 전체 커버.
+          이후 구간은 min_start_ts_kst와 동일.
+      - name: end_ts_kst
+        data_type: timestamp
+        description: |
+          구간 유효 종료 시각(KST).
+          다음 구간의 min_start_ts_kst를 LEAD로 가져옴.
+          마지막 구간은 CURRENT_TIMESTAMP()(빌드 시점)로 설정.
+

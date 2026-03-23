@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: "external_mart"
+    database: "mrtdata"
+    schema: "edw_mart"
+    description: "외부데이터 ( 스프레드시트 등 )"
+    tables:
+      - name: "DIM_TEST_PRODUCT"
+        identifier: "DIM_TEST_PRODUCT"
+        description: "스프레드 시트 기반 테이블"
+        columns:
+          - name: "GID"
+            description: "GID"
+          - name: "PARTNER_ID"
+            description: "파트너 ID"
+          - name: "PARTNER_EMAIL"
+            description: "파트너 이메일 (테스트 계정, 개인정보 X)"
+          - name: "DOMAIN_NM"
+            description: "도메인명"
+          - name: "CATEGORY"
+            description: "카테고리"
+          - name: "SUB_CATEGORY"
+            description: "서브 카테고리"
+          - name: "PRODUCT_URL"
+            description: "상품 URL"

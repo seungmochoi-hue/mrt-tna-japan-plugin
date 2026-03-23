@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "bash ./.cursor/hooks/block-cursor-agent.sh || cmd /c .\\\\.cursor\\\\hooks\\\\block-cursor-agent.cmd || pwsh -File ./.cursor/hooks/block-cursor-agent.ps1 || powershell -ExecutionPolicy Bypass -File ./.cursor/hooks/block-cursor-agent.ps1",
+        "timeout": 5
+      }
+    ]
+  }
+}

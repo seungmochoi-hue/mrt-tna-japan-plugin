@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_B2B_SAMSUNG_INFO"
+        identifier: "FPNA_B2B_SAMSUNG_INFO"
+        description: "삼성 B2B 예약/정산 PROFIT 정보 (스프레드시트관리)"
+        columns:
+          - name: "HOTEL_PKG_ID"
+            description: "호텔 패키지 ID"
+          - name: "OPTION_TITLE"
+            description: "옵션 제목"
+          - name: "OPTION_TITLE_2"
+            description: "옵션 제목 2"
+          - name: "DATE"
+            description: "날짜"
+          - name: "TYPE"
+            description: "타입"
+          - name: "TAKE_AMOUNT"
+            description: "수수료 금액"
+          - name: "BACK_COMMISSION"
+            description: "백커미션 금액"
+          - name: "MRT_TAKE_AMOUNT"
+            description: "MRT 수수료 금액"

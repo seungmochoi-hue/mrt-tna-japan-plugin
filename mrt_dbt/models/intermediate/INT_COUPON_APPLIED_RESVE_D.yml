@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: INT_COUPON_APPLIED_RESVE_D
+    description: "예약 쿠폰 적용 이력"
+    config:
+      tags: ["INT", "COUPON"]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_ID
+            - COUPON_USER_MAPPING_ID
+            - COUPON_ID
+            - USABLE_TYPE
+          config:
+            severity: warn
+    columns:
+      - name: RESVE_ID
+        description: "예약 아이디"
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+      - name: COUPON_USER_MAPPING_ID
+        description: "쿠폰 지급 ID"
+        data_type: INTEGER
+      - name: COUPON_ID
+        description: "쿠폰 템플릿 ID"
+        data_type: INTEGER
+      - name: COUPON_NM
+        description: "쿠폰 명"
+        data_type: STRING
+      - name: USABLE_TYPE
+        description: "쿠폰 적용 유형"
+        data_type: STRING
+      - name: PAYMENT_COUPON_PRICE
+        description: "결제 쿠폰 금액"
+        data_type: INTEGER
+      - name: REFUND_COUPON_PRICE
+        description: "환불 쿠폰 금액"
+        data_type: INTEGER
+      - name: NET_COUPON_PRICE
+        description: "순 쿠폰 금액"
+        data_type: INTEGER
+      - name: COUPON_PUBLISH_TYPE
+        description: "쿠폰 배포 유형"
+        data_type: STRING
+      - name: COUPON_PUBLISH_TEAM
+        description: "쿠폰 배포 팀"
+        data_type: STRING
+      - name: COUPON_PUBLISH_PURPOSE
+        description: "쿠폰 배포 목적"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

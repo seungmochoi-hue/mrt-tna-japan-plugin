@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_MYPACK_ACTUAL_SUPPLY_PRICE_INFO"
+        identifier: "FPNA_MYPACK_ACTUAL_SUPPLY_PRICE_INFO"
+        description: "마이팩 실제 공급가 정보 ( 스프레드 시트 관리 )"
+        columns:
+          - name: "RESVE_ID"
+            description: "패키지 예약 ID"
+          - name: "PACKAGE_OPTION_TYPE"
+            description: "패키지 구성상품 TYPE"
+          - name: "PACKAGE_COMPONENT_GID"
+            description: "패키지 구성상품 GID"
+          - name: "ACTUAL_SUPPLY_PRICE"
+            description: "ACTUAL SUPPLY PRICE"
+          - name: "REMARK_1"
+            description: "비고1 ( 내용요약 )"
+          - name: "REMARK_2"
+            description: "비고2 ( 기타 메모 )"
+          - name: "REMARK_3"
+            description: "비고3 ( 기타 메모2 )"

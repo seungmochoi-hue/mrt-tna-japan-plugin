@@ -1,0 +1,82 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: stay_option
+    identifier: DW_MRT_STAYNET_STAY_OPTION
+    description: 옵션. 하위 모델 MART_STAY_OPTION_SALE_D에서 사용함. 마지막 적재일 2026-03-19.
+    columns:
+    - name: option_id
+      description: 옵션 ID
+    - name: property_id
+      description: Property ID
+    - name: option_name
+      description: Option Name
+    - name: room_only
+      description: Room Only
+    - name: fee_type
+      description: Fee Type
+    - name: fee_value
+      description: Fee Value
+    - name: apply_type
+      description: Apply Type
+    - name: apply_room_ids
+      description: Apply Room IDs
+    - name: apply_period_type
+      description: Apply Period Type
+    - name: apply_start_date
+      description: Apply Start Date
+    - name: apply_end_date
+      description: Apply End Date
+    - name: refundable
+      description: Refundable
+    - name: auto_pricing_used
+      description: Auto Pricing Used
+    - name: auto_pricing_type
+      description: Auto Pricing Type
+    - name: auto_pricing_value
+      description: Auto Pricing Value
+    - name: min_nights
+      description: Min Nights
+    - name: max_nights
+      description: Max Nights
+    - name: priority
+      description: Priority
+    - name: descriptions
+      description: Descriptions
+    - name: attributes
+      description: Attributes
+    - name: represent_inclusions
+      description: Represent Inclusions
+    - name: enabled
+      description: Enabled
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: Deleted By
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: option_perks
+      description: Option Perks
+    - name: check_in_start_time
+      description: Check In Start Time
+    - name: check_out_end_time
+      description: Check Out End Time
+    - name: calendar_open_days
+      description: Calendar Open Days
+    - name: min_days_in_advance
+      description: Min Days In Advance
+    - name: max_days_in_advance
+      description: Max Days In Advance
+    - name: cross_sell
+      description: Cross Sell

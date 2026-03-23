@@ -1,0 +1,190 @@
+version: 2
+
+models:
+  - name: MART_FPNA_AIR_PROFIT_D
+    description: |
+      FPNA 항공 도메인 수익/비용 산출 일 단위 MART.
+      MART_SALE_D(KIND=1, MRT_TYPE='flight')를 기준으로 항공 예약 건(PNR)의 커미션, 수수료, 할인 등을 산출한다.
+      Grain은 PNR 단위(1 row = 1 RESVE_ID, 'f' + PNR_SEQNO 형식).
+
+      ## 항공 도메인 특수성
+      - 비항공과 달리 MRT_SALES_PRICE/CON_MARGIN이 없음. 항공의 수익 구조는 BSP 커미션, VI, TASF, GDS 등 항목별로 분리 산출.
+      - BSP 커미션: 국제선 발권 수수료(FEE + FEE_VAT)
+      - VI(Volume Incentive): 항공사별 월별 VI율 x DISCOUNT_AFTER_NET_PRICE
+      - GDS: Travelport(T) 기반 세그먼트 수수료
+      - TASF: 국내선/국제선 발권 서비스 수수료 (VAT 제외)
+      - 채널수수료: SKYSCANNER(2%), NAVER(국제1%/국내0.9%) 등 파트너별 별도 산출
+
+      ## 주요 upstream
+      - MART_SALE_D, MART_AIR_SALE_D, MART_AIR_PNR_SALE_D
+      - TB_AIR_RV100/RV110/TK110 등 (항공 원천 테이블)
+      - FPNA_AIR_DOMESTIC_VI, FPNA_AIR_INTERNATIONAL_VI (VI율)
+      - FPNA_AIR_GDS_INFO (GDS 수수료)
+      - DIM_AIRPORT_CITY_MAPPING (공항-도시 매핑)
+    config:
+      tags: [ "MART", "FPNA", "AIR"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일"
+        data_type: DATE
+      - name: TRAVEL_START_DATE
+        description: "여행 시작일"
+        data_type: DATE
+      - name: TRAVEL_END_DATE
+        description: "여행 종료일"
+        data_type: DATE
+      - name: TRAVEL_DAYS
+        description: "여행 일수. DATE_DIFF(TRAVEL_END_DATE, TRAVEL_START_DATE, DAY)."
+        data_type: INTEGER
+      - name: CANCEL_DATE
+        description: "취소일"
+        data_type: DATE
+      - name: RESVE_CANCEL_DAY_DIFF
+        description: "예약-취소 간 일수 차이. DATE_DIFF(CANCEL_DATE, BASIS_DATE, DAY)."
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: RESVE_PRSNL_CNT
+        description: "예약 인원 수"
+        data_type: INTEGER
+      - name: TRAVEL_ID
+        description: "여행 ID"
+        data_type: STRING
+      - name: MRT_STAFF_FLAG
+        description: "MRT 직원 여부"
+        data_type: BOOLEAN
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 유형"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NM
+        description: "파트너/채널명. PARTNER_ID 기반 매핑: SKY001=SKYSCANNER, N00001=NAVER, KAO001=KAKAO, NULL=MRT."
+        data_type: STRING
+      - name: STOCK_AIRLINE_CD
+        description: "재고 항공사 코드 (IATA 2-letter). MART_AIR_PNR_SALE_D 기반."
+        data_type: STRING
+      - name: DI_FLAG
+        description: "국내선/국제선 구분. 'D'=Domestic(국내선), 'I'=International(국제선)."
+        data_type: STRING
+      - name: REGION_TYPE
+        description: "지역 유형. 'Domestic'(Korea) / 'Outbound'(해외 또는 NULL)."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가 이름. NULL이면 'Others'로 치환."
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름. NULL이면 'Others'로 치환."
+        data_type: STRING
+      - name: JEJU_FLAG
+        description: "제주도 여부 (Y/N). CITY_NM='Jeju' AND COUNTRY_NM='Korea, Republic of'이면 'Y'."
+        data_type: STRING
+      - name: TRIP_TYPE_CD
+        description: "여정 유형 코드. MART_AIR_PNR_SALE_D 기반 (편도/왕복/다구간 등)."
+        data_type: STRING
+      - name: DEPART_AIRPORT_CD
+        description: "출발 공항/도시 코드. MART_AIR_PNR_SALE_D.DEPART_CITY_CD 기반."
+        data_type: STRING
+      - name: DEPART_CITY_NM
+        description: "출발 도시 이름"
+        data_type: STRING
+      - name: DEPART_COUNTRY_NM
+        description: "출발 국가 이름"
+        data_type: STRING
+      - name: DEPART_REGION_NM
+        description: "출발 지역 이름"
+        data_type: STRING
+      - name: ARRIVE_CITY_CD
+        description: "도착 도시 코드"
+        data_type: STRING
+      - name: ARRIVE_CITY_NM
+        description: "도착 도시 이름"
+        data_type: STRING
+      - name: ARRIVE_COUNTRY_NM
+        description: "도착 국가 이름"
+        data_type: STRING
+      - name: ARRIVE_REGION_NM
+        description: "도착 지역 이름"
+        data_type: STRING
+      - name: GDS_CD
+        description: "GDS 코드. 'T'=Travelport 등. GDS 수수료 산출에 사용."
+        data_type: STRING
+      - name: GDS_AIRLINE_TYPE
+        description: |
+          GDS 항공사 유형 (Travelport 기반, GDS_CD='T'일 때만).
+          KE/7C/LJ/ZE/TW/RS/BX는 개별 코드, 나머지는 'OAL'(Other Airlines).
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "고객 결제 금액 (KRW, GMV). MART_SALE_D.SALES_KRW_PRICE 패스스루."
+        data_type: FLOAT
+      - name: DISCOUNT_AFTER_NET_PRICE
+        description: "할인 후 NET 가격. MART_AIR_SALE_D의 DISCOUNT_AFTER_NET_PRICE PNR 합계. VI 산출의 기준 금액."
+        data_type: FLOAT
+      - name: VI_COMMISSION_PRICE
+        description: |
+          항공사 Volume Incentive 수수료 금액.
+          산출식: ACTUAL_VI_RATE * DISCOUNT_AFTER_NET_PRICE (PNR별 합계).
+          국내선(D): FPNA_AIR_DOMESTIC_VI, 국제선(I): FPNA_AIR_INTERNATIONAL_VI에서 월별/항공사별 VI율 매핑.
+          해당 월 VI율이 없으면 가장 최근 월의 VI율로 대체.
+          confirm/finish 상태만 산출, 그 외 0.
+        data_type: FLOAT
+      - name: GDS_VI_COMMISSION_PRICE
+        description: |
+          GDS(Travelport) 세그먼트 수수료 금액.
+          산출식: 세그먼트 수 * 인원 * 항공사 유형별 단가(USD * 환율).
+          GDS_CD='T' 기반, 국제선(DI_FLAG='I')만 대상.
+          KE/7C/LJ-ZE/OAL별 단가 상이. TW/RS/BX/QR는 제외.
+          confirm/finish 상태만 산출, 그 외 0.
+        data_type: FLOAT
+      - name: BSP_COMMISSION_PRICE
+        description: |
+          BSP(Billing and Settlement Plan) 커미션 금액.
+          국제선(DI_FLAG='I') 발권 건의 FEE + FEE_VAT 합계.
+          TB_AIR_TK110(발권 수수료)에서 PAX별 산출 후 PNR 합계.
+          confirm/finish 상태만 산출, 그 외 0.
+        data_type: INTEGER
+      - name: D_TASF_COMMISSION_PRICE
+        description: "국내선 TASF(Travel Agent Service Fee) 수수료 (VAT 제외). PNR별 TASF 합계 / 1.1."
+        data_type: FLOAT
+      - name: I_TASF_COMMISSION_PRICE
+        description: "국제선 TASF 수수료 (VAT 제외). 2022-09-27 이후 발권 건 대상. PNR별 TASF 합계 / 1.1."
+        data_type: FLOAT
+      - name: REISSUE_COMMISSION_PRICE
+        description: "국제선 재발행(reissue) 수수료 (VAT 제외). TB_ANO_RV310.fee_cd='1' 기반 / 1.1."
+        data_type: FLOAT
+      - name: CANCEL_COMMISSION_PRICE
+        description: "국제선 환불 수수료 (VAT 제외). TB_ANO_RV310.fee_cd='4' 기반 / 1.1."
+        data_type: FLOAT
+      - name: DISCOUNT_PRICE
+        description: "할인 금액. (-1) * (PROMTN_DSCNT_FARE + add_promtn_dscnt_fare) PNR 합계."
+        data_type: FLOAT
+      - name: CARD_CASH_BACK_PRICE
+        description: "국내선 카드 캐시백 금액. TB_AIR_RV110.cash_back PNR 합계. 발권완료(TKKY)+온라인+미취소 건 대상."
+        data_type: FLOAT
+      - name: D_NPAY_PRICE
+        description: "국내선 네이버페이(NPAY) 비용. 네이버 영업소(BPLC_CD='N00001') + 국내선 + CCNP 결제 건당 750원."
+        data_type: INTEGER
+      - name: CHANNEL_FEE_PRICE
+        description: |
+          채널 수수료 금액. 파트너별 DISCOUNT_AFTER_NET_PRICE 기반 산출.
+          - SKYSCANNER: 2% (guest 제외, 당월 취소 제외)
+          - NAVER: 국제선 1%, 국내선 0.9%
+          - 그 외: 0
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

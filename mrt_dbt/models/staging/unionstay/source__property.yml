@@ -1,0 +1,149 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: property
+    identifier: DW_MRT_STAY_PROPERTY
+    description: 통합숙소 마스터. 하위 모델 MART_OFFER_SALE_D, MART_PRODUCT_ORIGINAL_D, DIM_PRODUCT_FPNA_TYPE에서
+      사용함. 주요 상태값 ON_SALE 확인. 주요 타입값 GDS/MRT 확인.
+    columns:
+    - name: property_id
+      description: 통합숙소 GID
+    - name: provider_type
+      description: 공급자 타입
+    - name: provider_code
+      description: 공급자 코드
+    - name: provider_property_id
+      description: 공급자가 관리하는 상품 ID
+    - name: provider_brand_id
+      description: 공급자가 관리하는 브랜드 ID
+    - name: provider_chain_id
+      description: 공급자가 관리하는 체인 ID
+    - name: accommodation_mapping_type
+      description: accommodation - property 매핑 타입
+    - name: accommodation_id
+      description: 통합숙소 accommodation ID
+    - name: represent_category
+      description: 매핑된 UPS 표준 카테고리 중 대표 카테고리
+    - name: property_categories
+      description: UPS 표준 카테고리
+    - name: ranking
+      description: 랭킹
+    - name: discountable
+      description: 마리트할인 적용 가능 여부
+    - name: en_name
+      description: 영문 숙소명
+    - name: ko_name
+      description: 국문 숙소명
+    - name: star_rating
+      description: 성급
+    - name: guest_overall_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 전체 평점
+    - name: guest_cleanliness_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 청결도 평점
+    - name: guest_service_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 직원 서비스 평점
+    - name: guest_comfort_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 안락함 평점
+    - name: guest_condition_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 상태 평점
+    - name: guest_location_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 접근 편리성 평점
+    - name: guest_neighborhood_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 주변 환경 평점
+    - name: guest_quality_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 품질 평점
+    - name: guest_value_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 가격 대비 만족도  평점
+    - name: guest_amenity_rating
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 편의 시설 평점
+    - name: guest_recommendation_percent
+      description: EPS 전체 고객 이용 후기로부터 평균을 낸 숙박 시설의 추천 비율
+    - name: guest_rating_count
+      description: (공급사의) 후기 개수
+    - name: check_in_min_age
+      description: 체크인 최소 나이
+    - name: check_in_start_time
+      description: 체크인 시작 시간
+    - name: check_in_end_time
+      description: 체크인 마감 시간
+    - name: check_out_start_time
+      description: 체크아웃 시작 시간
+    - name: check_out_end_time
+      description: 체크아웃 마감 시간
+    - name: mrt_property_status
+      description: 마리트 판매 상태
+    - name: provider_property_status
+      description: 공급사 판매 상태
+    - name: emails
+      description: 이메일
+    - name: faxes
+      description: 팩스
+    - name: phones
+      description: 전화번호
+    - name: urls
+      description: URL
+    - name: country_code
+      description: 국가 코드
+    - name: en_country
+      description: 영문 국가명
+    - name: ko_country
+      description: 국문 국가명
+    - name: state_province_code
+      description: 주/도 코드
+    - name: en_state_province
+      description: 영문 주/도 명
+    - name: ko_state_province
+      description: 국문 주/도 명
+    - name: en_city
+      description: 영문 도시명
+    - name: ko_city
+      description: 국문 도시명
+    - name: en_street_name
+      description: 영문 도로명
+    - name: ko_street_name
+      description: 국문 도로명
+    - name: street_no
+      description: 도로번호
+    - name: en_address_lines
+      description: 영문 주소
+    - name: ko_address_lines
+      description: 국문 주소 라인
+    - name: postal_code
+      description: 우편번호
+    - name: latitude
+      description: 위도
+    - name: longitude
+      description: 경도
+    - name: attributes
+      description: 숙소 속성
+    - name: visuals
+      description: 숙소 사진
+    - name: descriptions
+      description: 숙소 설명
+    - name: mrt_region_info
+      description: 마리트 지역 정보
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: Deleted By
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: partner_id
+      description: 파트너 아이디
+    - name: mrt_discount_types
+      description: 마리트 할인 유형 (예. ZERO_MARGIN)
+    - name: resell_market
+      description: 리셀마켓 여부
+    - name: mrt_property_off_sale_reason
+      description: 마리트 숙소 판매 중단 사유

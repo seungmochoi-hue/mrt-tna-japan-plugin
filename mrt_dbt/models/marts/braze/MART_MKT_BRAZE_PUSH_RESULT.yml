@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: MART_MKT_BRAZE_PUSH_RESULT
+    description: |
+      MART_MKT_BRAZE_PUSH_RESULT.
+      BigQuery 물리 최적화: partition(SEND_DATE_KST, day, 기적용) + cluster(CAMPAIGN_NAME)
+    config:
+      tags: ["BRAZE"]
+

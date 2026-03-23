@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "members"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "o_auth_providers"
+        identifier: "DW_MRT_MEMBERS_O_AUTH_PROVIDERS"
+        description: "계정 연동 정보 저장"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "user_id"
+            description: "사용자 ID"
+          - name: "uid"
+            description: "Uid"
+          - name: "provider"
+            description: "Provider"
+          - name: "provider_app_id"
+            description: "Provider App ID"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "updated_at"
+            description: "수정일시"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: DW_MRT_UPS_UNION_PRODUCT_NODUP
+    description: 상품 관련 정보 테이블입니다.
+    columns:
+      - name: ID
+        description: 상품_아이디
+        data_type: INTEGER
+      - name: PRODUCT_ID
+        description: 상품_아이디
+        data_type: STRING
+      - name: PRODUCT_NM
+        description: 상품_명
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: 도메인_명
+        data_type: STRING
+

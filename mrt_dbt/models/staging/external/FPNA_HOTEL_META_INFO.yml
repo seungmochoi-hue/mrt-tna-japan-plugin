@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: FPNA_HOTEL_META_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [숙박-메타](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=2058853675#gid=2058853675)
+    columns:
+      - name: MRT_TYPE
+        description: "마리트 타입"
+      - name: HOTEL_AFFILIATE_NM
+        description: "호텔 제휴 이름"
+      - name: COMMISSION_RATE
+        description: "커미션 비율"
+      - name: DISCOUNT_RATE
+        description: "할인 비율"
+      - name: START_DATE
+        description: "시작 날짜"
+      - name: END_DATE
+        description: "종료 날짜"
+

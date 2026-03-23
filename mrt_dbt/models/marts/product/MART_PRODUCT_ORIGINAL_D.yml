@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  - name: MART_PRODUCT_ORIGINAL_D
+    description: 상품 정보 테이블 (GID, 파트너, 공급체, 카테고리 등 메타 포함)
+    columns:
+      - name: GID
+        description: GID
+        data_type: STRING
+
+      - name: GPID
+        description: GPID
+        data_type: STRING
+
+      - name: DOMAIN_NM
+        description: 도메인명
+        data_type: STRING
+
+      - name: PRODUCT_NM
+        description: 상품명
+        data_type: STRING
+
+      - name: PRODUCT_ID
+        description: 상품 아이디
+        data_type: STRING
+
+      - name: PARTNER_ID
+        description: 파트너 아이디
+        data_type: STRING
+
+      - name: PARTNER_NM
+        description: 파트너명
+        data_type: STRING
+
+      - name: AGENCY_ID
+        description: 공급체 아이디
+        data_type: STRING
+
+      - name: AGENCY_NM
+        description: 공급체명
+        data_type: STRING
+
+      - name: RECENT_STATUS
+        description: 최근 상태
+        data_type: STRING
+
+      - name: CREATE_KST_DT
+        description: 생성 일시(KST)
+        data_type: TIMESTAMP
+
+      - name: UPDATE_KST_DT
+        description: 수정 일시(KST)
+        data_type: TIMESTAMP
+
+      - name: PRODUCT_TYPE
+        description: 상품 유형
+        data_type: STRING
+
+      - name: PRODUCT_CATEGORY_NM
+        description: 상품 카테고리명
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: 표준 카테고리 레벨 1 코드
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: 표준 카테고리 레벨 2 코드
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: 표준 카테고리 레벨 3 코드
+        data_type: STRING
+
+      - name: FIRST_PUBLISHED_KST_DT
+        description: 최초 판매 일시(KST)
+        data_type: TIMESTAMP
+
+      - name: LATITUDE_COORDINATE
+        description: 위도 좌표
+        data_type: FLOAT
+
+      - name: LONGITUDE_COORDINATE
+        description: 경도 좌표
+        data_type: FLOAT
+
+      - name: CITY_CD
+        description: 도시 코드
+        data_type: STRING
+
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: 도시 대표 여부
+        data_type: STRING
+
+      - name: COMMISSION_RATE
+        description: 커미션 비율
+        data_type: FLOAT
+
+      - name: DURATION_UNIT
+        description: 소요 시간 단위
+        data_type: STRING
+
+      - name: DURATION_SIZE
+        description: 소요 시간 값
+        data_type: INTEGER
+
+      - name: ALLOW_QUICK_RESERVATION
+        description: 즉시 확정 예약 허용 여부
+        data_type: BOOLEAN
+
+      - name: LOCALE
+        description: 지역
+        data_type: STRING
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: TIMESTAMP
+

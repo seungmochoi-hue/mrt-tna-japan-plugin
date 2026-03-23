@@ -1,0 +1,214 @@
+version: 2
+
+models:
+  - name: INT_SALE_ORIGINAL_OVERSEAS_RENTALCAR_SALE
+    description: |
+      해외 렌터카 판매 원본 정보.
+      MART_OVERSEAS_RENTALCAR_SALE_D에서 컬럼을 INT_SALE_BASE_D 공통 스키마로 정규화.
+      PRODUCT_ID='100000004', GID='1000009' 고정 (해외 렌터카 단일 상품 식별값).
+      표준 카테고리(STANDARD_CATEGORY_LV_1/2/3_CD)는 union_product_v3 + dim_standard_category 조인으로 산출.
+      ORDER_NO, ORDER_RESVE_TYPE, SALE_FORM_CD/TYPE, SALE_AGG_TYPE, BRANCH_CD,
+      PAYMENT_LATER_FLAG, PARTNERSHIP_*, PROVIDER_CD, CITY_REPRESENTATIVE_FLAG,
+      SETTLEMENT_COMMISSION_*, RESVE_PURPOSE_TYPE, PACKAGE_PNR_NO는 NULL 고정.
+      DISCOUNT_PRICE는 0 고정 (해외 렌터카 할인 미지원).
+      SALES_PRICE_CUR_TYPE, PAID_PRICE_CUR_TYPE은 'KRW' 고정.
+      Grain: RESVE_ID (예약당 1행).
+      Downstream: INT_SALE_BASE_D (UNION ALL).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_ID
+            - KIND
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: "판매 기준일."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: "예약 ID."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ORDER_ID
+        description: "주문 ID (MART_OVERSEAS_RENTALCAR_SALE_D.ORDER_ID)."
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: USER_ID
+        description: "예약자 사용자 ID."
+        data_type: STRING
+      - name: KIND
+        description: "상품 종류 코드."
+        data_type: INT64
+      - name: RECENT_STATUS
+        description: "예약 최신 상태 코드."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST). 취소되지 않은 건은 NULL."
+        data_type: TIMESTAMP
+      - name: DOMAIN_NM
+        description: "'OVERSEAS RENTALCAR' 고정값. INT_SALE_BASE_D에서 도메인 구분에 사용."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "'100000004' 고정. 해외 렌터카 상품 식별값."
+        data_type: STRING
+      - name: GID
+        description: "'1000009' 고정. 해외 렌터카 그룹 ID 고정값."
+        data_type: STRING
+      - name: GPID
+        description: "그룹 패키지 ID."
+        data_type: STRING
+      - name: CONFIRM_KST_DT
+        description: "예약 확정 일시 (KST). MART_OVERSEAS_RENTALCAR_SALE_D.RESVE_CONFIRM_KST_DT 매핑."
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작일 (KST)."
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료일 (KST)."
+        data_type: DATE
+      - name: RESVE_TYPE
+        description: "예약 유형. MART_OVERSEAS_RENTALCAR_SALE_D.PRODUCT_TYPE 매핑."
+        data_type: STRING
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: SALE_FORM_TYPE
+        description: "판매 형태 유형. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: BRANCH_CD
+        description: "지점 코드. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: |
+          표준 카테고리 1단계 코드.
+          union_product_v3(id=1000009) → dim_standard_category 조인으로 산출.
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: |
+          표준 카테고리 2단계 코드.
+          union_product_v3(id=1000009) → dim_standard_category 조인으로 산출.
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: |
+          표준 카테고리 3단계 코드.
+          union_product_v3(id=1000009) → dim_standard_category 조인으로 산출.
+        data_type: STRING
+      - name: PAYMENT_LATER_FLAG
+        description: "후불 결제 여부 플래그. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PAYMENT_LIMIT_KST_DT
+        description: "결제 기한 일시 (KST). 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: TIMESTAMP
+      - name: PARTNERSHIP_CD
+        description: "제휴사 코드. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 ID. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 ID. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "공급자 코드. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: CITY_CD
+        description: "도시 코드."
+        data_type: STRING
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: "대표 도시 여부 플래그. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: PG_NM
+        description: "PG(결제대행사) 명칭."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 결제 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: SALES_PRICE
+        description: "판매가 (원화)."
+        data_type: INT64
+      - name: SALES_PRICE_CUR_TYPE
+        description: "'KRW' 고정. 해외 렌터카 상품은 원화 단일 통화."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "판매가 원화 환산액. SALES_PRICE와 동일 (원화 고정)."
+        data_type: INT64
+      - name: PAID_PRICE
+        description: "실결제가 (원화)."
+        data_type: INT64
+      - name: PAID_PRICE_CUR_TYPE
+        description: "'KRW' 고정. 해외 렌터카 상품은 원화 단일 통화."
+        data_type: STRING
+      - name: PAID_KRW_PRICE
+        description: "실결제가 원화 환산액. PAID_PRICE와 동일 (원화 고정)."
+        data_type: INT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인액."
+        data_type: NUMERIC
+      - name: POINT_PRICE
+        description: "포인트 사용액."
+        data_type: INT64
+      - name: DISCOUNT_PRICE
+        description: "할인액. 해외 렌터카 할인 미지원으로 0 고정."
+        data_type: INT64
+      - name: COMMISSION_PRICE
+        description: "수수료액."
+        data_type: INT64
+      - name: COMMISSION_RATE
+        description: "수수료율."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료액. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료율. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: FLOAT64
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "소인 예약 인원수."
+        data_type: INT64
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "대인 예약 인원수."
+        data_type: INT64
+      - name: RESVE_PRSNL_CNT
+        description: |
+          총 예약 인원수.
+          계산식: CHILD_RESVE_PRSNL_CNT + ADULT_RESVE_PRSNL_CNT
+        data_type: INT64
+      - name: PLATFORM
+        description: "예약 플랫폼 (예: WEB, APP)."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "레코드 생성 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "레코드 최종 수정 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: PACKAGE_PNR_NO
+        description: "패키지 PNR 번호. 해외 렌터카 도메인 해당 값 없어 NULL 고정."
+        data_type: INT64

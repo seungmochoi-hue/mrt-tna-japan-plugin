@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: DIM_RESVE_TYPE
+    description: |
+      예약 기준 상품 유형 분류 dimension.
+      INT_SALE_BASE_D에서 PRODUCT_ID + DOMAIN_NM 단위로 상품 유형을 분류한다.
+      MRT_TYPE은 classify_mrt_type 매크로(RESVE 모드)로 산출한다.
+      downstream: MART_SALE_D.
+    columns:
+      - name: PRODUCT_ID
+        description: 상품 아이디.
+        data_type: STRING
+        tests:
+          - not_null
+
+      - name: DOMAIN_NM
+        description: "도메인명. 2.0 PRODUCT, 3.0 PRODUCT, HOTEL, INSURANCE, AIR 등."
+        data_type: STRING
+        tests:
+          - not_null
+
+      - name: BIG_TYPE
+        description: |
+          예약 타입 기반 대분류.
+          T&A 연동 상품(3.0 + touractivity)은 offer type 기준, 그 외는 RESVE_TYPE 기준.
+          deliveryTicket/eticket/istanbulticket은 'ticket'으로 통합.
+        data_type: STRING
+
+      - name: MRT_TYPE
+        description: |
+          MRT 상품 유형 분류. classify_mrt_type 매크로 기반 (RESVE 모드).
+          13개 분류: ticket_rentalcar, ticket_lodging, ticket_flight, tour, kids,
+          ticket, hotdeal, lodging, pension, rentalcar, hotel, insurance, flight, unclassified.
+        data_type: STRING
+
+      - name: TEAM_DIVISION
+        description: |
+          팀 배분 분류값. classify_team_division 매크로 기반.
+          8개 분류: flight, insurance, bdka, accommodation, transport, new_biz, bdx, unclassified.
+          RESVE 모드: flight 최상위 판정, 2.0+3.0 모두 bdx.
+        data_type: STRING
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: TIMESTAMP
+

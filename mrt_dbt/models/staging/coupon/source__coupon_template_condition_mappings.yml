@@ -1,0 +1,39 @@
+version: 2
+
+sources:
+  - name: "coupon"
+    database: "mrtdata"
+    schema: "edw"
+    description: |
+      쿠폰 도메인 원천 테이블. 개별 쿠폰 추적 기준은 coupon_user_mapping.id. coupon_templates / coupon_user_mapping / coupon_use_history / coupon_reservation_history 조합으로 지급, 사용, 예약을 연결한다.
+    tables:
+      - name: "coupon_template_condition_mappings"
+        identifier: "DW_MRT_COUPONS_COUPON_TEMPLATE_CONDITION_MAPPINGS"
+        description: "쿠폰 템플릿-조건 매핑"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "template_condition_id"
+            description: "Template Condition ID"
+          - name: "template_id"
+            description: "Template ID"
+          - name: "is_include"
+            description: "Is Include"
+          - name: "mapping_type"
+            description: "Mapping Type"
+          - name: "mapping_value"
+            description: "Mapping Value"
+          - name: "mapping_meta"
+            description: "Mapping Meta"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_by"
+            description: "생성자"
+          - name: "updated_at"
+            description: "수정일시"
+          - name: "updated_by"
+            description: "수정자"
+          - name: "deleted_at"
+            description: "삭제일시"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

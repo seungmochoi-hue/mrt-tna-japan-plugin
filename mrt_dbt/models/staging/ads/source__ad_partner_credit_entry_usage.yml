@@ -1,0 +1,30 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_partner_credit_entry_usage
+    identifier: DW_MRT_ADS_AD_PARTNER_CREDIT_ENTRY_USAGE
+    description: 검색광고 파트너 크레딧 사용. 마지막 적재일 2026-03-10.
+    columns:
+    - name: id
+      description: ID
+    - name: credit_entry_id
+      description: 크레딧 적립 ID
+    - name: ad_campaign_budget_daily_detail_id
+      description: 일예산 소진 상세 ID
+    - name: used_amount
+      description: 사용 금액
+    - name: used_at
+      description: 사용 일시
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

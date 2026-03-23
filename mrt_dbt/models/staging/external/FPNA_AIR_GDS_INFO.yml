@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: FPNA_AIR_GDS_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [항공 - GDS VI](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=701115817#gid=701115817)
+    columns:
+      - name: basis_date
+        description: "기준 날짜"
+      - name: AIRLINE_TYPE
+        description: "항공사 타입"
+      - name: seg
+        description: "세그먼트"
+      - name: SEG_TYPE
+        description: "세그먼트 타입"
+      - name: SEG_TYPE_USD_AMOUNT
+        description: "세그먼트 타입 USD 금액"
+      - name: GDS_VI_COM_USD
+        description: "GDS VI COM USD 금액"
+      - name: CURRENCY_RATE
+        description: "환율"
+      - name: GDS_VI_COM_KRW_WO_VAT
+        description: "GDS VI COM KRW (VAT 제외)"
+      - name: SEG_ADJUSTED
+        description: "세그먼트 조정"

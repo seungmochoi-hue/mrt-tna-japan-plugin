@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: "external_mapping"
+    database: "mrtdata"
+    schema: "mrt_mapping"
+    description: "외부 데이터"
+    tables:
+      - name: "mrt_type"
+        identifier: "mrt_type"
+        description: "마리트 타입 (스프레드시트관리) 20년 11월 이후 미관리"
+        columns:
+          - name: "guide_id"
+            description: "가이드 ID"
+          - name: "mrt_type"
+            description: "마리트 타입"
+          - name: "pl_begin_at"
+            description: "플래닝 시작 시간 (%E4Y-%m-%d)"

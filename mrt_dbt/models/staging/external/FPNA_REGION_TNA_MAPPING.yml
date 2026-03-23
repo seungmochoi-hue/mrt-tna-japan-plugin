@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: FPNA_REGION_TNA_MAPPING
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      T&A 팀 Region 매핑 시트 [FPNA Region TNA Mapping](https://docs.google.com/spreadsheets/d/1LwMrl0UB22uJhjqAcdtsOhPaA9GZuRMr_kKcDBVTF80/edit?gid=0#gid=0)
+    columns:
+      - name: CITY_NM
+        description: "도시명 (조인 키)"
+      - name: COUNTRY_NM
+        description: "국가명 (조인 키)"
+      - name: REGION_NM
+        description: "전사 Region (조인 키)"
+      - name: REGION_TNA_NM
+        description: "T&A 팀 기준 Region (결과값)"
+

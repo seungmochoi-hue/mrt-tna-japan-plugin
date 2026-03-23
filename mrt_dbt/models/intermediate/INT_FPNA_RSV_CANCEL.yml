@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: INT_FPNA_RSV_CANCEL
+    description: |
+      예약별 취소 정보.
+      MART_SALE_D에서 KIND=2(취소행)인 건의 취소일자, 취소 GMV를 추출.
+      Grain: RESVE_ID (예약당 1행).
+    columns:
+      - name: RESVE_ID
+        description: "예약 ID"
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: CANCEL_DATE
+        description: "취소 일자. DATE(CANCEL_KST_DT)."
+        data_type: DATE
+      - name: CANCEL_GMV
+        description: "취소 GMV (SALES_KRW_PRICE)."

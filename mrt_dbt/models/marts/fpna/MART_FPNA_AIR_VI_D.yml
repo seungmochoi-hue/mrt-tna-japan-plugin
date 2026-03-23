@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: MART_FPNA_AIR_VI_D
+    description: |
+      FPNA PNR 단위 항공 VI/GDS 커미션 마트.
+      MART_AIR_PNR_SALE_D(KIND=1)에서 항공사별 VI율(fpna_external_commission_flight_vi)과
+      GDS율(fpna_external_commission_flight_gds_vi)을 DISCOUNT_AFTER_NET_PRICE에 곱하여 산출.
+      VI: 출발 후(basis_date >= 출발일)면 출발월 기준, 출발 전이면 basis_date월 기준으로 조인.
+      GDS: 국제선(DI_FLAG=I)에만 산출, 국내선은 NULL.
+    config:
+      tags: [ "MART", "FPNA", "AIR" ]
+    columns:
+      - name: PNR_NO
+        description: "PNR 번호"
+        data_type: NUMERIC
+      - name: VI_COMMISSION_PRICE
+        description: "VI(Volume Incentive) 커미션 금액. historical_vi_rate 우선, 없으면 estimated_vi_rate 적용"
+        data_type: FLOAT
+      - name: GDS_COMMISSION_PRICE
+        description: "GDS 커미션 금액. 국제선(DI_FLAG=I)만 산출, 국내선은 NULL"
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: "mrt_mart_view"
+    database: "mrtdata"
+    schema: "edw_mart"
+    tables:
+      - name: "dim_standard_category"
+        identifier: "DIM_STANDARD_CATEGORY"
+        description: "표준 카테고리 차원 참조"
+        columns:
+          - name: "LV_1_CD"
+            description: "카테고리 레벨 1 코드"
+          - name: "LV_1_NM"
+            description: "카테고리 레벨 1 이름"
+          - name: "LV_2_CD"
+            description: "카테고리 레벨 2 코드"
+          - name: "LV_2_NM"
+            description: "카테고리 레벨 2 이름"
+          - name: "LV_3_CD"
+            description: "카테고리 레벨 3 코드(키)"
+          - name: "LV_3_NM"
+            description: "카테고리 레벨 3 이름"
+          - name: "LV"
+            description: "실제 카테고리 레벨"

@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: FPNA_PKG_HARD_BLOCK_INFO
+    config:
+        meta:
+            owner: "FPNA"
+    description: >
+      손익DB 버티컬 별 손익 관리 시트 [패키지솔루션_하드블럭_INFO](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=58129506#gid=58129506)
+
+    columns:
+      - name: OPTION_PARTNER_ID
+        description: "옵션 파트너 ID"
+      - name: COMPONENT_GID
+        description: "컴포넌트 GID"
+      - name: OPTION_TYPE
+        description: "옵션 타입"
+      - name: REMARK
+        description: "비고"
+

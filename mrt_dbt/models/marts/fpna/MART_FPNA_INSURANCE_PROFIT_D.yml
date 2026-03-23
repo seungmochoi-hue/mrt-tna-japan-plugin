@@ -1,0 +1,283 @@
+version: 2
+
+models:
+  - name: MART_FPNA_INSURANCE_PROFIT_D
+    description: |
+      FPNA 보험 상품 예약 단위 수익성(Profit) 마트.
+      MART_SALE_D(KIND=1, 판매행)에서 STANDARD_CATEGORY_LV_1_CD='INSURANCE'인 보험 예약만 추출한다.
+      보험 상품은 쿠폰/포인트/할인/채널수수료가 모두 0(미적용)이며,
+      MRT_SALES_PRICE는 RESVE_ID prefix(io/in/ia)와 BASIS_DATE에 따라 하드코딩된 요율을 SALES_KRW_PRICE에 곱하여 산출한다.
+      Grain: RESVE_ID (예약 단위, 1행)
+      upstream: MART_SALE_D, MART_USER_D, FPNA_CATEGORY_INFO
+      BigQuery 물리 최적화: partition(BASIS_DATE, month) + cluster(RECENT_STATUS, DOMAIN_NM)
+    config:
+      tags: [ "MART", "FPNA", "INSURANCE" ]
+    columns:
+      - name: BASIS_DATE
+        description: "예약 기준일 (MART_SALE_D.BASIS_DATE)"
+        data_type: DATE
+      - name: TRAVEL_START_DATE
+        description: "여행 시작일"
+        data_type: DATE
+      - name: TRAVEL_END_DATE
+        description: "여행 종료일"
+        data_type: DATE
+      - name: TRAVEL_DAYS
+        description: "여행 일수. 계산식: TRAVEL_END_DATE - TRAVEL_START_DATE (일 단위)"
+        data_type: INTEGER
+      - name: CANCEL_DATE
+        description: "취소일. MART_SALE_D KIND=2(취소행) 기준 취소 발생 일자"
+        data_type: DATE
+      - name: RESVE_CANCEL_DAY_DIFF
+        description: "예약일~취소일 간 일수 차이. 계산식: CANCEL_DATE - BASIS_DATE (일 단위)"
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 이름"
+        data_type: STRING
+      - name: RESVE_PRSNL_CNT
+        description: "예약 인원 수"
+        data_type: INTEGER
+      - name: TRAVEL_ID
+        description: "여행 ID"
+        data_type: STRING
+      - name: TRAVEL_DETAIL_ID
+        description: "여행 상세 ID"
+        data_type: INTEGER
+      - name: MRT_STAFF_FLAG
+        description: "MRT 직원 여부"
+        data_type: BOOLEAN
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: CATEGORY_NM
+        description: "카테고리 이름"
+        data_type: STRING
+      - name: CATEGORY_CD
+        description: "카테고리 코드"
+        data_type: STRING
+      - name: SUB_CATEGORY_CD
+        description: "하위 카테고리 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 이름"
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "파트너십 유형"
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "제공자 코드"
+        data_type: STRING
+      - name: ACCOUNTING_PROJECT_CODE
+        description: "회계 프로젝트 코드"
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드. 보험 상품은 항상 MRT 고정"
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 유형"
+        data_type: STRING
+      - name: BIZ_TYPE
+        description: "비즈니스 유형. 보험 상품은 항상 INSURANCE 고정"
+        data_type: STRING
+      - name: BIZ_TYPE_V2
+        description: "비즈니스 유형 V2. 보험 상품은 항상 INSURANCE 고정"
+        data_type: STRING
+      - name: BIZ_TYPE_V3
+        description: "비즈니스 유형 V3. 보험 상품은 항상 INSURANCE 고정"
+        data_type: STRING
+      - name: FPNA_CATEGORY
+        description: "FPNA 분석용 카테고리. FPNA_CATEGORY_INFO에서 STANDARD_CATEGORY_LV_3_CD 기준 매핑"
+        data_type: STRING
+      - name: TEAM_DIVISION
+        description: "팀 구분"
+        data_type: STRING
+      - name: FLIGHT_RESVE_ID
+        description: "항공 예약 ID"
+        data_type: STRING
+      - name: FLIGHT_CREATE_KST_DT
+        description: "항공 생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: FLIGHT_TRAVEL_START_KST_DATE
+        description: "항공 여행 시작 KST 날짜"
+        data_type: DATE
+      - name: HOTEL_CAMPAIGN_ID
+        description: "호텔 캠페인 ID"
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DT
+        description: "확인 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DATE
+        description: "확인 KST 날짜"
+        data_type: DATE
+      - name: CREATE_KST_DATE
+        description: "생성 KST 날짜"
+        data_type: DATE
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NM
+        description: "파트너명. partner_account(type=MASTER)의 name"
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: GPID
+        description: "GPID"
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+        data_type: STRING
+      - name: REGION_TYPE
+        description: "지역 유형. Domestic(한국) / Outbound(해외). NULL이면 Outbound"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가 이름. NULL이면 Others로 치환"
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름. NULL이면 Others로 치환"
+        data_type: STRING
+      - name: JEJU_FLAG
+        description: "제주도 여부 (Y/N). 국내 + 도시가 Jeju인 경우만 Y"
+        data_type: STRING
+      - name: COUPON_ID
+        description: "대표 쿠폰 ID. 보험 상품은 항상 NULL"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 템플릿 ID. 보험 상품은 항상 NULL"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 템플릿 ID. 보험 상품은 항상 NULL"
+        data_type: INTEGER
+      - name: COUPON_TITLE
+        description: "쿠폰명. 보험 상품은 항상 NULL (쿠폰 미적용)"
+        data_type: STRING
+      - name: COUPON_PUBLISH_TEAM_NM
+        description: "쿠폰 발행 팀. 보험 상품은 항상 NULL (쿠폰 미적용)"
+        data_type: STRING
+      - name: COUPON_PUBLISH_PURPOSE_NM
+        description: "쿠폰 발행 목적. 보험 상품은 항상 NULL (쿠폰 미적용)"
+        data_type: STRING
+      - name: CROSS_SELL_FLAG
+        description: "크로스셀 여부 (Y/N). NULL이면 N으로 치환"
+        data_type: STRING
+      - name: COMMISSION_RATE
+        description: |
+          보험 커미션율. RESVE_ID prefix와 BASIS_DATE에 따라 하드코딩 분기.
+          - io/in prefix + 2022-07-01 이후: 0.23 (23%)
+          - io/in prefix + 2022-07-01 이전: 0.3 (30%)
+          - ia prefix: 0.5 (50%)
+          - 2023-02-01 ~ 2023-02-28: 0.4 (40%)
+          - 그 외: 0.45 (45%)
+        data_type: FLOAT
+      - name: SALES_COMMISSION_PRICE
+        description: "MART_SALE_D 원본 커미션 금액"
+        data_type: FLOAT
+      - name: PARTNER_SETTLE_TYPE
+        description: "파트너 정산 유형"
+        data_type: STRING
+      - name: PARTNER_SALES_TYPE
+        description: "파트너 판매 유형"
+        data_type: STRING
+      - name: PARTNERSHIP_CD
+        description: "파트너십 코드 (MART_SALE_D 원본)"
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 파트너십 코드 (MART_SALE_D 원본)"
+        data_type: STRING
+      - name: PG_NM
+        description: "PG사명. 보험 상품은 항상 NULL"
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "총 판매가(GMV). MART_SALE_D.SALES_KRW_PRICE"
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE
+        description: |
+          MRT 총매출 (보험). COMMISSION_RATE * SALES_KRW_PRICE로 산출.
+          RESVE_ID prefix와 BASIS_DATE에 따라 요율이 결정됨.
+          - io/in prefix + 2022-07-01 이후: 0.23 * SALES_KRW_PRICE
+          - io/in prefix + 2022-07-01 이전: 0.3 * SALES_KRW_PRICE
+          - ia prefix: 0.5 * SALES_KRW_PRICE
+          - 2023-02-01 ~ 2023-02-28: 0.4 * SALES_KRW_PRICE
+          - 그 외: 0.45 * SALES_KRW_PRICE
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE_TYPE
+        description: |
+          MRT 총매출 요율 분기 타입 번호.
+          - 1: io/in prefix + 2022-07-01 이후 (요율 0.23)
+          - 2: io/in prefix + 2022-07-01 이전 (요율 0.3)
+          - 3: ia prefix (요율 0.5)
+          - 4: 2023-02-01 ~ 2023-02-28 (요율 0.4)
+          - 99: 그 외 (요율 0.45)
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: "쿠폰 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 비용 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 비용 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "포인트 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: EXCLUDED_POINT_PRICE
+        description: "제외 포인트 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: DISCOUNT_PRICE
+        description: "할인 금액. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: FLOAT
+      - name: CHANNEL_FEE_PRICE
+        description: "채널(PG) 수수료. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: FLOAT
+      - name: AGENCY_FEE
+        description: "여행사 대리점 수수료. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: MARKETING_PARTNER_FEE
+        description: "마케팅 파트너 수수료. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: INTEGER
+      - name: AFFILIATE_POINT_FEE
+        description: "B2B 제휴 포인트 수수료. 보험 상품 특성상 항상 0 (미적용)"
+        data_type: FLOAT
+      - name: NET_PRICE
+        description: "순매출. 현재 NULL (미산출)"
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

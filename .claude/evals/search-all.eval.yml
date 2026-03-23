@@ -1,0 +1,38 @@
+name: search-all-knowledge
+description: 사내 지식 통합 검색 시 검색어 생성, 소스별 라우팅, 결과 중복 제거 규칙 준수 여부 검증
+
+tests:
+  - name: multi_source_generates_search_terms
+    prompt: |
+      항공 매출 집계 기준 관련 논의 찾아줘
+    expected_behavior:
+      - 검색어를 최소 3개 이상 생성한다 (한국어/영어/테이블명 등 다양한 축)
+      - Slack, Confluence, Jira를 한 메시지에서 병렬로 검색한다
+      - 검색 결과를 소스별(Slack/Confluence/Jira)로 구분하여 정리한다
+    tags: [search, multi-source, search-terms]
+
+  - name: source_specific_routing_slack
+    prompt: |
+      슬랙에서 MART_SALE_D 관련 논의 찾아줘
+    expected_behavior:
+      - "슬랙에서"를 감지하여 Slack만 검색한다
+      - Confluence, Jira는 검색하지 않는다
+      - Slack 검색 결과의 Permalink를 그대로 사용한다 (URL을 직접 구성하지 않는다)
+    tags: [search, source-specific, slack-only]
+
+  - name: source_specific_routing_confluence
+    prompt: |
+      컨플루언스에 항공 수익 구조 문서 있나?
+    expected_behavior:
+      - "컨플루언스에"를 감지하여 Confluence만 검색한다
+      - Slack, Jira는 검색하지 않는다
+    tags: [search, source-specific, confluence-only]
+
+  - name: result_dedup_by_url
+    prompt: |
+      reservation_travelers 테이블 관련 내용 찾아줘
+    expected_behavior:
+      - 같은 URL을 가진 결과는 하나만 유지한다 (중복 제거)
+      - 관련도가 높은 순서로 정렬한다
+      - 결과가 없는 소스는 섹션을 생략한다
+    tags: [search, dedup, result-format]

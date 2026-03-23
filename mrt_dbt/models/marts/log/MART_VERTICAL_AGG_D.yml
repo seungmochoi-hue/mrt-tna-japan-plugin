@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: MART_VERTICAL_AGG_D
+    description: "수직 집계 데이터"
+    config:
+      tags: ["VERTICAL", "MART"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: event_name
+        description: "이벤트 이름"
+        data_type: STRING
+      - name: item_name
+        description: "아이템 이름"
+        data_type: STRING
+      - name: vertical_name
+        description: "수직 이름"
+        data_type: STRING
+      - name: click_cnt
+        description: "클릭 수"
+        data_type: INTEGER
+      - name: click_uv
+        description: "클릭 UV"
+        data_type: INTEGER
+      - name: click_cnt_web
+        description: "웹 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_web
+        description: "웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_cnt_ios_mweb
+        description: "iOS 모바일 웹 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_ios_mweb
+        description: "iOS 모바일 웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_cnt_aos_mweb
+        description: "Android 모바일 웹 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_aos_mweb
+        description: "Android 모바일 웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_cnt_ios
+        description: "iOS 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_ios
+        description: "iOS 클릭 UV"
+        data_type: INTEGER
+      - name: click_cnt_aos
+        description: "Android 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_aos
+        description: "Android 클릭 UV"
+        data_type: INTEGER
+      - name: imp_uv
+        description: "노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_web
+        description: "웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_ios_mweb
+        description: "iOS 모바일 웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_aos_mweb
+        description: "Android 모바일 웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_ios
+        description: "iOS 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_aos
+        description: "Android 노출 UV"
+        data_type: INTEGER
+

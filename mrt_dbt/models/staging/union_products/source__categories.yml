@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: "ups"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "categories"
+        identifier: "DW_MRT_UPS_CATEGORIES"
+        description: "통합상품 카테고리"
+        columns:
+          - name: "id"
+            description: "카테고리 ID"
+          - name: "code"
+            description: "카테고리 코드"
+          - name: "name"
+            description: "카테고리 이름"
+          - name: "product_type"
+            description: "상품 타입"
+          - name: "parent_id"
+            description: "상위 카테고리 ID"
+          - name: "created_at"
+            description: "생성일"
+          - name: "created_by"
+            description: "생성자"
+          - name: "updated_at"
+            description: "수정일"
+          - name: "updated_by"
+            description: "수정자"
+          - name: "deleted_at"
+            description: "삭제일"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

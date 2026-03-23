@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: resve_attribute
+    description: "예약 단위 UTM/광고 트래킹 속성(여러 소스에서 수집된 값을 우선순위로 병합)"
+    config:
+      tags: ["MART", "RESVE", "ATTR"]
+    columns:
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 구분"
+        data_type: STRING
+      - name: CREATED_KST_DATE
+        description: "생성 일시(KST)"
+        data_type: DATETIME
+      - name: UPDATED_KST_DATE
+        description: "수정 일시(KST)"
+        data_type: DATETIME
+      - name: FIRST_UTM_MEDIUM
+        description: "첫번째 UTM medium"
+        data_type: STRING
+      - name: FIRST_UTM_SOURCE
+        description: "첫번째 UTM source"
+        data_type: STRING
+      - name: FIRST_UTM_CAMPAIGN
+        description: "첫번째 UTM campaign"
+        data_type: STRING
+      - name: FIRST_UTM_TERM
+        description: "첫번째 UTM term"
+        data_type: STRING
+      - name: FIRST_UTM_CONTENT
+        description: "첫번째 UTM content"
+        data_type: STRING
+      - name: UTM_MEDIUM
+        description: "최근 UTM medium"
+        data_type: STRING
+      - name: UTM_SOURCE
+        description: "최근 UTM source"
+        data_type: STRING
+      - name: UTM_CAMPAIGN
+        description: "최근 UTM campaign"
+        data_type: STRING
+      - name: UTM_TERM
+        description: "최근 UTM term"
+        data_type: STRING
+      - name: UTM_CONTENT
+        description: "최근 UTM content"
+        data_type: STRING
+      - name: N_AD
+        description: "네이버 광고 이름"
+        data_type: STRING
+      - name: N_AD_GROUP
+        description: "네이버 광고 그룹"
+        data_type: STRING
+      - name: N_CAMPAIGN_TYPE
+        description: "네이버 캠페인 타입"
+        data_type: STRING
+      - name: N_KEYWORD
+        description: "네이버 키워드"
+        data_type: STRING
+      - name: N_KEYWORD_ID
+        description: "네이버 키워드 ID"
+        data_type: STRING
+      - name: MRT_CONTENTS_VALUE
+        description: "마이리얼트립 콘텐츠 값"
+        data_type: STRING
+      - name: APP_PLATFORM
+        description: "앱 플랫폼"
+        data_type: STRING
+      - name: APP_IDFA_VALUE
+        description: "IDFA 값(iOS 광고 식별자)"
+        data_type: STRING
+      - name: APP_ADID_VALUE
+        description: "ADID 값(Android 광고 식별자)"
+        data_type: STRING
+      - name: APP_DEVICE_TYPE
+        description: "앱 디바이스 타입"
+        data_type: STRING
+      - name: APP_SITE_ID_VALUE
+        description: "앱 사이트 ID"
+        data_type: STRING
+      - name: APP_SUB_SITE_ID_VALUE
+        description: "앱 서브 사이트 ID"
+        data_type: STRING
+      - name: APP_ADSET_VALUE
+        description: "앱 광고 세트 값"
+        data_type: STRING
+      - name: APP_AD_VALUE
+        description: "앱 광고 값"
+        data_type: STRING
+      - name: APP_CHANNEL_VALUE
+        description: "앱 채널 값"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

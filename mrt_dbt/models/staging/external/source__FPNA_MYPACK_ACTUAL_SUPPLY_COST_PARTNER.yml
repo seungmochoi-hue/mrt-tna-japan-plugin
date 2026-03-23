@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_MYPACK_ACTUAL_SUPPLY_COST_PARTNER"
+        identifier: "FPNA_MYPACK_ACTUAL_SUPPLY_COST_PARTNER"
+        description: "마이팩 실공급가 파트너 기준 일괄 조정 (스프레드시트관리)"
+        columns:
+          - name: "PACKAGE_OPTION_PARTNER_ID"
+            description: "PACKAGE OPTION PARTNER ID"
+          - name: "PARTNER_NM"
+            description: "파트너 이름"
+          - name: "RESVE_END_DATE"
+            description: "RESVE END DATE"
+          - name: "TRAVEL_MONTH"
+            description: "TRAVEL MONTH"
+          - name: "ADJUSTMENT_RATE"
+            description: "ADJUSTMENT RATE"
+          - name: "REMARK"
+            description: "비고"

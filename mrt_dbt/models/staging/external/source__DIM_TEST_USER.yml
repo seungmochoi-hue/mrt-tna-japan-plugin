@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: "external_mart"
+    database: "mrtdata"
+    schema: "edw_mart"
+    description: "외부데이터 ( 스프레드시트 등 )"
+    tables:
+      - name: "DIM_TEST_USER"
+        identifier: "DIM_TEST_USER"
+        description: "스프레드 시트 기반 테이블"
+        columns:
+          - name: "USER_ID"
+            description: "사용자 ID"
+          - name: "DOMAIN_NM"
+            description: "도메인명"
+          - name: "USER_NAME"
+            description: "사용자 이름"
+          - name: "EMAIL"
+            description: "이메일 (테스트 계정, 개인정보 X)"
+          - name: "TEAM"
+            description: "팀"

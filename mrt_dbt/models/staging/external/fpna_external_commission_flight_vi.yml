@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: fpna_external_commission_flight_vi
+    description: "항공 VI(수수료) 추정/이력 정보"
+    config:
+      meta:
+        owner: "FPNA"
+    columns:
+      - name: TRAVEL_DATE
+        description: "여행일자"
+        data_type: DATE
+      - name: DI_FLAG
+        description: "국내/해외 구분 플래그"
+        data_type: STRING
+      - name: STOCK_AIRLINE_CD
+        description: "항공사 코드"
+        data_type: STRING
+      - name: HISTORICAL_VI_RATE
+        description: "이력 VI 비율"
+        data_type: FLOAT64
+      - name: ESTIMATED_VI_RATE
+        description: "추정 VI 비율"
+        data_type: FLOAT64
+      - name: REMARK_1
+        description: "비고 1"
+        data_type: STRING
+      - name: REMARK_2
+        description: "비고 2"
+        data_type: STRING
+

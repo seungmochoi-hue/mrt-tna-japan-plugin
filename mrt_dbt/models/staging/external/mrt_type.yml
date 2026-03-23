@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mrt_type
+    description: >
+      마리트 타입 [guide_type](https://docs.google.com/spreadsheets/d/1hfA3CEBlkFXHR02ivvcrAczux5Ef2sbntfdkoP969UE/edit?gid=0#gid=0)
+    config:
+      meta:
+        owner: "파트너"
+    columns:
+      - name: guide_id
+        description: "가이드 ID"
+      - name: mrt_type
+        description: "마리트 타입"
+      - name: pl_begin_at
+        description: "플래닝 시작 시간 (%E4Y-%m-%d)"
+

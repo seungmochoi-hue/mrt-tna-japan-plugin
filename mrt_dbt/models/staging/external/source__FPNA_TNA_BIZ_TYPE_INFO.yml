@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TNA_BIZ_TYPE_INFO"
+        identifier: "FPNA_TNA_BIZ_TYPE_INFO"
+        description: "T&A BIZ_TYPE 구분 정보 (스프레드시트관리)"
+        columns:
+          - name: "PARTNER_ID"
+            description: "파트너 ID"
+          - name: "PARTNER_NM"
+            description: "파트너 이름"
+          - name: "BIZ_TYPE_PARTNER"
+            description: "파트너 BIZ_TYPE"
+          - name: "REMARK_PARTNER"
+            description: "REMARK PARTNER"
+          - name: "NULL"
+            description: "NULL"
+          - name: "PRODUCT_ID"
+            description: "상품 ID"
+          - name: "PRODUCT_NM"
+            description: "상품 이름"
+          - name: "BIZ_TYPE_PRODUCT"
+            description: "상품 BIZ_TYPE"
+          - name: "REMARK_PRODUCT"
+            description: "REMARK PRODUCT"

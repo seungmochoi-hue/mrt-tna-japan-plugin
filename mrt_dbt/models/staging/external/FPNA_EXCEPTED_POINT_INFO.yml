@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: FPNA_EXCEPTED_POINT_INFO
+    description: "FPNA 포인트 예외/가치 환산 관련 설정 정보"
+    config:
+      meta:
+        owner: "FPNA"
+    columns:
+      - name: template_id
+        description: "템플릿 ID"
+        data_type: INT64
+      - name: template_name
+        description: "템플릿 이름"
+        data_type: STRING
+      - name: mrt_value_rate
+        description: "MRT 가치 환산 비율"
+        data_type: FLOAT64
+      - name: remark_1
+        description: "비고 1"
+        data_type: STRING
+      - name: remark_2
+        description: "비고 2"
+        data_type: STRING
+      - name: remark_3
+        description: "비고 3"
+        data_type: STRING
+

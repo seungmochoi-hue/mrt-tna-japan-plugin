@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: DAILY_PAGEVIEW_LOG
+    description: "일일 페이지뷰 로그"
+    config:
+      tags: ["LOG"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: pid
+        description: "PID"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: screen_name
+        description: "화면 이름"
+        data_type: STRING
+      - name: event_name
+        description: "이벤트 이름"
+        data_type: STRING
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: STRING
+      - name: item_id
+        description: "아이템 ID"
+        data_type: STRING
+      - name: url
+        description: "URL"
+        data_type: STRING
+      - name: campaign_id
+        description: "캠페인 ID"
+        data_type: STRING
+      - name: PID_SCREEN_FIRST_ACCESS_DT
+        description: "PID 화면 최초 접근 일시"
+        data_type: DATETIME

@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_partner_settlement_expense
+    identifier: DW_MRT_ADS_AD_PARTNER_SETTLEMENT_EXPENSE
+    description: 검색광고 파트너 정산 비용. 주요 상태값 PUBLISHED 확인. 주요 타입값 CPC 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: partner_id
+      description: 파트너 ID
+    - name: execution_type
+      description: 집행 타입
+    - name: period_type
+      description: 기간 타입
+    - name: period_start_date
+      description: 기간 시작 일자
+    - name: period_end_date
+      description: 기간 종료 일자
+    - name: settlement_base_date
+      description: 정산 기준 일자
+    - name: expense_amount
+      description: 비용 금액
+    - name: status
+      description: 상태
+    - name: publish_attempt_count
+      description: 발행 시도 횟수
+    - name: published_at
+      description: 발행 일시
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

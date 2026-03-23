@@ -1,0 +1,40 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_partner_credit_entry
+    identifier: DW_MRT_ADS_AD_PARTNER_CREDIT_ENTRY
+    description: 검색광고 파트너 크레딧 적립. 마지막 적재일 2026-03-10. 주요 타입값 GRANT 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: partner_id
+      description: 파트너 ID
+    - name: entry_type
+      description: 적립 타입
+    - name: amount
+      description: 적립 금액
+    - name: remaining_amount
+      description: 잔여 금액
+    - name: effective_start_at
+      description: 유효 시작 일시
+    - name: expire_at
+      description: 만료 일시
+    - name: created_by_type
+      description: 생성 주체 타입
+    - name: created_by
+      description: 생성 주체 ID
+    - name: reason
+      description: 적립 사유
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

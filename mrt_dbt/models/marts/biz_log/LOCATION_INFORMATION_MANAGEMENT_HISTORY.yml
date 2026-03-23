@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: LOCATION_INFORMATION_MANAGEMENT_HISTORY
+    description: "위치 정보 관리 이력"
+    config:
+      tags: [ "BIZ_LOG", "HISTORY" ]
+    columns:
+      - name: user_id
+        description: "사용자 ID"
+        data_type: string
+      - name: platform
+        description: "플랫폼"
+        data_type: string
+      - name: using_service
+        description: "사용 서비스"
+        data_type: string
+      - name: recipient
+        description: "수신자"
+        data_type: string
+      - name: using_method
+        description: "사용 방법"
+        data_type: string
+      - name: acquisition_date
+        description: "수집 일자"
+        data_type: date

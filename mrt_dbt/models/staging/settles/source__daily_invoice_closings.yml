@@ -1,0 +1,108 @@
+version: 2
+sources:
+- name: settles
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: daily_invoice_closings
+    identifier: DW_MRT_SETTLES_DAILY_INVOICE_CLOSINGS
+    description: 인보이스 일마감 상세. 마지막 적재일 2026-03-13. 주요 타입값 JPY 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: invoice_id
+      description: 인보이스 ID
+    - name: closing_date
+      description: 마감 일자
+    - name: partner_id
+      description: 파트너 ID
+    - name: reservation_id
+      description: 예약 ID
+    - name: reservation_no
+      description: 예약 번호
+    - name: union_product_id
+      description: 통합 상품 ID
+    - name: product_title
+      description: 상품명
+    - name: trip_started_at
+      description: 여행 시작 일시
+    - name: trip_ended_at
+      description: 여행 종료 일시
+    - name: seq
+      description: 순번
+    - name: currency_type
+      description: 통화
+    - name: exchange_rate
+      description: 환율
+    - name: accumulated_invoice_product_price
+      description: 누적 인보이스 상품 금액
+    - name: accumulated_invoice_supply_price
+      description: 누적 인보이스 공급 금액
+    - name: invoice_product_price
+      description: 인보이스 상품 금액
+    - name: invoice_supply_price
+      description: 인보이스 공급 금액
+    - name: balance
+      description: 잔액
+    - name: total_balance
+      description: 총 잔액
+    - name: foreign_currency_product_price
+      description: 외화 상품 금액
+    - name: foreign_currency_accumulated_product_price
+      description: 누적 외화 상품 금액
+    - name: foreign_currency_supply_price
+      description: 외화 공급 금액
+    - name: foreign_currency_accumulated_supply_price
+      description: 누적 외화 공급 금액
+    - name: sale_price
+      description: 판매 금액
+    - name: product_price
+      description: 상품 금액
+    - name: pg_amount
+      description: PG 금액
+    - name: supply_price
+      description: 공급 금액
+    - name: mrt_coupon_discount_amount
+      description: 마리트 쿠폰 할인 금액
+    - name: partner_coupon_discount_amount
+      description: 파트너 쿠폰 할인 금액
+    - name: card_corp_coupon_discount_amount
+      description: 카드사 쿠폰 할인 금액
+    - name: free_point_amount
+      description: 무료 포인트 금액
+    - name: paid_point_amount
+      description: 유료 포인트 금액
+    - name: instant_discount_amount
+      description: 즉시 할인 금액
+    - name: mrt_instant_discount_amount
+      description: 마리트 즉시 할인 금액
+    - name: affiliate_instant_discount_amount
+      description: 제휴 즉시 할인 금액
+    - name: total_cancel_commission
+      description: 총 취소 수수료
+    - name: mrt_cancel_commission
+      description: 마리트 취소 수수료
+    - name: partner_cancel_commission
+      description: 파트너 취소 수수료
+    - name: sale_commission
+      description: 판매 수수료
+    - name: etc_commission
+      description: 기타 수수료
+    - name: total_traveler_compensation
+      description: 총 여행자 보상 금액
+    - name: mrt_traveler_compensation
+      description: 마리트 여행자 보상 금액
+    - name: partner_traveler_compensation
+      description: 파트너 여행자 보상 금액
+    - name: dw_load_dt
+      description: DW 적재 일시

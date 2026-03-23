@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: "insurance"
+    database: "mrtdata"
+    schema: "mrt_insurance"
+    description: "insurance"
+    tables:
+      - name: "insurance_old"
+        identifier: "insurance_old"
+        description: "기존 보험 원천"
+        columns:
+          - name: "int64_field_0"
+            description: "Int64 Field 0"
+          - name: "begin_at"
+            description: "Begin At"
+          - name: "end_at"
+            description: "End At"
+          - name: "email"
+            description: "Email"
+          - name: "sales"
+            description: "Sales"
+          - name: "reservation_date"
+            description: "Reservation Date"

@@ -1,0 +1,54 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: theme_offer
+    identifier: DW_MRT_STAY_THEME_OFFER
+    description: 통합숙소 테마 오퍼. 주요 타입값 SELECTED/ALL 확인.
+    columns:
+    - name: theme_offer_id
+      description: 테마 오퍼 ID
+    - name: enabled
+      description: 활성 여부
+    - name: template_title
+      description: 템플릿 제목
+    - name: apply_period_type
+      description: 적용 기간 타입
+    - name: apply_start_date
+      description: 적용 시작 일시
+    - name: apply_end_date
+      description: 적용 종료 일시
+    - name: exposure_strength
+      description: 노출 강도
+    - name: main_title
+      description: 메인 제목
+    - name: sub_title
+      description: 서브 제목
+    - name: is_child_friendly_theme
+      description: 아동 친화 테마 여부
+    - name: is_cross_sell_theme
+      description: 교차 판매 테마 여부
+    - name: coupon_template_id
+      description: 쿠폰 템플릿 ID
+    - name: check_in_out_period_type
+      description: 체크인아웃 기간 타입
+    - name: check_in_start_date
+      description: 체크인 시작 일자
+    - name: check_out_end_date
+      description: 체크아웃 종료 일자
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

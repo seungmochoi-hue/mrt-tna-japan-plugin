@@ -1,0 +1,9 @@
+
+target/
+target_prod/
+dbt_packages/
+logs/
+edr_target/
+
+.user.yml
+package-lock.yml

@@ -1,0 +1,19 @@
+ARG AIRFLOW_VERSION=2.10.5
+ARG PYTHON_VERSION=3.12
+
+FROM apache/airflow:${AIRFLOW_VERSION}-python${PYTHON_VERSION}
+
+ENV AIRFLOW_DEPS="slack,google,amazon"
+
+ARG DEPLOYMENT=dev
+ENV DEPLOYMENT=${DEPLOYMENT}
+
+RUN pip install --no-cache-dir apache-airflow[${AIRFLOW_DEPS}]=="${AIRFLOW_VERSION}"
+
+RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
+    pip install dbt-bigquery==1.9.1 && \
+    pip install dbt-adapters==1.14.8 && \
+    deactivate
+
+ADD requirements.txt .
+RUN pip3 install -r requirements.txt

@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_COMMERCE_ETC"
+        identifier: "FPNA_COMMERCE_ETC"
+        description: "FPNA 재고수불부 보정/폐기/반폼 정보 (스프레드시트관리)"
+        columns:
+          - name: "BASIS_DATE"
+            description: "BASIS DATE"
+          - name: "TYPE"
+            description: "TYPE"
+          - name: "SKU_ID"
+            description: "SKU ID"
+          - name: "SKU_NAME"
+            description: "SKU NAME"
+          - name: "TICKET_AMOUNT"
+            description: "TICKET AMOUNT"
+          - name: "UNIT_PRICE"
+            description: "UNIT PRICE"
+          - name: "TOTAL_PRICE"
+            description: "TOTAL PRICE"
+          - name: "REMARK"
+            description: "REMARK"

@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: "insurance"
+    database: "mrtdata"
+    schema: "mrt_insurance"
+    description: "insurance"
+    tables:
+      - name: "insurance_raw"
+        identifier: "insurance_raw"
+        description: "보험 원천"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "user_id"
+            description: "사용자 ID"
+          - name: "country"
+            description: "Country"
+          - name: "begin_at"
+            description: "Begin At"
+          - name: "num_of_people"
+            description: "Num Of People"
+          - name: "total_price"
+            description: "Total Price"

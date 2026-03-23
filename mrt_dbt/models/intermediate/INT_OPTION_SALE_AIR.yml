@@ -1,0 +1,173 @@
+version: 2
+
+models:
+  - name: INT_OPTION_SALE_AIR
+    description: |
+      항공(AIR) 도메인 옵션 판매 데이터 정규화 뷰.
+      MART_AIR_SALE_D(확정 발권 건만 포함)에서 재발권 건(REISUE_FLAG = 'R') 및 B2BCON/PKG 판매 형태를 제외하여
+      MART_OPTION_SALE_D UNION 구조에 맞는 표준 스키마로 변환.
+      PRODUCT_ID/OPTION_ID/GID/OPTION_GID는 항공 고정값으로 설정.
+      PG사·결제 수수료·정산 수수료·예약 목적 유형 정보는 항공 도메인 특성상 미제공.
+      Grain: RESVE_OPTION_ID + BASIS_DATE + KIND (일별 이력 구조. MART_AIR_SALE_D 스냅샷 기반으로 동일 예약이 날짜별로 여러 row 존재. KIND=1 결제·KIND=2 취소 두 row가 같은 날짜에 공존 가능. RESVE_OPTION_ID IS NULL 건은 B2G 채널 특성상 PAX_NO 미존재 케이스로 테스트 대상 제외).
+      Downstream: MART_OPTION_SALE_D.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_OPTION_ID
+            - BASIS_DATE
+            - KIND
+          config:
+            severity: warn
+            where: "RESVE_OPTION_ID IS NOT NULL"
+    columns:
+      - name: BASIS_DATE
+        description: "집계 기준일자."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: |
+          항공 예약 ID.
+          PNR_NO에 'f' prefix를 붙여 도메인 간 충돌 방지.
+          예: PNR_NO=12345678 -> 'f12345678'
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_OPTION_ID
+        description: |
+          옵션 단위 예약 ID (행 고유 식별자).
+          CONCAT('f', PNR_NO, '-', PAX_NO) 형태로 승객 단위 구분.
+          예: 'f12345678-1'.
+          B2G(해외제휴) 등 일부 채널은 TB_AIR_RV110(탑승객 요금) 레코드 미존재로 PAX_NO가 NULL인 경우 본 컬럼도 NULL.
+        data_type: STRING
+      - name: USER_ID
+        description: "예약자 사용자 ID."
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID. 항공은 RESVE_ID와 동일 (CONCAT('f', PNR_NO))."
+        data_type: STRING
+      - name: KIND
+        description: "예약 구분 (신규/취소 등)."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID. 항공 고정값: '100000001'."
+        data_type: STRING
+      - name: OPTION_ID
+        description: "옵션 ID. 항공 고정값: '100000001'."
+        data_type: STRING
+      - name: GID
+        description: "상품 그룹 ID. 항공 고정값: '1000006'."
+        data_type: STRING
+      - name: OPTION_GID
+        description: "옵션 그룹 ID. 항공 고정값: '1000006'."
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 명칭. 항공 고정값: 'AIR'."
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품명. 항공은 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: OPTION_TITLE
+        description: "옵션명. 항공은 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: RECENT_STATUS
+        description: "최근 예약 상태 코드."
+        data_type: STRING
+      - name: TRAVEL_START_KST_DATE
+        description: |
+          여행 출발일 (KST).
+          국내선 왕편(PNR_NO > SUPER_PNR_NO): 왕복편(SUPER_PNR_NO)의 출발일(dep_dtm)로 대체.
+          그 외: DEPART_KST_DT 기준.
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: |
+          여행 귀국일 (KST).
+          국내선(DOMESTIC_INTERNATIONAL_DIV_CD='D') 복편(PNR_NO < SUPER_PNR_NO): 왕복편(SUPER_PNR_NO)의 출발일(dep_dtm)로 대체.
+          국내선(DOMESTIC_INTERNATIONAL_DIV_CD='D') 왕편(PNR_NO > SUPER_PNR_NO): DEPART_KST_DT 기준.
+          그 외: RETURN_KST_DT 기준.
+        data_type: DATE
+      - name: PG_NM
+        description: "PG사 명칭. 항공은 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: PLATFORM
+        description: "결제 플랫폼 (PAYMENT_PLATFORM 원천 컬럼)."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "발권/결제 일시 (KST). ISSUE_KST_DATE를 TIMESTAMP로 변환."
+        data_type: TIMESTAMP
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 1단계 코드. union_product_v3(id=1000006) 기준 dim_standard_category 조인."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 1단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 2단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 2단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 3단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 3단계 명칭."
+        data_type: STRING
+      - name: OPTION_PARTNER_ID
+        description: "옵션 파트너 ID (BPLC_CD)."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: |
+          판매 금액 (원화).
+          계산식: SALE_TOTAL_PRICE + (DISCOUNT_BEFORE_NET_PRICE - DISCOUNT_AFTER_NET_PRICE).
+          할인 적용 전후 차액을 더하여 실제 판매가 반영.
+        data_type: INT64
+      - name: PAID_PRICE
+        description: "실 결제 금액. SALE_TOTAL_PRICE 기준."
+        data_type: INT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인 금액. 항공은 항상 0."
+        data_type: INT64
+      - name: POINT_PRICE
+        description: "포인트 사용 금액. NULL이면 0으로 대체 (IFNULL 처리)."
+        data_type: INT64
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 수단 상세값. 항공은 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: PAYMENT_COMMISSION_RATE
+        description: "결제 수수료율. 항공은 데이터 미제공 (NULL)."
+        data_type: FLOAT64
+      - name: PAYMENT_COMMISSION_PRICE
+        description: "결제 수수료 금액. 항공은 데이터 미제공 (NULL)."
+        data_type: INT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료율. 항공은 데이터 미제공 (NULL)."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액. 항공은 데이터 미제공 (NULL)."
+        data_type: INT64
+      - name: CITY_NM
+        description: "도착 도시명. ARRIVE_AIRPORT_CD 기준 DIM_CITY 조인."
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "도착 국가명. ARRIVE_AIRPORT_CD 기준 DIM_CITY 조인."
+        data_type: STRING
+      - name: REGION_NM
+        description: "도착 지역명. ARRIVE_AIRPORT_CD 기준 DIM_CITY 조인."
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형. 항공은 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "예약 생성 일시 (KST). RESVE_KST_DT 기준."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "예약 최종 수정 일시 (KST). 항공은 CREATE_KST_DT와 동일."
+        data_type: TIMESTAMP

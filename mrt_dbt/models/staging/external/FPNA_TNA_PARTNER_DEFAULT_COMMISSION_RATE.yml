@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: FPNA_TNA_PARTNER_DEFAULT_COMMISSION_RATE
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      손익 DB 버티컬 별 손익 관리 시트[T&A 파트너 디폴트 수수료율](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=761770856#gid=761770856)
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID"
+      - name: PARTNER_NM
+        description: "파트너 이름"
+      - name: COMMISSION_RATE
+        description: "커미션 비율"
+      - name: REMARK
+        description: "비고"
+

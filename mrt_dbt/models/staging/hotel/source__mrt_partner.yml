@@ -1,0 +1,41 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mrt_partner
+    identifier: DW_MRT_STAYNET_MRT_PARTNER
+    description: 호텔 마리트 파트너. 마지막 적재일 2026-03-19. 주요 상태값 ACTIVE/WAITING 확인. 주요 타입값
+      DEPENDS_ON_COMMISSION_TYPE 확인.
+    columns:
+    - name: mrt_partner_id
+      description: MRT 파트너 ID
+    - name: partner_name
+      description: 파트너 이름
+    - name: email
+      description: 이메일
+    - name: partner_status
+      description: 파트너 상태
+    - name: request_categories
+      description: Request categories
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: mrt_commission_rate
+      description: MRT 수수료 요율
+    - name: cms_reservation_price_type
+      description: CMS 예약 금액 타입
+    - name: commission_type
+      description: 수수료 타입

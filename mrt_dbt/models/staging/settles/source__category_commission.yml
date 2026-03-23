@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: category_commission
+        identifier: DW_MRT_SETTLES_CATEGORY_COMMISSION
+        description: |
+          카테고리 수수료율 기준 원천. 카테고리/상품군 단위 기본 수수료율을 제공하며, 카테고리 수수료율 조회 쿼리에서 기준표로 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: updated_at
+            description: "수정일"
+          - name: deleted_at
+            description: "삭제일"
+          - name: created_by
+            description: "생성자"
+          - name: updated_by
+            description: "수정자"
+          - name: snapshot_date
+            description: "스냅샷 날짜"
+          - name: commission_group_code
+            description: "수수료 그룹 코드"
+          - name: commission_group_name
+            description: "수수료 그룹 이름"
+          - name: category_code
+            description: "카테고리 코드"
+          - name: category_name
+            description: "카테고리명"
+          - name: commission_rate
+            description: "수수료율"
+          - name: agency_provide_type
+            description: "제휴여행사 제공 구분"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

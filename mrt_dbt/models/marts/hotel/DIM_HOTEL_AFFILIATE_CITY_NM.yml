@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: DIM_HOTEL_AFFILIATE_CITY_NM
+    description: "마트 쿠폰"
+    config:
+      tags: ["HOTEL", "DIM", "AFFILIATE", "CITY"]
+    columns:
+      - name: CITY_INFO_ID
+        description: 도시_정보_ID
+        data_type: STRING
+
+      - name: KEY_NM
+        description: 키_이름
+        data_type: STRING
+
+      - name: BOOKING_CITY_NM
+        description: 예약_도시_이름
+        data_type: STRING
+
+      - name: AFFILIATE_NM
+        description: 제휴_이름
+        data_type: STRING
+
+      - name: CITY_NM
+        description: 도시_이름
+        data_type: STRING
+
+      - name: DW_LOAD_DT
+        description: DW_적재_일시
+        data_type: TIMESTAMP
+

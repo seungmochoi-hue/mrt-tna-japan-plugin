@@ -1,0 +1,26 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_campaign_budget_daily
+    identifier: DW_MRT_ADS_AD_CAMPAIGN_BUDGET_DAILY
+    description: 검색광고 일예산.
+    columns:
+    - name: id
+      description: ID
+    - name: ad_campaign_id
+      description: 광고 캠페인 ID
+    - name: daily_budget
+      description: 일예산
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

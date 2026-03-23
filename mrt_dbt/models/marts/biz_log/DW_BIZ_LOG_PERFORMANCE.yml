@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: DW_BIZ_LOG_PERFORMANCE
+    description: "Biz Log 중 performance 로그 추출 테이블"
+    config:
+      tags: [ "BIZ_LOG"]
+    columns:
+      - name: basis_dt
+        description: "기준 날짜"
+        data_type: date
+      - name: received_timestamp_kst
+        description: "이벤트 서버 도착 시간"
+        data_type: timestamp
+      - name: event_timestamp_kst
+        description: "이벤트 발생시간"
+        data_type: timestamp
+      - name: screen_name
+        description: "이벤트 발생 화면 이름"
+        data_type: string
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: string
+      - name: event_name
+        description: "이벤트 이름"
+        data_type: string
+      - name: platform
+        description: "이벤트 발생 플랫폼"
+        data_type: string
+      - name: pid
+        description: "사용자 구분 ID(임의 부여 ID - 쿠키 삭제까지 유효)"
+        data_type: string
+      - name: udid
+        description: "사용자 ID(기기 고유 ID)"
+        data_type: string
+      - name: user_id
+        description: "마리트 유저 ID"
+        data_type: string
+      - name: lib_version
+        description: "로그 SDK 버전"
+        data_type: string
+      - name: client_ip
+        description: "Client IP"
+        data_type: string
+      - name: session_id
+        description: "사용자 구분 ID(행동 없을시 30분 기준)"
+        data_type: string
+      - name: tti
+        description: "응답 시간"
+        data_type: float
+      - name: data
+        description: "Data"
+        data_type: string
+      - name: device
+        description: "기기 정보"
+        data_type: string
+      - name: dw_load_dt
+        description: "로드 일시"
+        data_type: datetime
+

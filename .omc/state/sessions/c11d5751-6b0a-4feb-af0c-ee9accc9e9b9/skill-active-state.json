@@ -1,0 +1,10 @@
+{
+  "active": true,
+  "skill_name": "setup",
+  "session_id": "c11d5751-6b0a-4feb-af0c-ee9accc9e9b9",
+  "started_at": "2026-03-23T11:32:16.873Z",
+  "last_checked_at": "2026-03-23T11:32:16.873Z",
+  "reinforcement_count": 0,
+  "max_reinforcements": 3,
+  "stale_ttl_ms": 300000
+}

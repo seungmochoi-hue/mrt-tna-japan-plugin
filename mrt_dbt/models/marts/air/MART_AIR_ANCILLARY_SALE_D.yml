@@ -1,0 +1,107 @@
+version: 2
+
+models:
+  - name: MART_AIR_ANCILLARY_SALE_D
+    description: |
+      항공 부가서비스(좌석 지정, 수하물 등) 판매 마트.
+      원천: TB_AIR_ANCILLARY_SALE. MART_AIR_SALE_D와 PNR_NO로 항공 정보 연결.
+      KIND=1 확정, KIND=2 취소(금액 음수).
+    config:
+      tags: ["AIR", "MART"]
+      docs:
+        node_color: "#33FF57"
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자"
+        data_type: DATE
+      - name: PNR_NO
+        description: "PNR 번호"
+        data_type: FLOAT
+      - name: RESVE_ID
+        description: "예약 아이디"
+        data_type: STRING
+      - name: RESVE_OPTION_ID
+        description: "예약 옵션 아이디"
+        data_type: STRING
+      - name: RESVE_UNIQUE_ID
+        description: "예약 고유 아이디"
+        data_type: STRING
+        data_tests:
+          - unique:
+              config:
+                where: "KIND = 1"
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 명"
+        data_type: STRING
+      - name: KIND
+        description: "1=결제행, 2=취소행"
+        data_type: INTEGER
+      - name: USER_ID
+        description: "사용자 아이디"
+        data_type: STRING
+      - name: DEPART_AIRPORT_CD
+        description: "출발 공항 코드"
+        data_type: STRING
+      - name: DEPART_KST_DT
+        description: "출발 KST 일시"
+        data_type: TIMESTAMP
+      - name: ARRIVE_AIRPORT_CD
+        description: "도착 공항 코드"
+        data_type: STRING
+      - name: ARRIVE_KST_DT
+        description: "도착 KST 일시"
+        data_type: TIMESTAMP
+      - name: STOCK_AIRLINE_CD
+        description: "항공사 코드"
+        data_type: STRING
+      - name: ON_OFF_RESVE_FLAG
+        description: "온/오프라인 예약 구분"
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드"
+        data_type: STRING
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형"
+        data_type: STRING
+      - name: DOMESTIC_INTERNATIONAL_DIV_CD
+        description: "국내/해외 구분 코드"
+        data_type: STRING
+      - name: ANCILLARY_TYPE
+        description: "부가 서비스 유형"
+        data_type: STRING
+      - name: ANCILLARY_TYPE_NM
+        description: "부가 서비스 유형 명"
+        data_type: STRING
+      - name: ANCILLARY_DESC
+        description: "부가 서비스 설명"
+        data_type: STRING
+      - name: SALES_PRICE
+        description: "판매 가격"
+        data_type: FLOAT
+      - name: SALES_PRICE_CUR_TYPE
+        description: "판매 가격 통화"
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "판매 가격(KRW)"
+        data_type: FLOAT
+      - name: CREATED_KST_DT
+        description: "생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: UPDATED_KST_DT
+        description: "업데이트 KST 일시"
+        data_type: TIMESTAMP
+      - name: CANCEL_KST_DATE
+        description: "취소 KST 일시"
+        data_type: DATE
+      - name: RESVE_CNT
+        description: "예약 건수"
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+
+
+

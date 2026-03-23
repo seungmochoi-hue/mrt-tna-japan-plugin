@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: DIM_MYLINK_D
+    description: |
+      마이링크(Mylink) 제휴 링크 및 URL 관련 데이터 테이블.
+      BigQuery 물리 최적화: cluster(PARTNER_ID)
+    config:
+      tags: ['MYLINK', 'DIM']
+    columns:
+      - name: MYLINK_ID
+        description: "마이링크 ID"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NAME
+        description: '파트너 이름'
+        data_type: STRING
+      - name: PARTNER_ACCOUNT_ID
+        description: '파트너 계정 ID'
+        data_type: STRING
+      - name: SHORT_URL_ID
+        description: '마이링크 단축 URL ID'
+        data_type: STRING
+      - name: TARGET_WEB_URL
+        description: '마이링크 대상 웹 URL'
+        data_type: STRING
+      - name: TARGET_MOBILE_URL
+        description: '마이링크 대상 모바일 URL'
+        data_type: STRING
+      - name: GID
+        description: 'GID'
+        data_type: STRING
+      - name: CREATED_KST_AT
+        description: '생성 시간 (KST)'
+        data_type: TIMESTAMP
+      - name: UPDATED_KST_AT
+        description: '업데이트 시간 (KST)'
+        data_type: TIMESTAMP
+      - name: EXPIRE_KST_AT
+        description: '마이링크 만료 시간 (KST)'
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: 'DW 로드 시간'
+        data_type: TIMESTAMP
+

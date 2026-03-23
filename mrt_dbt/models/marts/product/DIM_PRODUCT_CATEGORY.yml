@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: DIM_PRODUCT_CATEGORY
+    description: |
+      상품 카테고리 정보 테이블.
+      BigQuery 물리 최적화: cluster(DOMAIN_NM)
+    columns:
+    - name: PRODUCT_ID
+      description: 상품_아이디
+      data_type: STRING
+    - name: DOMAIN_NM
+      description: 도메인_명
+      data_type: STRING
+    - name: CATEGORY_NM
+      description: 카테고리_명
+      data_type: INTEGER
+    - name: CATEGORY_ID
+      description: 카테고리_아이디
+      data_type: INTEGER
+    - name: CATEGORY_CD
+      description: 카테고리_코드
+      data_type: STRING
+    - name: SUB_CATEGORY_ID
+      description: 서브_카테고리_아이디
+      data_type: INTEGER
+    - name: SUB_CATEGORY_CD
+      description: 서브_카테고리_코드
+      data_type: STRING
+    - name: DW_LOAD_DT
+      description: DW_적재_일시
+      data_type: TIMESTAMP
+

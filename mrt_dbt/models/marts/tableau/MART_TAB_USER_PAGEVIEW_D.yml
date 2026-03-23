@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: MART_TAB_USER_PAGEVIEW_D
+    description: >
+      일별, 시간대별, 플랫폼별 pv, uv
+      시간대 : 00 ~ 23, ALL
+      플랫폼 : ALL, aos, aos_mweb, aos_webview, ios, ios_mweb, ios_webview, web
+    config:
+      tags: [ "tableau" ]
+    columns:
+      - name: BASIS_DATE
+        description: 기준 일자
+        data_type: DATE
+      - name: PLATFORM
+        description: 플랫폼
+        data_type: STRING
+      - name: TOTAL_USER_CNT
+        description: 전체 유저 수
+        data_type: INTEGER
+      - name: ACTIVE_USER_CNT
+        description: 활성 유저 수
+        data_type: INTEGER
+      - name: DORMANT_USER_CNT
+        description: 휴면 유저 수
+        data_type: INTEGER
+      - name: LEAVE_USER_CNT
+        description: 탈퇴 유저 수
+        data_type: INTEGER
+      - name: NEW_USER_CNT
+        description: 신규 유저 수
+        data_type: INTEGER
+      - name: PV
+        description: PV
+        data_type: INTEGER
+      - name: UV
+        description: UV
+        data_type: INTEGER
+      - name: USER_ID_CNT
+        description: 유저 아이디 수
+        data_type: INTEGER
+      - name: LOGIN_ACTIVE_CNT
+        description: 로그인 활성 유저 수
+        data_type: INTEGER
+      - name: NON_LOGIN_ACTIVE_CNT
+        description: 비활성 유저 수
+        data_type: INTEGER
+      - name: PAID_CNT
+        description: 지불 건수
+        data_type: INTEGER
+      - name: WEEK_UV
+        description: 주간 UV
+        data_type: INTEGER
+      - name: WEEK_PV
+        description: 주간 PV
+        data_type: INTEGER
+      - name: MONTH_UV
+        description: 월간 UV
+        data_type: INTEGER
+      - name: MONTH_PV
+        description: 월간 PV
+        data_type: INTEGER
+

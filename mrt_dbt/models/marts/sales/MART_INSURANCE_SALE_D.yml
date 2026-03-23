@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: MART_INSURANCE_SALE_D
+    description: |
+      보험 상품 일별 매출 마트.
+      5개 소스(insurance_old, insurance_raw, Chubb, AXA, Meritz) 통합.
+      KIND=1 예약 확정, KIND=2 취소(금액 음수). 테스트 유저 제외.
+      smart_guest 등 비회원은 DIM_BIZ_LOG_USER_MAPPING_REFINE으로 user_id 매핑.
+      MERITZ는 POLICY_ID를 보험 식별자(ID)로 사용하며 원천 ORDER_ID는 본 모델 컬럼으로 보존하지 않는다.
+      downstream(INT_SALE_ORIGINAL_INSURANCE_SALE)에서 ORDER_ID는 CONCAT('i', RESVE_ID) 형태로 생성된다.
+      원천 ORDER_ID가 비어 있는 가입 건이 존재하므로 MERITZ는 주문번호 대신 POLICY_ID를 식별자로 사용한다.
+      1주문(ORDER_ID) = N명분 POLICY_ID 구조이므로, POLICY_ID 기준 집계 시 주문수가 과대 계상될 수 있다.
+    config:
+      tags: ["MART", "INSURANCE"]
+    columns:
+      - name: BASIS_DATE
+        description: "KIND=1 예약일, KIND=2 취소일"
+        data_type: DATE
+      - name: USER_ID
+        description: "마리트 유저 아이디. 비회원(smart_guest 등)은 DIM_BIZ_LOG_USER_MAPPING_REFINE 매핑, 매핑 실패 시 guest"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "소스별 prefix 구분 (o:old, n:raw, c:Chubb, a:AXA, m:Meritz). MERITZ는 m+POLICY_ID 형태."
+        data_type: STRING
+      - name: OFFER_ID
+        description: "고정값 100000003 (보험 오퍼)"
+        data_type: STRING
+      - name: KIND
+        description: "1=결제행, 2=취소행"
+        data_type: INTEGER
+      - name: CANCEL_KST_DT
+        description: "취소 일시(KST). 취소 발생 시 값 존재, 미취소면 NULL"
+        data_type: TIMESTAMP
+      - name: RECENT_STATUS
+        description: "confirm / cancel"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "보험 플랜명. Chubb=insuredPlan, AXA=INSURANCE_PLAN, MERITZ=PLAN_CD, 레거시=NULL"
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "보험 계약 생성 일시(KST)"
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: "보험 적용 시작일(여행 시작일)"
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "보험 적용 종료일(여행 종료일)"
+        data_type: DATE
+      - name: RESVE_TYPE
+        description: "고정값 insurance"
+        data_type: STRING
+      - name: MANAGE_TYPE
+        description: "NORMAL / CHUBB / AXA / MERITZ"
+        data_type: STRING
+      - name: SALES_PRICE
+        description: "단위 원(KRW). KIND=1 양수, KIND=2 음수"
+        data_type: INTEGER
+      - name: SALES_PRICE_CUR_TYPE
+        description: "고정값 KRW"
+        data_type: STRING
+      - name: PAID_PRICE
+        description: "SALES_PRICE와 동일"
+        data_type: INTEGER
+      - name: PAID_PRICE_CUR_VALUE
+        description: "고정값 KRW"
+        data_type: STRING
+      - name: COUPON_PRICE
+        description: "고정값 0"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "고정값 0"
+        data_type: INTEGER
+      - name: COUNTRY_NM
+        description: "Chubb만 DIM_CITY 매핑, 나머지 NULL 또는 원본"
+        data_type: STRING
+      - name: CITY_NM
+        description: "Chubb만 DIM_CITY 매핑, 나머지 NULL"
+        data_type: STRING
+      - name: REGION_NM
+        description: "Chubb만 DIM_CITY 매핑, 나머지 NULL"
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "고정값 0"
+        data_type: INTEGER
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 예약 인원수. 아동 구분 없이 전체 인원(num_of_people)을 성인으로 기록"
+        data_type: INTEGER
+      - name: RESVE_PRSNL_CNT
+        description: "총 예약 인원수. MERITZ는 POLICY_ID 단위 적재로 1, AXA는 1행에 N명 가능."
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시(KST)"
+        data_type: TIMESTAMP

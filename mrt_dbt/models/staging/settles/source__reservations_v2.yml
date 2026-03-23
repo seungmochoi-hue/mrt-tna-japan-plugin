@@ -1,0 +1,168 @@
+version: 2
+sources:
+- name: settles
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: reservations_v2
+    identifier: DW_MRT_SETTLES_RESERVATIONS_V2
+    description: 정산 도메인 예약 마스터(SETTLES V2). 하위 모델 MART_FPNA_CONFIRMATION_CLOSING_D,
+      MART_SETTLEMENT_MYPACK_OPTION_SETTLES_D에서 사용함. 주요 상태값 CONFIRM/REQUEST_CANCEL/FINISH/CANCEL/FAIL
+      확인. 주요 타입값 TRAVELER_PERSONAL_REASON/SYSTEM 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일
+    - name: updated_at
+      description: 수정일
+    - name: updated_by
+      description: 수정자
+    - name: cancel_reason_type
+      description: 취소 사유 구분
+    - name: canceled_at
+      description: 취소일
+    - name: coupon_discount_amount
+      description: 쿠폰 할인 금액
+    - name: instant_discount_amount
+      description: 즉시 할인 적용 금액
+    - name: margin_discount_amount
+      description: 마진 할인 금액
+    - name: margin_discount_type
+      description: 마진 할인 타입
+    - name: point_amount
+      description: 포인트 적용 금액
+    - name: is_immediate_confirm
+      description: 즉시 확인 여부
+    - name: partner_id
+      description: 파트너 ID
+    - name: partner_name
+      description: 파트너 이름
+    - name: payment_amount
+      description: 결제 금액
+    - name: product_id
+      description: 상품 ID
+    - name: product_time_offset
+      description: 상품 현지 시간과 한국과의 시간차
+    - name: product_timezone
+      description: 상품 현지 타임존
+    - name: product_title
+      description: 상품 타이틀
+    - name: product_subtitle
+      description: 상품 서브 타이틀
+    - name: product_type
+      description: 상품 구분
+    - name: reservation_no
+      description: 예약 NO
+    - name: merchant_uid
+      description: 입점사UID
+    - name: merchant_id
+      description: 입점사 ID
+    - name: reserved_at
+      description: 예약일
+    - name: sale_price
+      description: 판매 금액
+    - name: status
+      description: 상태
+    - name: total_refund_amount
+      description: 총 환불 금액
+    - name: total_sale_commission
+      description: 총 판매 수수료
+    - name: total_sale_commission_rate
+      description: 총 판매 수수료율
+    - name: total_supply_price
+      description: 총 공급 금액
+    - name: traveler_email
+      description: 여행자 이메일(개인정보 - null 처리)
+    - name: traveler_name
+      description: 여행자명(개인정보 - null 처리)
+    - name: traveler_phone_icc
+      description: 여행자 전화 국가코드(개인정보 - null 처리)
+    - name: traveler_phone_number
+      description: 여행자 전화번호(개인정보 - null 처리)
+    - name: traveler_phone_last_number
+      description: 여행자 마지막 전화번호(개인정보 - null 처리)
+    - name: extra_require_infos
+      description: 기타 필요 정보(개인정보 - null 처리)
+    - name: user_id
+      description: 유저 ID
+    - name: order_id
+      description: 주문 ID
+    - name: union_product_id
+      description: 통합 상품 ID
+    - name: sync_id
+      description: 연동ID
+    - name: trip_ended_at
+      description: 여행 종료일
+    - name: trip_started_at
+      description: 여행 시작일
+    - name: confirmed_at
+      description: 확인일
+    - name: accounted_at
+      description: 회계일(매출일)
+    - name: account_criteria_type
+      description: 회계(매출) 기준 구분
+    - name: finished_at
+      description: 여행 완료일
+    - name: settled_at
+      description: 정산 기준일
+    - name: settlement_criteria_type
+      description: 정산 기준 구분
+    - name: product_country_code
+      description: 상품 국가 코드
+    - name: product_image_url
+      description: 상품 이지미 URL
+    - name: product_no
+      description: 상품 NO
+    - name: product_category
+      description: 상품 카테고리
+    - name: system_provider
+      description: 버티컬
+    - name: is_pay_later
+      description: 나중결제
+    - name: entry_channel
+      description: 인입채널 TRAVELER|AGENCY|MRT_CALL
+    - name: partnership_code
+      description: 파트너 코드
+    - name: corp_partnership_code
+      description: 법인제휴 파트너쉽코드
+    - name: marketing_partnership_code
+      description: 마케팅 파트너쉽코드
+    - name: partnership_type
+      description: 제휴사 유형
+    - name: payment_limit_at
+      description: 결제 마감 기한
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: recent_request_canceled_at
+      description: 최근 취소요청 시간
+    - name: is_async_reserve
+      description: 비동기 예약 여부
+    - name: auto_cancel_limit_at
+      description: 자동취소 기한
+    - name: deactivated_at
+      description: 비노출 시작 시점
+    - name: sub_type
+      description: 서브 타입
+    - name: used
+      description: 사용 여부
+    - name: non_cancelable
+      description: 취소 불가 상품
+    - name: use_refund_calculator
+      description: 환불계산기 사용유무
+    - name: updated_by_type
+      description: 여행자/파트너/매니저 updated Id
+    - name: progress_confirm
+      description: 연동시 예약확정 전 중간 상태 필요여부
+    - name: type
+      description: 예약 타입
+    - name: version
+      description: 버전
+    - name: kst_trip_started_at
+      description: 여행 시작일시 KST
+    - name: kst_trip_ended_at
+      description: 여행 종료일시 KST

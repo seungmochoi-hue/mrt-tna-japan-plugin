@@ -1,0 +1,101 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: property_history
+    identifier: DW_MRT_STAYNET_PROPERTY_HISTORY
+    description: 호텔 이력. 마지막 적재일 2026-03-19. 주요 상태값 OFF_SALE/PREPARING/HOLD/ON_SALE/REVIEW
+      확인. 주요 타입값 HANIN_MINBAK 확인.
+    columns:
+    - name: rev
+      description: 리비전 번호
+    - name: revtype
+      description: 리비전 타입
+    - name: property_id
+      description: 숙소 ID
+    - name: gid
+      description: GID
+    - name: partner_id
+      description: 파트너 ID
+    - name: property_type
+      description: 숙소 타입
+    - name: property_name
+      description: 숙소명
+    - name: property_en_name
+      description: 영문 숙소명
+    - name: star_rating
+      description: 성급
+    - name: address
+      description: 주소
+    - name: address_detail
+      description: 상세 주소
+    - name: postal_code
+      description: 우편번호
+    - name: latitude
+      description: 위도
+    - name: longitude
+      description: 경도
+    - name: zone_id
+      description: 권역 ID
+    - name: check_in_start_time
+      description: 체크인 시작 시간
+    - name: check_in_end_time
+      description: 체크인 종료 시간
+    - name: check_out_start_time
+      description: 체크아웃 시작 시간
+    - name: check_out_end_time
+      description: 체크아웃 종료 시간
+    - name: emails
+      description: 이메일
+    - name: faxes
+      description: 팩스
+    - name: phones
+      description: 전화번호
+    - name: urls
+      description: URL
+    - name: descriptions
+      description: 설명
+    - name: attributes
+      description: 속성
+    - name: images
+      description: 이미지
+    - name: discountable
+      description: 할인 적용 여부
+    - name: pms_price_accept_type
+      description: PMS 요금 수용 타입
+    - name: property_status
+      description: 숙소 상태
+    - name: send_partner_mail
+      description: 파트너 메일 발송 여부
+    - name: confirm_type
+      description: 확정 타입
+    - name: confirm_wait_hour
+      description: 확정 대기 시간
+    - name: created_at
+      description: 생성일시
+    - name: currency_code
+      description: 통화 코드
+    - name: currency_apply_type
+      description: 통화 적용 타입
+    - name: fixed_currency_rate
+      description: 고정 환율
+    - name: child_available
+      description: 아동 투숙 가능 여부
+    - name: is_my_pack
+      description: 마이팩 여부
+    - name: use_traveler_korean_name
+      description: 여행자 한글명 사용 여부
+    - name: order_product_tax_type
+      description: 주문 상품 과세 타입
+    - name: optional_info
+      description: 부가 정보
+    - name: check_in_price_mode
+      description: 체크인 가격 모드
+    - name: sale_start_at
+      description: 판매 시작 일시
+    - name: hold_reason
+      description: 판매 보류 사유
+    - name: dw_load_dt
+      description: DW 적재 일시

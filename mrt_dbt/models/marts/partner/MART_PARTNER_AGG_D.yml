@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: MART_PARTNER_AGG_D
+    description: 파트너별 액티비티 통계 테이블입니다.
+    columns:
+    - name: PARTNER_ID
+      description: 파트너_아이디
+      data_type: STRING
+      data_tests:
+        - not_null
+        - unique
+    - name: RESVE_CNT
+      description: 예약_건수
+      data_type: INTEGER
+    - name: SALES_KRW_PRICE
+      description: 매출_KRW_금액
+      data_type: INTEGER
+    - name: USER_CNT
+      description: 유저_건수
+      data_type: INTEGER
+    - name: CURRENT_RESVE_CNT
+      description: 현재_예약_건수
+      data_type: INTEGER
+    - name: ONSALE_CNT
+      description: 판매_건수
+      data_type: INTEGER
+    - name: MAIN_ACTIVITY_CITY_CD
+      description: 메인_액티비티_도시_코드
+      data_type: STRING
+    - name: MAIN_ACTIVITY_COUNTRY_NM
+      description: 메인_액티비티_국가_코드
+      data_type: STRING
+    - name: MAIN_ACTIVITY_MRT_TYPE
+      description: 메인_액티비티_마이리얼트립_유형
+      data_type: STRING
+    - name: REVIEW_CNT
+      description: 리뷰_건수
+      data_type: INTEGER
+    - name: REVIEW_SCORE_AVG
+      description: 리뷰_점수_평균
+      data_type: FLOAT
+    - name: CONFIRM_RATE
+      description: 확정_비율
+      data_type: FLOAT
+    - name: DW_LOAD_DT
+      description: DW_적재_일시
+      data_type: TIMESTAMP

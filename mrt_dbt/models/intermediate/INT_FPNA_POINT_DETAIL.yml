@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: INT_FPNA_POINT_DETAIL
+    description: |
+      예약별 제외 포인트 금액 및 B2B 포인트 예약 식별.
+      POINT_OTHERS: FPNA_EXCEPTED_POINT_INFO에 정의된 특정 template의 포인트 사용 금액을 예약 단위로 합산.
+      B2B_POINT_RSV: B2B 포인트(point_category LIKE '%B2B%')를 사용한 예약 식별.
+      두 결과를 FULL OUTER JOIN으로 통합.
+      Grain: RESVE_ID (예약당 1행).
+      주의: Package 모델은 별도 B2B 포인트 로직(MART_PACKAGE_OPTION_SALE_D 기반)을 사용하므로 IS_B2B_POINT_RSV를 참조하지 않는다.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_ID
+          config:
+            severity: warn
+    columns:
+      - name: RESVE_ID
+        description: "예약 ID"
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: POINT_SUM
+        description: |
+          비용 제외 대상 포인트 합산 금액.
+          FPNA_EXCEPTED_POINT_INFO의 template_id에 해당하는 포인트의 action_amount 합계 * -1.
+          해당 건이 없으면 NULL.
+      - name: IS_B2B_POINT_RSV
+        description: |
+          B2B 포인트 사용 예약 여부.
+          TRUE: B2B 카테고리 포인트를 사용하고 point_price가 0이 아닌 예약.
+          FALSE: 해당하지 않는 예약.
+        data_type: BOOLEAN

@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: MART_PROMOTION_AGG_D
+    description: "프로모션 집계 데이터"
+    config:
+      tags: ["PROMOTION", "MART"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: campaign_id
+        description: "캠페인 ID"
+        data_type: STRING
+      - name: pv
+        description: "페이지뷰 수"
+        data_type: INTEGER
+      - name: uv
+        description: "고유 방문자 수"
+        data_type: INTEGER
+      - name: pv_web
+        description: "웹 페이지뷰 수"
+        data_type: INTEGER
+      - name: uv_web
+        description: "웹 고유 방문자 수"
+        data_type: INTEGER
+      - name: pv_ios_mweb
+        description: "iOS 모바일 웹 페이지뷰 수"
+        data_type: INTEGER
+      - name: uv_ios_mweb
+        description: "iOS 모바일 웹 고유 방문자 수"
+        data_type: INTEGER
+      - name: pv_aos_mweb
+        description: "Android 모바일 웹 페이지뷰 수"
+        data_type: INTEGER
+      - name: uv_aos_mweb
+        description: "Android 모바일 웹 고유 방문자 수"
+        data_type: INTEGER
+      - name: pv_ios
+        description: "iOS 페이지뷰 수"
+        data_type: INTEGER
+      - name: uv_ios
+        description: "iOS 고유 방문자 수"
+        data_type: INTEGER
+      - name: pv_aos
+        description: "Android 페이지뷰 수"
+        data_type: INTEGER
+      - name: uv_aos
+        description: "Android 고유 방문자 수"
+        data_type: INTEGER
+

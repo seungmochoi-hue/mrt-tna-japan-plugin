@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: temp_fpna_team_mapping
+    config:
+      meta:
+        owner: "FPNA"
+    description: "FPNA 팀 매핑 빅쿼리 예약 쿼리에서 4시간 단위로 업데이트"
+    columns:
+      - name: guide_id
+        description: "가이드 ID"
+      - name: guide_name
+        description: "가이드 이름"
+      - name: team
+        description: "팀"
+      - name: biz_type
+        description: "BIZ_TYPE"
+      - name: adjustment_type
+        description: "조정 타입"
+      - name: remark
+        description: "비고"
+      - name: created_date
+        description: "생성 날짜"
+      - name: updated_date
+        description: "업데이트 날짜"
+
+

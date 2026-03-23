@@ -1,0 +1,40 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: cutoff
+    identifier: DW_MRT_STAYNET_CUTOFF
+    description: 호텔 예약 cutoff. 마지막 적재일 2026-03-18. 주요 타입값 SELECTED 확인.
+    columns:
+    - name: cutoff_id
+      description: cutoff ID
+    - name: cutoff_days
+      description: cutoff 일수
+    - name: start_time
+      description: 시작 시간
+    - name: apply_type
+      description: 적용 타입
+    - name: always_applied
+      description: 상시 적용 여부
+    - name: apply_start_datetime
+      description: 적용 시작 일시
+    - name: apply_end_datetime
+      description: 적용 종료 일시
+    - name: property_id
+      description: 숙소 ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

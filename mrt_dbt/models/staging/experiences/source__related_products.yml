@@ -1,0 +1,44 @@
+version: 2
+sources:
+- name: experiences
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: related_products
+    identifier: DW_MRT_EXPERIENCES_RELATED_PRODUCTS
+    description: 연관상품. 마지막 적재일 2026-03-18. 주요 타입값 EXP 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: related_product_bundle_id
+      description: 연관 상품 번들 ID
+    - name: gid
+      description: GID
+    - name: summary
+      description: Summary
+    - name: enabled
+      description: Enabled
+    - name: exposed_start_at
+      description: Exposed start at
+    - name: exposed_end_at
+      description: Exposed end at
+    - name: position
+      description: Position
+    - name: representative
+      description: Representative
+    - name: system_provider
+      description: System provider
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: dw_load_dt
+      description: DW 적재 일시

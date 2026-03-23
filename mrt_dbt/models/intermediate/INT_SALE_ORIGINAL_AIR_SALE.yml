@@ -1,0 +1,244 @@
+version: 2
+
+models:
+  - name: INT_SALE_ORIGINAL_AIR_SALE
+    description: |
+      항공(Air) 판매 원천 데이터를 통합 판매 스키마로 변환한 중간 모델.
+      MART_AIR_SALE_D에서 재발행(REISUE_FLAG='R'), B2B컨소시엄/PKG 채널,
+      패키지 묶음 예약(PACKAGE_RESVE_ID IS NOT NULL, SALE_AGG_TYPE='PACKAGE')을 제외.
+      B2C 채널 중 오프라인 예약(SALE_FORM_CD='B2C', REISUE_FLAG='N', ON_OFF_RESVE_FLAG='OFF')도 서브쿼리로 추가 제외.
+      가격 집계는 TK110 매칭 완료건(TK110_MATCH_FLAG='Y')만 사용한 AIR_SALE_PRICE CTE를 JOIN.
+      국내선 왕복편의 출발일/귀국일은 SUPER_PNR_NO 비교로 보정.
+      도메인 고정값: DOMAIN_NM='AIR', PRODUCT_ID='100000001'.
+      Grain: (BASIS_DATE, RESVE_ID, KIND). SELECT DISTINCT로 중복 제거.
+      Upstream: MART_AIR_SALE_D, TB_AIR_RV100(source), union_product_v3(source), dim_standard_category(source).
+      Downstream: 통합 판매 마트 계열 모델.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BASIS_DATE
+            - RESVE_ID
+            - KIND
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: "기준일자 (MART_AIR_SALE_D.BASIS_DATE)."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: |
+          예약 고유 식별자.
+          PNR_NO 앞에 'f' prefix를 붙여 항공 도메인을 식별: CONCAT('f', PNR_NO).
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ORDER_ID
+        description: |
+          주문 식별자.
+          RESVE_ID와 동일값: CONCAT('f', PNR_NO).
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: USER_ID
+        description: "사용자 ID (MART_AIR_SALE_D.USER_ID)."
+        data_type: STRING
+      - name: KIND
+        description: "예약 구분 코드 (MART_AIR_SALE_D.KIND)."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RECENT_STATUS
+        description: "최신 예약 상태 (MART_AIR_SALE_D.RECENT_STATUS)."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST). MART_AIR_SALE_D.CANCEL_KST_DT."
+        data_type: TIMESTAMP
+      - name: DOMAIN_NM
+        description: "도메인명 고정값 ('AIR')."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID 고정값 ('100000001')."
+        data_type: STRING
+      - name: GID
+        description: |
+          상품 그룹 ID.
+          시리즈 발권의 경우 MART_AIR_SALE_D.GID를, 그 외엔 '1000006'을 사용.
+        data_type: STRING
+      - name: GPID
+        description: "상품 그룹 부모 ID. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: CONFIRM_KST_DT
+        description: "예약 확정 일시 (KST). ISSUE_KST_DATE를 TIMESTAMP로 캐스팅."
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: |
+          여행 시작일 (KST).
+          국내선(DOMESTIC_INTERNATIONAL_DIV_CD='D') 왕편(PNR_NO > SUPER_PNR_NO)인 경우
+          TB_AIR_RV100.dep_dtm을 사용하여 왕복편 출발일로 통일.
+          그 외에는 MART_AIR_SALE_D.DEPART_KST_DT.
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: |
+          여행 종료일 (KST).
+          국내선 편도(PNR_NO < SUPER_PNR_NO)는 TB_AIR_RV100.dep_dtm 사용.
+          국내선 왕편(PNR_NO > SUPER_PNR_NO)은 DEPART_KST_DT 사용.
+          국제선 등은 RETURN_KST_DT 사용.
+          국내선 복편 출발일을 왕복편 모두의 귀국일로 지정하는 보정 로직.
+        data_type: DATE
+      - name: RESVE_TYPE
+        description: "예약 유형 고정값 ('flight')."
+        data_type: STRING
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드 (MART_AIR_SALE_D.SALE_FORM_CD)."
+        data_type: STRING
+      - name: SALE_FORM_TYPE
+        description: "판매 형태 유형 (MART_AIR_SALE_D.SALE_FORM_TYPE)."
+        data_type: STRING
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형 (MART_AIR_SALE_D.SALE_AGG_TYPE)."
+        data_type: STRING
+      - name: BRANCH_CD
+        description: "지점 코드 (MART_AIR_SALE_D.BRANCH_CD)."
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID (MART_AIR_SALE_D.BPLC_CD)."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: |
+          표준 카테고리 1단계 코드.
+          dim_standard_category.LV_1_CD 기준. SALE_AGG_TYPE='PACKAGE' 집계건은 WHERE 절에서 제외.
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: |
+          표준 카테고리 2단계 코드.
+          dim_standard_category.LV_2_CD 기준. SALE_AGG_TYPE='PACKAGE' 집계건은 WHERE 절에서 제외.
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: |
+          표준 카테고리 3단계 코드.
+          dim_standard_category.LV_3_CD 기준. SALE_AGG_TYPE='PACKAGE' 집계건은 WHERE 절에서 제외.
+        data_type: STRING
+      - name: PAYMENT_LATER_FLAG
+        description: "후불 결제 여부 플래그. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PAYMENT_LIMIT_KST_DT
+        description: "결제 기한 일시 (KST). Air 미사용 (NULL 고정)."
+        data_type: TIMESTAMP
+      - name: PARTNERSHIP_CD
+        description: "제휴 코드. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드 (MART_AIR_SALE_D.MARKETING_PARTNERSHIP_CD)."
+        data_type: STRING
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 ID (MART_AIR_SALE_D.MARKETING_LINK_ID)."
+        data_type: STRING
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 ID. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "공급사 코드 (MART_AIR_SALE_D.AIRLINE_CD)."
+        data_type: STRING
+      - name: CITY_CD
+        description: "도착 공항 코드 (MART_AIR_SALE_D.ARRIVE_AIRPORT_CD)."
+        data_type: STRING
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: "대표 도시 여부 플래그. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PG_NM
+        description: "PG사명. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 및 결제 일시 (KST). MART_AIR_SALE_D.RESVE_KST_DT."
+        data_type: TIMESTAMP
+      - name: SALES_PRICE
+        description: |
+          판매 원가 (KRW).
+          계산식: AIR_SALE_PRICE.PAID_PRICE + AIR_SALE_PRICE.DISCOUNT_PRICE.
+          TK110 매칭 완료건(TK110_MATCH_FLAG='Y') 기준.
+        data_type: FLOAT64
+      - name: SALES_PRICE_CUR_TYPE
+        description: "판매 원가 통화 유형 고정값 ('KRW')."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: |
+          판매 금액 (KRW).
+          계산식: AIR_SALE_PRICE.PAID_PRICE + AIR_SALE_PRICE.DISCOUNT_PRICE. SALES_PRICE와 동일값.
+        data_type: FLOAT64
+      - name: PAID_PRICE
+        description: |
+          실결제 금액 (KRW).
+          AIR_SALE_PRICE CTE의 SUM(SALE_TOTAL_PRICE). TK110 매칭 완료건만 집계.
+        data_type: FLOAT64
+      - name: PAID_PRICE_CUR_TYPE
+        description: "실결제 금액 통화 유형 고정값 ('KRW')."
+        data_type: STRING
+      - name: PAID_KRW_PRICE
+        description: "실결제 금액 (KRW). PAID_PRICE와 동일값."
+        data_type: FLOAT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인 금액. Air 미사용 (0 고정)."
+        data_type: INT64
+      - name: POINT_PRICE
+        description: "포인트 사용 금액 (MART_AIR_SALE_D.POINT_PRICE를 INT로 캐스팅)."
+        data_type: INT64
+      - name: DISCOUNT_PRICE
+        description: |
+          할인 금액 (KRW).
+          AIR_SALE_PRICE CTE에서 계산: SUM(DISCOUNT_BEFORE_NET_PRICE) - SUM(DISCOUNT_AFTER_NET_PRICE).
+        data_type: FLOAT64
+      - name: COMMISSION_PRICE
+        description: "커미션 금액. Air 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: COMMISSION_RATE
+        description: "커미션 율. Air 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 커미션 금액. Air 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 커미션 율. Air 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형. Air 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: |
+          소아 예약 인원수.
+          AIR_SALE_PRICE CTE의 SUM(CHILD_RESVE_TICKET_CNT). TK110 매칭 완료건만 집계.
+        data_type: INT64
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: |
+          성인 예약 인원수.
+          AIR_SALE_PRICE CTE의 SUM(ADULT_RESVE_TICKET_CNT). TK110 매칭 완료건만 집계.
+        data_type: INT64
+      - name: RESVE_PRSNL_CNT
+        description: "총 예약 인원수. CHILD_RESVE_PRSNL_CNT + ADULT_RESVE_PRSNL_CNT."
+        data_type: INT64
+      - name: PLATFORM
+        description: "결제 플랫폼 (MART_AIR_SALE_D.PAYMENT_PLATFORM)."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "생성 일시 (KST). MART_AIR_SALE_D.RESVE_KST_DT."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "최종 수정 일시 (KST). MART_AIR_SALE_D.RESVE_KST_DT."
+        data_type: TIMESTAMP
+      - name: PACKAGE_PNR_NO
+        description: "패키지 PNR 번호. Air 미사용 (NULL 고정)."
+        data_type: INT64

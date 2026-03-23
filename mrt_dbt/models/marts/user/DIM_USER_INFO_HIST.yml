@@ -1,0 +1,92 @@
+version: 2
+
+models:
+  - name: DIM_USER_INFO_HIST
+    description: 유저 상태 이력 및 가입 정보 스냅샷
+    config:
+      tags: ["DIM", "USER"]
+    columns:
+      - name: BASIS_DT
+        description: 기준 날짜
+        data_type: DATE
+
+      - name: USER_ID
+        description: 유저 아이디
+        data_type: STRING
+
+      - name: JOIN_KST_DT
+        description: 가입 일시 (KST)
+        data_type: TIMESTAMP
+
+      - name: JOIN_PLATFORM
+        description: 가입 플랫폼
+        data_type: STRING
+
+      - name: JOIN_OAUTH_TYPE
+        description: 가입 인증 플랫폼
+        data_type: STRING
+
+      - name: SMS_RECV_AGREE
+        description: SMS 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: PUSH_RECV_AGREE
+        description: PUSH 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: MAIL_RECV_AGREE
+        description: 메일 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: POSITION_ARGREEMENT_FLAG
+        description: 위치 정보 제공 동의 여부
+        data_type: BOOLEAN
+
+      - name: PHONE_VALID_FLAG
+        description: 휴대폰 인증 여부
+        data_type: BOOLEAN
+
+      - name: DORMANT_FLAG
+        description: 휴면 여부
+        data_type: BOOLEAN
+
+      - name: DORMANT_KST_DT
+        description: 휴면 전환 일자 (KST)
+        data_type: DATE
+
+      - name: LEAVE_FLAG
+        description: 탈퇴 여부
+        data_type: BOOLEAN
+
+      - name: LEAVE_KST_DT
+        description: 탈퇴 일시 (KST)
+        data_type: TIMESTAMP
+
+      - name: MRT_STAFF_FLAG
+        description: 마이리얼트립 직원 여부
+        data_type: BOOLEAN
+
+      - name: APP_INSTALL_FLAG
+        description: 앱 설치 여부
+        data_type: BOOLEAN
+
+      - name: GUIDE_FLAG
+        description: 파트너(가이드) 여부
+        data_type: BOOLEAN
+
+      - name: STATUS
+        description: 유저 상태 코드
+        data_type: STRING
+
+      - name: UPDATE_KST_DT
+        description: 데이터 변경 일시 (KST)
+        data_type: TIMESTAMP
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: DATETIME
+
+      - name: TEST_FLAG
+        description: 테스트 계정 여부
+        data_type: BOOLEAN
+

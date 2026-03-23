@@ -1,0 +1,381 @@
+version: 2
+
+models:
+  - name: MART_USER_D
+    description: |
+      사용자 종합 마트. 기본 정보, 로그인 이력, 쿠폰 보유, 리뷰, 구매/여행 이력을 통합한 일별 스냅샷.
+      EXPT_* 컬럼은 여행 종료일 >= 기준일인 미래 예정 여행 정보.
+      BigQuery 물리 최적화: cluster(USER_ID)
+    config:
+      tags: ["MART", "USER"]
+    columns:
+      - name: BASIS_DT
+        description: "기준 날짜"
+        data_type: DATE
+      - name: USER_ID
+        description: "마리트 유저 아이디"
+        data_type: STRING
+      - name: JOIN_KST_DT
+        description: "가입일시 (KST)"
+        data_type: TIMESTAMP
+      - name: JOIN_PLATFORM
+        description: "가입 플랫폼"
+        data_type: STRING
+      - name: APP_INSTALL_FLAG
+        description: "앱 설치 여부"
+        data_type: BOOLEAN
+      - name: JOIN_OAUTH_TYPE
+        description: "가입 인증 플랫폼"
+        data_type: STRING
+      - name: LAST_LOGIN_PLATFORM
+        description: "마지막 로그인 플랫폼"
+        data_type: STRING
+      - name: LAST_LOGIN_KST_DT
+        description: "마지막 로그인 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: DORMANT_FLAG
+        description: "휴면 여부"
+        data_type: BOOLEAN
+      - name: DORMANT_KST_DT
+        description: "휴면 전환 일자 (KST)"
+        data_type: DATE
+      - name: LEAVE_FLAG
+        description: "탈퇴 여부"
+        data_type: BOOLEAN
+      - name: LEAVE_KST_DT
+        description: "탈퇴 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: SMS_RECV_AGREE
+        description: "SMS 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: PUSH_RECV_AGREE
+        description: "PUSH 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: MAIL_RECV_AGREE
+        description: "메일 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: POSITION_ARGREEMENT_FLAG
+        description: "위치 정보 제공 동의 여부"
+        data_type: BOOLEAN
+      - name: PHONE_VALID_FLAG
+        description: "휴대폰 인증 여부"
+        data_type: BOOLEAN
+      - name: REP_AGE
+        description: "대표 출생년도. 항공 예약 승객 정보 기반 추정값"
+        data_type: STRING
+      - name: USER_GENDER_NM
+        description: "대표 성별(M/F). 항공 예약 승객 정보 기반"
+        data_type: STRING
+      - name: COMPANION_AGE_GENDER_GROUP
+        description: "동반 탑승자 출생년도-성별 조합. 항공 예약 기반 (예: 1990-M,1985-F)"
+        data_type: STRING
+      - name: GUIDE_FLAG
+        description: "파트너(가이드) 여부"
+        data_type: BOOLEAN
+      - name: MRT_STAFF_FLAG
+        description: "마이리얼트립 직원 여부"
+        data_type: BOOLEAN
+      - name: TEST_FLAG
+        description: "테스트 계정 여부"
+        data_type: BOOLEAN
+      - name: INVITE_FRND_CNT
+        description: "초대한 친구 수"
+        data_type: INTEGER
+      - name: REVIEW_CNT
+        description: "작성한 리뷰 수"
+        data_type: INTEGER
+      - name: OWN_COUPON_CNT
+        description: "사용 가능 쿠폰수. 미사용 + 유효기간 내 쿠폰만 집계"
+        data_type: INTEGER
+      - name: OWN_COUPON_NO
+        description: "보유한 쿠폰 번호"
+        data_type: STRING
+      - name: TOTAL_ORDER_BUY_CNT
+        description: "총 주문 건수. COUNT(DISTINCT ORDER_ID)"
+        data_type: INTEGER
+      - name: TOTAL_BUY_CNT
+        description: "총 예약 건수. COUNT(DISTINCT RESVE_ID)"
+        data_type: INTEGER
+      - name: TOTAL_BUY_PRICE
+        description: "총 구매 금액"
+        data_type: FLOAT
+      - name: FIRST_BUY_KST_DT
+        description: "첫 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: FIRST_BUY_TYPE
+        description: "첫 구매 유형"
+        data_type: STRING
+      - name: FIRST_BUY_ORDER_ID
+        description: "첫 구매 주문 아이디"
+        data_type: STRING
+      - name: FIRST_BUY_RESVE_ID
+        description: "첫 구매 예약 아이디"
+        data_type: STRING
+      - name: LAST_BUY_KST_DT
+        description: "마지막 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: LAST_BUY_TYPE
+        description: "마지막 구매 유형"
+        data_type: STRING
+      - name: LAST_BUY_ORDER_ID
+        description: "마지막 구매 주문 아이디"
+        data_type: STRING
+      - name: LAST_BUY_RESVE_ID
+        description: "마지막 구매 예약 아이디"
+        data_type: STRING
+      - name: RECENT_TRAVEL_ORDER_ID
+        description: "최근 여행 주문 아이디"
+        data_type: STRING
+      - name: RECENT_TRAVEL_RESVE_ID
+        description: "최근 여행 예약 아이디"
+        data_type: STRING
+      - name: RECENT_TRAVEL_PRODUCT_ID
+        description: "최근 여행 상품 아이디"
+        data_type: STRING
+      - name: RECENT_TRAVEL_MRT_TYPE
+        description: "최근 여행 유형"
+        data_type: STRING
+      - name: RECENT_TRAVEL_DEPART_KST_DT
+        description: "최근 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: RECENT_TRAVEL_ARRIVE_KST_DT
+        description: "최근 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: RECENT_TRAVEL_RESVE_PURPOSE
+        description: "최근 여행 예약 목적"
+        data_type: STRING
+      - name: RECENT_TRAVEL_CITY
+        description: "최근 여행 도시"
+        data_type: STRING
+      - name: RECENT_TRAVEL_COUNTRY
+        description: "최근 여행 국가"
+        data_type: STRING
+      - name: EXPT_TRAVEL_ORDER_ID
+        description: "예정 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_TRAVEL_RESVE_ID
+        description: "예정 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_TRAVEL_PRODUCT_ID
+        description: "예정 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_TRAVEL_MRT_TYPE
+        description: "예정 여행 유형"
+        data_type: STRING
+      - name: EXPT_TRAVEL_DEPART_KST_DT
+        description: "예정 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_TRAVEL_ARRIVE_KST_DT
+        description: "예정 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_TRAVEL_RESVE_PURPOSE
+        description: "예정 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_TRAVEL_CITY
+        description: "예정 여행 도시"
+        data_type: STRING
+      - name: EXPT_TRAVEL_COUNTRY
+        description: "예정 여행 국가"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_ORDER_ID
+        description: "항공 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_RESVE_ID
+        description: "항공 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_PRODUCT_ID
+        description: "항공 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_MRT_TYPE
+        description: "항공 여행 유형"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_DEPART_KST_DATE
+        description: "항공 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_FLIGHT_TRAVEL_ARRIVE_KST_DT
+        description: "항공 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_FLIGHT_TRAVEL_RESVE_PURPOSE
+        description: "항공 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_CITY
+        description: "항공 여행 도시"
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_COUNTRY
+        description: "항공 여행 국가"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_ORDER_ID
+        description: "숙박 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_RESVE_ID
+        description: "숙박 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_PRODUCT_ID
+        description: "숙박 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_MRT_TYPE
+        description: "숙박 여행 유형"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_DEPART_KST_DATE
+        description: "숙박 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_STAY_TRAVEL_ARRIVE_KST_DT
+        description: "숙박 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_STAY_TRAVEL_RESVE_PURPOSE
+        description: "숙박 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_CITY
+        description: "숙박 여행 도시"
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_COUNTRY
+        description: "숙박 여행 국가"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_ORDER_ID
+        description: "교통 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_RESVE_ID
+        description: "교통 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_PRODUCT_ID
+        description: "교통 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_MRT_TYPE
+        description: "교통 여행 유형"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_DEPART_KST_DATE
+        description: "교통 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_RIDE_TRAVEL_ARRIVE_KST_DT
+        description: "교통 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_RIDE_TRAVEL_RESVE_PURPOSE
+        description: "교통 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_CITY
+        description: "교통 여행 도시"
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_COUNTRY
+        description: "교통 여행 국가"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_ORDER_ID
+        description: "TNA 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_RESVE_ID
+        description: "TNA 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_PRODUCT_ID
+        description: "TNA 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_MRT_TYPE
+        description: "TNA 여행 유형"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_DEPART_KST_DATE
+        description: "TNA 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_TNA_TRAVEL_ARRIVE_KST_DT
+        description: "TNA 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_TNA_TRAVEL_RESVE_PURPOSE
+        description: "TNA 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_CITY
+        description: "TNA 여행 도시"
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_COUNTRY
+        description: "TNA 여행 국가"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_ORDER_ID
+        description: "기타 여행 주문 아이디"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_RESVE_ID
+        description: "기타 여행 예약 아이디"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_PRODUCT_ID
+        description: "기타 여행 상품 아이디"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_MRT_TYPE
+        description: "기타 여행 유형"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_DEPART_KST_DATE
+        description: "기타 여행 출발 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_ETC_TRAVEL_ARRIVE_KST_DT
+        description: "기타 여행 도착 일시 (KST)"
+        data_type: DATE
+      - name: EXPT_ETC_TRAVEL_RESVE_PURPOSE
+        description: "기타 여행 예약 목적"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_CITY
+        description: "기타 여행 도시"
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_COUNTRY
+        description: "기타 여행 국가"
+        data_type: STRING
+      - name: FLIGHT_ORDER_BUY_CNT
+        description: "항공 구매 건수"
+        data_type: INTEGER
+      - name: FLIGHT_BUY_CNT
+        description: "항공 구매 수"
+        data_type: INTEGER
+      - name: FLIGHT_BUY_PRICE
+        description: "항공 구매 금액"
+        data_type: FLOAT
+      - name: LAST_FLIGHT_BUY_KST_DT
+        description: "마지막 항공 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: STAY_ORDER_BUY_CNT
+        description: "숙박 구매 건수"
+        data_type: INTEGER
+      - name: STAY_BUY_CNT
+        description: "숙박 구매 수"
+        data_type: INTEGER
+      - name: STAY_BUY_PRICE
+        description: "숙박 구매 금액"
+        data_type: FLOAT
+      - name: LAST_STAY_BUY_KST_DT
+        description: "마지막 숙박 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: RIDE_ORDER_BUY_CNT
+        description: "교통 구매 건수"
+        data_type: INTEGER
+      - name: RIDE_BUY_CNT
+        description: "교통 구매 수"
+        data_type: INTEGER
+      - name: RIDE_BUY_PRICE
+        description: "교통 구매 금액"
+        data_type: FLOAT
+      - name: LAST_RIDE_BUY_KST_DT
+        description: "마지막 교통 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: TNA_ORDER_BUY_CNT
+        description: "TNA 구매 건수"
+        data_type: INTEGER
+      - name: TNA_BUY_CNT
+        description: "TNA 구매 수"
+        data_type: INTEGER
+      - name: TNA_BUY_PRICE
+        description: "TNA 구매 금액"
+        data_type: FLOAT
+      - name: LAST_TNA_BUY_KST_DT
+        description: "마지막 TNA 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: ETC_ORDER_BUY_CNT
+        description: "기타 구매 건수"
+        data_type: INTEGER
+      - name: ETC_BUY_CNT
+        description: "기타 구매 수"
+        data_type: INTEGER
+      - name: ETC_BUY_PRICE
+        description: "기타 구매 금액"
+        data_type: FLOAT
+      - name: LAST_ETC_BUY_KST_DT
+        description: "마지막 기타 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "데이터 변경 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

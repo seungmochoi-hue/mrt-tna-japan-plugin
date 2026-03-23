@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: FPNA_AIR_DOMESTIC_VI
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [항공 - 항공사 VI (국내선)](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=2049775466#gid=2049775466)
+
+    columns:
+      - name: TRAVEL_DATE
+        description: "여행 날짜"
+      - name: STOCK_AIRLINE_CD
+        description: "항공사 코드"
+      - name: ACTUAL_VI_RATE
+        description: "실제 V/I 비율"
+      - name: MRT_PERFORMANCE
+        description: "MRT 성과"
+      - name: PERFORMANCE_VI_RATE
+        description: "성과 V/I 비율"
+      - name: ACTUAL_VI_AMOUNT_WO_VAT
+        description: "실제 V/I 금액 (VAT 제외)"
+      - name: UPDATE_DATE
+        description: "업데이트 날짜"
+      - name: REMARK
+        description: "비고"
+

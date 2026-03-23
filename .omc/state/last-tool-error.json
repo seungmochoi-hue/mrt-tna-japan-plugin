@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd \\\"/c/Users/User/Downloads/mrt-dp-dbt-airflow-main (1)/mrt-dp-dbt-airflow-main\\\" && git checkout main 2>&1 && git pull origin main 2>&1\",\"description\":\"Switch to main branch and pull lat...",
+  "error": "Exit code 128\nfatal: not a git repository (or any of the parent directories): .git",
+  "timestamp": "2026-03-23T11:32:30.348Z",
+  "retry_count": 1
+}

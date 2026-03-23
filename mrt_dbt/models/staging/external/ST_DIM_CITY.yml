@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: ST_DIM_CITY
+    description: >
+      도시 매핑 [시트1](https://docs.google.com/spreadsheets/d/1Hlq8RDoU6Mqiji6-jzWzBVpBdpdCqHuFFNtHZvkIRos/edit?gid=0#gid=0)
+    columns:
+      - name: code
+        description: "도시 코드"
+      - name: city
+        description: "도시 이름"
+      - name: country
+        description: "국가 이름"
+      - name: region
+        description: "지역 이름"
+      - name: source
+        description: "사용처"
+

@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "fpna_coupon_info"
+        identifier: "fpna_coupon_info"
+        description: "쿠폰 손익 관리 시트"
+        columns:
+          - name: "type"
+            description: "FPNA 쿠폰 운영 타입"
+          - name: "coupon_id"
+            description: "쿠폰 ID"
+          - name: "coupon_title"
+            description: "쿠폰 제목"
+          - name: "coupon_value"
+            description: "쿠폰 금액"
+          - name: "mrt_value"
+            description: "MRT 금액"
+          - name: "partner_value"
+            description: "파트너 금액"
+          - name: "coupon_rate"
+            description: "쿠폰 비율"
+          - name: "mrt_rate"
+            description: "MRT 비율"
+          - name: "partner_rate"
+            description: "파트너 비율"

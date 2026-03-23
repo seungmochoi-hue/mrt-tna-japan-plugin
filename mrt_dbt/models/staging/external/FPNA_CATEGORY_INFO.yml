@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: FPNA_CATEGORY_INFO
+    description: "FPNA 카테고리 매핑 정보(표준 카테고리 레벨과 FPNA 카테고리 매핑)"
+    config:
+      meta:
+        owner: "FPNA"
+    columns:
+      - name: VERTICAL_NM
+        description: "버티컬 이름"
+        data_type: STRING
+      - name: LV_1_CD
+        description: "표준 카테고리 LV1 코드"
+        data_type: STRING
+      - name: LV_2_CD
+        description: "표준 카테고리 LV2 코드"
+        data_type: STRING
+      - name: LV_3_CD
+        description: "표준 카테고리 LV3 코드"
+        data_type: STRING
+      - name: LV_3_NM
+        description: "표준 카테고리 LV3 이름"
+        data_type: STRING
+      - name: LV_3_INFO
+        description: "표준 카테고리 LV3 설명"
+        data_type: STRING
+      - name: FPNA_CATEGORY
+        description: "FPNA 카테고리 코드"
+        data_type: STRING
+      - name: FPNA_CATEGORY_NM
+        description: "FPNA 카테고리 이름"
+        data_type: STRING
+      - name: REMARK
+        description: "비고"
+        data_type: STRING
+

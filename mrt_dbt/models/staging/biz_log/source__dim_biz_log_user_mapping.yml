@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: "log"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "dim_biz_log_user_mapping"
+        identifier: "DIM_BIZ_LOG_USER_MAPPING"
+        description: "biz log 사용자 매핑"
+        columns:
+          - name: "basis_dt"
+            description: "Basis Date"
+          - name: "pid"
+            description: "Pid"
+          - name: "user_id"
+            description: "사용자 ID"
+          - name: "min_event_timestamp_kst"
+            description: "Min Event Timestamp Kst"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

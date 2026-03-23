@@ -1,0 +1,53 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mypack_package_reservation
+    identifier: DW_MRT_PACKAGE_SOLUTION_MYPACK_PACKAGE_RESERVATION
+    description: 마이팩 예약. 마지막 적재일 2026-03-19. 주요 상태값 CANCEL/CONFIRM 확인. 주요 타입값 DEFAULT/SURCHARGE
+      확인.
+    columns:
+    - name: id
+      description: ID
+    - name: package_order_id
+      description: 패키지 주문 ID
+    - name: reserve_comment
+      description: Reserve comment
+    - name: mrt_reservation_no
+      description: MRT 예약 no
+    - name: origin_mrt_reservation_no
+      description: Origin MRT 예약 no
+    - name: reservation_status
+      description: 예약 상태
+    - name: reserve_datetime
+      description: Reserve 일시
+    - name: cancel_datetime
+      description: Cancel 일시
+    - name: trip_start_date
+      description: Trip 시작 일자
+    - name: trip_end_date
+      description: Trip 종료 일자
+    - name: sale_price
+      description: Sale 금액
+    - name: slack_thread_id
+      description: Slack thread ID
+    - name: insurance_flag
+      description: Insurance flag
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: reservation_type
+      description: 예약 타입
+    - name: dw_load_dt
+      description: DW 적재 일시

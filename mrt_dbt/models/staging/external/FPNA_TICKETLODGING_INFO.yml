@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: FPNA_TICKETLODGING_INFO
+    description: "티켓/숙박권 프로모션 정산/수수료(테이크레이트) 관리 정보"
+    config:
+      meta:
+        owner: "FPNA"
+    columns:
+      - name: PROMOTION_NO
+        description: "프로모션 번호"
+        data_type: STRING
+      - name: ACCOUNT_NAME
+        description: "계정(어카운트) 이름"
+        data_type: STRING
+      - name: OSP_ID
+        description: "OSP ID"
+        data_type: STRING
+      - name: OSP_NM
+        description: "OSP 이름"
+        data_type: STRING
+      - name: GID
+        description: "상품 GID"
+        data_type: STRING
+      - name: SETTLE_TYPE
+        description: "정산 타입"
+        data_type: STRING
+      - name: MRT_TAKE_RATE
+        description: "MRT take rate"
+        data_type: FLOAT64
+      - name: OPEN_DATE
+        description: "오픈 일자"
+        data_type: DATE
+      - name: CLOSE_DATE
+        description: "종료 일자"
+        data_type: DATE
+      - name: ACCOUNT_TYPE
+        description: "계정 타입"
+        data_type: STRING
+      - name: PROMOTION_TYPE
+        description: "프로모션 타입"
+        data_type: STRING
+      - name: STATUS
+        description: "상태"
+        data_type: STRING
+

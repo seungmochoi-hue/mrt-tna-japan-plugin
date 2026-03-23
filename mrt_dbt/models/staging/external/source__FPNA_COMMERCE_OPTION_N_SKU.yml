@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_COMMERCE_OPTION_N_SKU"
+        identifier: "FPNA_COMMERCE_OPTION_N_SKU"
+        description: "FPNA 재고수불 option and sku 정보 (스프레드시트관리)"
+        columns:
+          - name: "PRODUCT_ID"
+            description: "상품 ID"
+          - name: "PRODUCT_TITLE"
+            description: "상품 제목"
+          - name: "OPTION_ID"
+            description: "옵션 ID"
+          - name: "OPTION_TITLE"
+            description: "옵션 제목"
+          - name: "SKU_ID_1"
+            description: "SKU ID 1"
+          - name: "SKU_ID_2"
+            description: "SKU ID 2"
+          - name: "SKU_ID_3"
+            description: "SKU ID 3"
+          - name: "SKU_ID_4"
+            description: "SKU ID 4"
+          - name: "status"
+            description: "상태"

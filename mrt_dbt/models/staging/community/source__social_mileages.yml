@@ -1,0 +1,28 @@
+version: 2
+sources:
+- name: community_social
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: social_mileages
+    identifier: DW_MRT_COMMUNITY_SOCIAL_SOCIAL_MILEAGES
+    description: 소셜 마일리지.
+    columns:
+    - name: id
+      description: ID
+    - name: social_avatars_id
+      description: 소셜 avatars ID
+    - name: mileage
+      description: 마일리지
+    - name: version
+      description: 버전
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,74 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: daily_orders_v2
+        identifier: DW_MRT_SETTLES_DAILY_ORDERS_V2
+        description: |
+          일자 기준 주문 요약(SETTLES V2) 원천. 주문 단위 상태/결제 연계 키를 제공하며, 원예약 대체 및 전표 대사 쿼리에서 주문 축 정합성 확인에 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: created_by
+            description: "생성자(개인정보 - null 처리)"
+          - name: deleted_at
+            description: "삭제일"
+          - name: updated_at
+            description: "수정일"
+          - name: updated_by
+            description: "수정장(개인정보 - null 처리)"
+          - name: canceled_at
+            description: "취소일"
+          - name: discount_amount
+            description: "할인 금액"
+          - name: order_coupon_discount_amount
+            description: "주문 쿠폰 금액"
+          - name: order_discount_amount
+            description: "주문 쿠폰 할인 금액"
+          - name: reservation_discount_amount
+            description: "예약 쿠폰 할인 금액"
+          - name: instant_discount_amount
+            description: "즉시 할인 금액"
+          - name: order_no
+            description: "주문 NO"
+          - name: ordered_country
+            description: "주문 국가"
+          - name: ordered_platform
+            description: "주문 플랫폼"
+          - name: payment_amount
+            description: "결제 금액"
+          - name: refund_amount
+            description: "환불 금액"
+          - name: sale_price
+            description: "판매 금액"
+          - name: status
+            description: "상태"
+          - name: trip_purpose
+            description: "여행 목적"
+          - name: user_age
+            description: "유저 나이"
+          - name: user_email
+            description: "유저 이메일"
+          - name: user_id
+            description: "유저 아이디"
+          - name: user_name
+            description: "유저 이름(개인정보 - null 처리)"
+          - name: user_phone_icc
+            description: "유저 전화번호 국가코드(개인정보 - null 처리)"
+          - name: user_phone_number
+            description: "유저 전화번호(개인정보 - null 처리)"
+          - name: user_phone_last_number
+            description: "유저 마지막 전화번호(개인정보 - null 처리)"
+          - name: margin_discount_amount
+            description: "상품 할인 금액"
+          - name: external_order_no
+            description: "external 주문 번호"
+          - name: group_no
+            description: "주문 그룹 번호"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: reservation_settlement_mapping
+        identifier: DW_MRT_SETTLES_RESERVATION_SETTLEMENT_MAPPING
+        description: |
+          예약-정산 매핑 원천. 예약과 정산 식별자 관계를 연결하며, 마이팩 매출현황/원예약 대체 산출 쿼리에서 매핑 기준으로 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일시"
+          - name: updated_at
+            description: "수정일시"
+          - name: deleted_at
+            description: "삭제일시"
+          - name: created_by
+            description: "생성자"
+          - name: updated_by
+            description: "수정자"
+          - name: order_id
+            description: "주문 ID"
+          - name: order_refund_id
+            description: "주문 환불 ID"
+          - name: reservation_id
+            description: "예약 ID"
+          - name: reservation_refund_id
+            description: "예약 환불 ID"
+          - name: target_type
+            description: "매핑 대상 구분"
+          - name: target_id
+            description: "매핑 대상 ID"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

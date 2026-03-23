@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: pre_reservation_room
+    identifier: DW_MRT_STAY_PRE_RESERVATION_ROOM
+    description: 통합숙소 가예약 객실별 정보. 마지막 적재일 2026-03-18.
+    columns:
+    - name: pre_reservation_room_id
+      description: 가예약 객실 ID
+    - name: booking_room_api_key
+      description: booking 객실 API 키
+    - name: adults
+      description: 성인 수
+    - name: child_ages
+      description: 미성년자 나이 목록
+    - name: surcharges
+      description: 추가 요금
+    - name: on_site_surcharges
+      description: 현장 결제 추가 요금
+    - name: special_request
+      description: 특별 요청사항
+    - name: pre_reservation_id
+      description: 가예약 ID
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: display_refund_text
+      description: 환불 정책 안내 문구

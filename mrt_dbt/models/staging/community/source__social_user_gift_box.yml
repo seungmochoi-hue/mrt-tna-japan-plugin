@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: community_social
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: social_user_gift_box
+    identifier: DW_MRT_COMMUNITY_SOCIAL_SOCIAL_USER_GIFT_BOX
+    description: 소셜 사용자 경품함. 주요 상태값 ISSUED/USED/EXPIRED 확인. 주요 타입값 ATTENDANCE 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: social_avatars_id
+      description: 소셜 avatars ID
+    - name: acquire_type
+      description: 획득 타입
+    - name: acquire_ref_id
+      description: 획득 ref ID
+    - name: gift_type
+      description: 경품 타입
+    - name: gift_status
+      description: 경품 상태
+    - name: transaction_id
+      description: 거래 ID
+    - name: pin_no
+      description: Pin no
+    - name: pin_image_url
+      description: PIN 이미지 URL
+    - name: order_no
+      description: 주문 no
+    - name: expires_at
+      description: 만료 at
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

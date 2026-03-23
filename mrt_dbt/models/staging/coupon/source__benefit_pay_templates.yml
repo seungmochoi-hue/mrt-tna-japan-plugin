@@ -1,0 +1,87 @@
+version: 2
+sources:
+- name: coupon
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: benefit_pay_templates
+    identifier: DW_MRT_COUPONS_BENEFIT_PAY_TEMPLATES
+    description: 혜택 결제 템플릿. 마지막 적재일 2026-03-19. 주요 상태값 UN_USABLE/USABLE 확인. 주요 타입값
+      AFFILIATE_CASHBACK/IMMEDIATE_DISCOUNT/BILLING_DISCOUNT 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: template_status
+      description: Template 상태
+    - name: template_name
+      description: Template 이름
+    - name: benefit_type
+      description: Benefit 타입
+    - name: pay_router_key
+      description: Pay router key
+    - name: template_discount_type
+      description: Template 할인 타입
+    - name: flat_amount
+      description: Flat 금액
+    - name: discount_rate
+      description: 할인 rate
+    - name: min_product_amount
+      description: Min 상품 금액
+    - name: max_discount_amount
+      description: Max 할인 금액
+    - name: activated_start_date
+      description: Activated start date
+    - name: activated_end_date
+      description: Activated end date
+    - name: budget_share_rate_of_mrt
+      description: Budget share rate of MRT
+    - name: budget_share_rate_of_affiliate
+      description: Budget share rate of affiliate
+    - name: is_budget_limit
+      description: Is budget limit
+    - name: total_budget_amount
+      description: Total budget 금액
+    - name: is_repeatable
+      description: Is repeatable
+    - name: max_repeatable_count
+      description: Max repeatable 수
+    - name: repeatable_count_condition
+      description: Repeatable 수 condition
+    - name: usable_channel
+      description: Usable channel
+    - name: is_use_coupon_together
+      description: Is use 쿠폰 together
+    - name: is_use_point_together
+      description: Is use point together
+    - name: template_brief_info
+      description: Template brief info
+    - name: description
+      description: 설명
+    - name: img_src
+      description: Img src
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: is_daily_budget_limit
+      description: Is 일별 budget limit
+    - name: daily_budget_type
+      description: 일별 budget 타입
+    - name: daily_budget_amount
+      description: 일별 budget 금액
+    - name: daily_budget_start_time
+      description: 일별 budget start time
+    - name: daily_budget_end_time
+      description: 일별 budget end time
+    - name: details_link
+      description: Details link
+    - name: is_draft
+      description: Is draft
+    - name: dw_load_dt
+      description: DW 적재 일시

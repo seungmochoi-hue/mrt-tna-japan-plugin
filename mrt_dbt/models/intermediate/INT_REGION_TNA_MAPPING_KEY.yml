@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: INT_REGION_TNA_MAPPING_KEY
+    description: "T&A 팀 Region 매핑 키. canonical country 기준 정규화"
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - CITY_NM_KEY
+            - COUNTRY_NM_KEY
+            - REGION_NM_KEY
+          config:
+            severity: warn
+    columns:
+      - name: CITY_NM_KEY
+        description: "정규화된 CITY_NM key"
+      - name: COUNTRY_NM_KEY
+        description: "canonical COUNTRY_NM key"
+      - name: REGION_NM_KEY
+        description: "canonical REGION_NM key"
+      - name: REGION_TNA_NM
+        description: "T&A 팀 기준 Region"

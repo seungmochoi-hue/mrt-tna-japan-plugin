@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "fpna_external_commission_stay_all"
+        identifier: "fpna_external_commission_stay_all"
+        description: "숙박 손익 관리 시트 (스프레드시트관리)"
+        columns:
+          - name: "mrt_type"
+            description: "마리트 타입"
+          - name: "gid"
+            description: "GID"
+          - name: "product_title"
+            description: "상품명"
+          - name: "commission_rate"
+            description: "커미션 비율"
+          - name: "remark"
+            description: "비고"

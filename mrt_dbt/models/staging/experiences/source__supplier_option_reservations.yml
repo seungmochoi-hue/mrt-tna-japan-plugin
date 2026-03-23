@@ -1,0 +1,58 @@
+version: 2
+sources:
+- name: experiences
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: supplier_option_reservations
+    identifier: DW_MRT_EXPERIENCES_SUPPLIER_OPTION_RESERVATIONS
+    description: T&A 3.0 연동사 옵션 예약 상세. 마지막 적재일 2026-02-13.
+    columns:
+    - name: id
+      description: PK
+    - name: created_at
+      description: 생성 시각
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제 시각 (soft delete)
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정 시각 (파티션 키, DAY)
+    - name: updated_by
+      description: 수정자
+    - name: currency
+      description: 통화 코드 (KRW 등)
+    - name: option_id
+      description: 미사용 (null)
+    - name: option_reservation_id
+      description: 공급사 옵션 예약 UUID
+    - name: order_info_raw
+      description: '주문 상세 JSON (2-depth). 공급사별로 스키마 상이. 유일한 공통 키는 $.optionResult(중첩
+        JSON: id, name, krwSalePrice, krwSupplyPrice, exchangeRate, currency, count).
+        $.optionName은 GYG 전용. 주요 패턴별 식별 키: GYG=optionId/ticketCategory, Klook=packageId/skuId,
+        Tiquets=productTypeUuid/ageType, PLU=plu, MRT내부=guid/prodNo. 파싱 시 JSON_VALUE
+        2회 적용 필요'
+    - name: sale_policy_id
+      description: 판매 정책 ID
+    - name: sale_price
+      description: 단위 판매가
+    - name: sale_price_krw
+      description: KRW 단위 판매가
+    - name: supplier_option_id
+      description: 공급사 옵션 해시 ID. 연동사별 원본 키를 MurmurHash3_128로 해싱하여 생성. 동일 옵션이라도 가격/환율
+        변동 시 새 해시 생성되므로 옵션별 집계 시 order_info_raw의 optionName 등을 사용
+    - name: supply_price
+      description: 단위 공급가
+    - name: supply_price_krw
+      description: KRW 단위 공급가
+    - name: title
+      description: 옵션 카테고리명 (성인, 아동 등). 인원 유형 수준(depth1). 상품 옵션명(depth2)은 order_info_raw에서
+        추출
+    - name: reservation_id
+      description: FK. reservations.id 참조
+    - name: quantity
+      description: 수량
+    - name: dw_load_dt
+      description: DW 적재 시각

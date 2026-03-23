@@ -1,0 +1,35 @@
+version: 2
+sources:
+- name: rewards
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: special_deal_hunter_product_snapshot
+    identifier: DW_MRT_REWARDS_SPECIAL_DEAL_HUNTER_PRODUCT_SNAPSHOT
+    description: 특가헌터 상품 스냅샷. 마지막 적재일 2025-09-05. 최근 90일 기준 신규 적재 미확인. 주요 타입값 CREATED/UPDATED
+      확인.
+    columns:
+    - name: id
+      description: ID
+    - name: episode_id
+      description: 에피소드 ID
+    - name: gid
+      description: GID
+    - name: discount_rate
+      description: 할인 요율
+    - name: change_type
+      description: Change 타입
+    - name: change_reason
+      description: Change 사유
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

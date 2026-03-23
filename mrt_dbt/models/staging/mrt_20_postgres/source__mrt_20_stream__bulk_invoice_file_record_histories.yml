@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "mrt_20_stream"
+    database: "mrtdata"
+    schema: "edw_stream"
+    tables:
+      - name: "bulk_invoice_file_record_histories"
+        identifier: "mrt_20_postgres_public_bulk_invoice_file_record_histories"
+        description: "MRT 2.0 대량 인보이스 파일 레코드 이력 (stream)"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "file_record_id"
+            description: "File Record ID"
+          - name: "before"
+            description: "Before"
+          - name: "after"
+            description: "After"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "deleted_at"
+            description: "삭제일시"
+          - name: "file_record_type"
+            description: "File Record Type"
+          - name: "_key"
+            description: "Key"

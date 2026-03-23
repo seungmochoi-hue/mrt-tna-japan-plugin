@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: "external_mart"
+    database: "mrtdata"
+    schema: "edw_mart"
+    description: "외부데이터 ( 스프레드시트 등 )"
+    tables:
+      - name: "DIM_HOTEL_CITY"
+        identifier: "DIM_HOTEL_CITY"
+        description: "스프레드 시트 기반 테이블"
+        columns:
+          - name: "CITY_INFO_ID"
+            description: "도시 정보 ID"
+          - name: "KEY_NM"
+            description: "키 이름"
+          - name: "BOOKING_CITY_NM"
+            description: "부킹스닷컴 도시 이름"
+          - name: "TRIP_NM"
+            description: "트립닷컴 이름"
+          - name: "EXPEDIA_NM"
+            description: "익스피디아 이름"
+          - name: "AIRBNB_NM"
+            description: "에어비앤비 이름"
+          - name: "HOTELS_NM"
+            description: "호텔스닷컴 이름"
+          - name: "AGODA_NM"
+            description: "아고다 이름"
+          - name: "BOOKING_NM"
+            description: "부킹닷컴 이름"

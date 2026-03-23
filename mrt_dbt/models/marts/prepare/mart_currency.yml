@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: mart_currency
+    description: "환율 정보 테이블"
+    columns:
+      - name: day
+        description: "환율 적용 일자 및 시간"
+        data_type: TIMESTAMP
+
+      - name: code
+        description: "통화 코드 (예: USD, EUR)"
+        data_type: STRING
+
+      - name: usd_rate
+        description: "USD 기준 환율"
+        data_type: FLOAT
+
+      - name: krw_rate
+        description: "KRW 기준 환율"
+        data_type: FLOAT

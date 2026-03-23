@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: community_log_v2
+    description: "biz log에서 커뮤니티 추출"
+    config:
+      tags: ["community", "logs"]
+    columns:
+      - name: basis_dt
+        description: "기준일"
+        data_type: DATE
+      - name: screen_name
+        description: "화면 이름"
+        data_type: STRING
+      - name: session_id
+        description: "세션 ID"
+        data_type: STRING
+      - name: pid
+        description: "pid"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: event_name
+        description: "이벤트 이름"
+        data_type: STRING
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: STRING
+      - name: platform
+        description: "플랫폼"
+        data_type: STRING
+      - name: event_timestamp_kst
+        description: "이벤트 발생 시간 (KST)"
+        data_type: TIMESTAMP
+      - name: post_id
+        description: "게시글 ID"
+        data_type: STRING
+      - name: item_id
+        description: "아이템 ID"
+        data_type: STRING
+      - name: item_kind
+        description: "아이템 종류"
+        data_type: STRING
+      - name: board_id
+        description: "게시판 ID"
+        data_type: STRING
+      - name: board_name
+        description: "게시판 이름"
+        data_type: STRING
+      - name: category_id
+        description: "카테고리 ID"
+        data_type: STRING
+      - name: category_name
+        description: "카테고리 이름"
+        data_type: STRING

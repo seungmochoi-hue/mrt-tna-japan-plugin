@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_KIDS_CIC_LEGACY_OFFER_COMMISSION_RATE"
+        identifier: "FPNA_KIDS_CIC_LEGACY_OFFER_COMMISSION_RATE"
+        description: "키즈 기획 상품 오퍼별 수수료율 (스프레드시트관리)"
+        columns:
+          - name: "PRODUCT_ID"
+            description: "상품 ID"
+          - name: "PRODUCT_TITLE"
+            description: "상품 제목"
+          - name: "TARGET_TR"
+            description: "대상 수수료율 (TR%: Take Rate)"
+          - name: "ACTUAL_TR"
+            description: "ACTUAL TR"
+          - name: "REMARK"
+            description: "비고"

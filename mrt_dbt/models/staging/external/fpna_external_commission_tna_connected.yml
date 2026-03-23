@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fpna_external_commission_tna_connected
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [T&A 연동 TR% 평균](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1175173327#gid=1175173327)
+    columns:
+      - name: product_id
+        description: "상품 ID"
+      - name: product_title
+        description: "상품 제목"
+      - name: avg_tr
+        description: "평균 수수료율 (TR%: Take Rate)"
+

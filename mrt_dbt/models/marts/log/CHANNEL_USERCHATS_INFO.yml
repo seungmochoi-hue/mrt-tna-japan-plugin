@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: CHANNEL_USERCHATS_INFO
+    description: "채널 사용자 채팅 정보"
+    config:
+      tags: ["CHANNEL"]
+    columns:
+      - name: id
+        description: "채널 ID"
+        data_type: STRING
+      - name: createdAt_kst
+        description: "채널 생성 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: dept1
+        description: "1차 구분"
+        data_type: STRING
+      - name: dept2
+        description: "2차 구분"
+        data_type: STRING
+      - name: dept3
+        description: "3차 구분"
+        data_type: STRING
+      - name: category
+        description: "카테고리"
+        data_type: STRING
+      - name: no_answer
+        description: "무응답 여부"
+        data_type: STRING

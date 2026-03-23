@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: MART_TAB_USER_VISIT_LEAVE_D
+    description: >
+      일별, pid 별 최초 진입 화면, 일탈 화면, 총 PV 수
+    config:
+      tags: [ "tableau" ]
+    columns:
+      - name: basis_dt
+        description: 기준 일자
+        data_type: DATE
+      - name: pid
+        description: PID
+        data_type: STRING
+      - name: pageview_cnt
+        description: 페이지뷰 건수
+        data_type: INTEGER
+      - name: first_screen_name
+        description: 첫 화면 이름
+        data_type: STRING
+      - name: last_screen_name
+        description: 마지막 화면 이름
+        data_type: STRING
+

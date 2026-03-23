@@ -1,0 +1,36 @@
+version: 2
+
+seeds:
+  - name: GEO_COUNTRY_NAME_RULES
+    description: "국가명 정규화 룰셋"
+    config:
+      schema: edw_intermediate
+      column_types:
+        RAW_COUNTRY_NM: string
+        CANONICAL_COUNTRY_NM: string
+    columns:
+      - name: RAW_COUNTRY_NM
+        description: "원본 국가명"
+        data_type: STRING
+      - name: CANONICAL_COUNTRY_NM
+        description: "표준 국가명"
+        data_type: STRING
+
+  - name: GEO_AIRPORT_CITY_NAME_RULES
+    description: "공항 도시명 정규화 룰셋"
+    config:
+      schema: edw_intermediate
+      column_types:
+        COUNTRY_NM: string
+        RAW_CITY_NM: string
+        CANONICAL_CITY_NM: string
+    columns:
+      - name: COUNTRY_NM
+        description: "정규화 대상 국가명"
+        data_type: STRING
+      - name: RAW_CITY_NM
+        description: "원본 도시명"
+        data_type: STRING
+      - name: CANONICAL_CITY_NM
+        description: "표준 도시명"
+        data_type: STRING

@@ -1,0 +1,45 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mypack_component_product_option
+    identifier: DW_MRT_PACKAGE_SOLUTION_MYPACK_COMPONENT_PRODUCT_OPTION
+    description: 마이팩 구성상품 옵션. 마지막 적재일 2026-03-19. 주요 타입값 ADULT_CHILD/ADULT/CHILD/INFANT
+      확인.
+    columns:
+    - name: id
+      description: ID
+    - name: component_product_id
+      description: 구성상품 상품 ID
+    - name: title
+      description: 제목
+    - name: age_type
+      description: Age 타입
+    - name: description
+      description: 설명
+    - name: linkage_info
+      description: Linkage info
+    - name: stock_sharing_target_option_flag
+      description: Stock sharing target 옵션 flag
+    - name: stock_sharing_flag
+      description: Stock sharing flag
+    - name: visible_flag
+      description: Visible flag
+    - name: represent_option_id
+      description: Represent 옵션 ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: MART_CITY_MRT_TYPE_AGG_D
+    description: "도시 MRT 타입 집계 데이터"
+    config:
+      tags: ["CITY", "MART"]
+    columns:
+      - name: BASIS_DT
+        description: "기준 날짜"
+        data_type: DATE
+      - name: COUNTRY_NM
+        description: "국가 이름"
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름"
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 타입"
+        data_type: STRING
+      - name: TOTAL_RESERVATION_CNT
+        description: "총 예약 건수"
+        data_type: INTEGER
+      - name: TOTAL_RESERVATION_USER_CNT
+        description: "총 예약 사용자 수"
+        data_type: INTEGER
+      - name: TOTAL_SALE_PRICE
+        description: "총 판매 가격"
+        data_type: INTEGER
+      - name: OFFER_IMPRESSION_CNT
+        description: "오퍼 노출 건수"
+        data_type: INTEGER
+      - name: OFFER_CLICK_CNT
+        description: "오퍼 클릭 건수"
+        data_type: INTEGER
+      - name: OFFER_CLICK_RT
+        description: "오퍼 클릭 비율"
+        data_type: FLOAT
+      - name: OFFER_DETAIL_UV
+        description: "오퍼 상세 UV"
+        data_type: INTEGER
+      - name: OFFER_TO_CHECKOUT_RT
+        description: "오퍼에서 체크아웃까지의 비율"
+        data_type: FLOAT
+      - name: CHECKOUT_UV
+        description: "체크아웃 UV"
+        data_type: INTEGER
+      - name: CHECKOUT_TO_COMPLETE_RT
+        description: "체크아웃에서 완료까지의 비율"
+        data_type: FLOAT
+      - name: CHECKOUT_COMPLETE_UV
+        description: "체크아웃 완료 UV"
+        data_type: INTEGER
+      - name: VIEW_ITEM_CNT
+        description: "아이템 조회 건수"
+        data_type: INTEGER
+      - name: AVG_VIEW_ITEM_CNT
+        description: "평균 아이템 조회 건수"
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

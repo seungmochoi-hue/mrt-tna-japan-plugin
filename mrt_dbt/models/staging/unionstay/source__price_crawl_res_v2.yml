@@ -1,0 +1,53 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: price_crawl_res_v2
+    identifier: DW_MRT_STAY_PRICE_CRAWL_RES_V2
+    description: 숙소 가격 크롤링 결과 V2. 마지막 적재일 2025-10-17. 최근 90일 기준 신규 적재 미확인. 주요 타입값
+      GDS 확인.
+    columns:
+    - name: crawl_id
+      description: 크롤링 ID
+    - name: gid
+      description: GID
+    - name: gpid
+      description: GPID
+    - name: provider_type
+      description: Provider 타입
+    - name: provider_code
+      description: Provider code
+    - name: provider_property_id
+      description: Provider 숙소 ID
+    - name: property_name
+      description: 숙소 이름
+    - name: provider_room_id
+      description: Provider room ID
+    - name: room_name
+      description: Room 이름
+    - name: provider_option_id
+      description: Provider 옵션 ID
+    - name: option_name
+      description: 옵션 이름
+    - name: provider_rate_id
+      description: Provider rate ID
+    - name: check_in
+      description: Check in
+    - name: check_out
+      description: Check out
+    - name: origin_rate
+      description: Origin rate
+    - name: discount_rate
+      description: 할인 rate
+    - name: partner_sale_rate
+      description: Partner sale rate
+    - name: sale_rate
+      description: Sale rate
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: dw_load_dt
+      description: DW 적재 일시

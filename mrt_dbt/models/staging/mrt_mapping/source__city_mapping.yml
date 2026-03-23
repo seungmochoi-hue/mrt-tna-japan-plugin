@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: "mrt_mapping"
+    database: "mrtdata"
+    schema: "mrt_mapping"
+    tables:
+      - name: "city_mapping"
+        identifier: "city_mapping"
+        description: "공항 도시명 수동 매핑 구글시트"
+        columns:
+          - name: "airport_cd"
+            description: "Airport Cd"
+          - name: "booking"
+            description: "Booking"
+          - name: "booking_n"
+            description: "Booking N"
+          - name: "agoda"
+            description: "Agoda"
+          - name: "expedia"
+            description: "Expedia"
+          - name: "hotelcom"
+            description: "Hotelcom"
+          - name: "trip"
+            description: "Trip"
+          - name: "evasion"
+            description: "Evasion"
+          - name: "airbnb"
+            description: "Airbnb"
+          - name: "city_info_id"
+            description: "City Info ID"
+          - name: "key_name"
+            description: "Key Name"

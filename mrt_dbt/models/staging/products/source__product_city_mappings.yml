@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: "products"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "product_city_mappings"
+        identifier: "DW_MRT_PRODUCTS_PRODUCT_CITY_MAPPINGS"
+        description: "상품-도시 매핑"
+        columns:
+          - name: "location_city_id"
+            description: "location_cities fk"
+          - name: "created_at"
+            description: "생성시간"
+          - name: "updated_at"
+            description: "수정시간"
+          - name: "deleted_at"
+            description: "삭제시간"
+          - name: "product_id"
+            description: "products fk"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

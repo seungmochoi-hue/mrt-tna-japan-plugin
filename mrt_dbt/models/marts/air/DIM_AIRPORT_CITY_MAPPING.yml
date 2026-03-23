@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: DIM_AIRPORT_CITY_MAPPING
+    description: "공항 코드 기준 도시/국가/지역 canonical 매핑"
+    config:
+      tags: ["AIR", "DIM"]
+      docs:
+        node_color: "#FF5733"
+    columns:
+      - name: AIRPORT_CODE
+        description: "공항 코드"
+        data_type: STRING
+        data_tests:
+          - unique:
+              config:
+                severity: warn
+      - name: AIRPORT_ID
+        description: "공항 식별자. raw20 id 우선, 부재 시 AIRPORT_CODE 기반 해시값"
+        data_type: INTEGER
+      - name: AIRPORT_NM
+        description: "공항명. 다중 source 대표값 선택, suffix 정리 적용"
+        data_type: STRING
+      - name: CITY_ID
+        description: "도시 식별자. raw20/city_mapping 우선, canonical city-country 매칭 복원"
+        data_type: INTEGER
+      - name: CITY_NM
+        description: "canonical 도시명"
+        data_type: STRING
+      - name: COUNTRY_ID
+        description: "국가 식별자. country alias 정규화 및 city fallback 복원"
+        data_type: INTEGER
+      - name: COUNTRY_NM
+        description: "canonical 국가명"
+        data_type: STRING
+      - name: REGION_ID
+        description: "지역 식별자. canonical country 기준 복원"
+        data_type: INTEGER
+      - name: REGION_NM
+        description: "canonical 지역명"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

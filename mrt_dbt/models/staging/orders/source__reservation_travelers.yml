@@ -1,0 +1,99 @@
+version: 2
+sources:
+- name: orders
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: reservation_travelers
+    identifier: DW_MRT_ORDERS_RESERVATION_TRAVELERS
+    description: 3.0 예약 여행자 단위 원천 테이블. 하위 모델 MART_OFFER_SALE_D, MART_FPNA_PACKAGE_PROFIT_D에서
+      사용함. 주요 타입값 TRAVELER 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: reservation_id
+      description: 예약 ID
+    - name: reservation_no
+      description: 예약 번호
+    - name: option_reservation_id
+      description: option reservation id
+    - name: product_option_id
+      description: 상품 옵션 ID
+    - name: section_title
+      description: 섹션 타이틀
+    - name: option_title
+      description: 옵션 제목
+    - name: traveler_type
+      description: 예약자/여행자 타입
+    - name: option_order
+      description: 옵션 노출 순서
+    - name: traveler_order
+      description: 여행자 노출 순서
+    - name: representative
+      description: 대표 여행자
+    - name: traveler_id
+      description: 여행자ID
+    - name: kor_name
+      description: 여행자 한글성함
+    - name: enter_later_kor_name
+      description: 여행자 한글성함 나중입력 여부
+    - name: eng_last_name
+      description: 여행자 영문성
+    - name: enter_later_eng_last_name
+      description: 여행자 영문성 나중입력 여부
+    - name: eng_first_name
+      description: 여행자 영문이름
+    - name: enter_later_eng_first_name
+      description: 여행자 영문이름 나중입력 여부
+    - name: email
+      description: 이메일 주소
+    - name: enter_later_email
+      description: 이메일 주소 나중입력 여부
+    - name: phone_icc
+      description: 휴대폰 번호
+    - name: enter_later_phone_icc
+      description: 휴대폰 번호 나중입력 여부
+    - name: phone_number
+      description: 휴대폰 번호
+    - name: enter_later_phone_number
+      description: 휴대폰 번호 나중입력 여부
+    - name: birth_date
+      description: 생년월일
+    - name: enter_later_birth_date
+      description: 생년월일 나중입력 여부
+    - name: gender
+      description: 성별
+    - name: enter_later_gender
+      description: 성별 나중입력 여부
+    - name: passport_number
+      description: 여권 번호
+    - name: enter_later_passport_number
+      description: 여권 번호 나중입력 여부
+    - name: passport_expire_date
+      description: 여권만료일
+    - name: enter_later_passport_expire_date
+      description: 여권만료일 나중입력 여부
+    - name: passport_nationality
+      description: 여권발행국
+    - name: enter_later_passport_nationality
+      description: 여권발행국 나중입력 여부
+    - name: driving_license_type
+      description: 운전면허종류
+    - name: enter_later_driving_license_type
+      description: 운전면허종류 나중입력 여부
+    - name: created_at
+      description: 생성 시간
+    - name: created_by
+      description: created By UserId
+    - name: deleted_at
+      description: 삭제 시간
+    - name: updated_at
+      description: 수정 시간
+    - name: updated_by
+      description: updated by UserId
+    - name: updated_by_type
+      description: 여행자/파트너/매니저 updated Id
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: traveler_age_type
+      description: 여행자 나이 타입

@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "partners"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "partnership"
+        identifier: "DW_MRT_PARTNERS_PARTNERSHIP"
+        description: "제휴 파트너 정보"
+        columns:
+          - name: "partner_id"
+            description: "파트너 ID"
+          - name: "code"
+            description: "Code"
+          - name: "flight"
+            description: "Flight"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_by"
+            description: "생성자"
+          - name: "modified_at"
+            description: "Modified At"
+          - name: "modified_by"
+            description: "Modified By"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

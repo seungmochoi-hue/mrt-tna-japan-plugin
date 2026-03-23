@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: DIM_SETTLEMENT_SEPARATE_SETTLEMENT_PARTNER
+    description: "외부 정산 파트너 분리 기준 매핑 테이블"
+    columns:
+      - name: GUIDE_ID
+        description: "가이드 ID"
+        data_type: STRING
+      - name: PARTNER_NAME
+        description: "파트너 이름"
+        data_type: STRING
+      - name: ISTANBUL_KEY_FIELD_NAME
+        description: "Istanbul key field 이름"
+        data_type: STRING
+      - name: ISTANBUL_REG_EXP
+        description: "Istanbul 정규식"
+        data_type: STRING
+      - name: PARTNER_DATA_LEVEL
+        description: "파트너 데이터 레벨"
+        data_type: STRING
+      - name: CREATE_DT
+        description: "생성 일자"
+        data_type: DATE
+

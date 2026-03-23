@@ -1,0 +1,66 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: giata_property
+    identifier: DW_MRT_STAYNET_GIATA_PROPERTY
+    description: GIATA 숙소 매핑. 마지막 적재일 2026-03-19.
+    columns:
+    - name: property_id
+      description: 숙소 ID
+    - name: property_name
+      description: 숙소 이름
+    - name: parent_property_id
+      description: Parent 숙소 ID
+    - name: giata_updated_at
+      description: Giata 수정 at
+    - name: score
+      description: Score
+    - name: phones
+      description: 전화번호
+    - name: faxes
+      description: 팩스
+    - name: emails
+      description: 이메일
+    - name: urls
+      description: URL
+    - name: city_id
+      description: 도시 ID
+    - name: city_name
+      description: 도시 이름
+    - name: country_code
+      description: 국가 코드
+    - name: airport_codes
+      description: Airport codes
+    - name: address_lines
+      description: Address lines
+    - name: street_name
+      description: Street 이름
+    - name: street_no
+      description: Street no
+    - name: postal_code
+      description: Postal 코드
+    - name: accuracy
+      description: Accuracy
+    - name: latitude
+      description: 위도
+    - name: longitude
+      description: 경도
+    - name: property_mappings
+      description: 숙소 매핑
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

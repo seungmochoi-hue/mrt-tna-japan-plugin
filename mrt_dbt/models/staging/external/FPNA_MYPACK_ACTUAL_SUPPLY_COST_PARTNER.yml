@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: FPNA_MYPACK_ACTUAL_SUPPLY_COST_PARTNER
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      마이팩 실공급가 관리 [실공급가(파트너기준 일괄 조정)](https://docs.google.com/spreadsheets/d/1xYBG00_Lsj8FjtQeyTwA83jOmEUYcD-1EmaHVIw047A/edit?gid=2048662043#gid=2048662043)
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID"
+      - name: PARTNER_NM
+        description: "파트너 이름"
+      - name: ACTUAL_SUPPLY_COST
+        description: "실공급가"
+      - name: REMARK
+        description: "비고"
+

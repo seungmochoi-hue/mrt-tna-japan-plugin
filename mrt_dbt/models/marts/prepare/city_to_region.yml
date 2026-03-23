@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: city_to_region
+    description: "오퍼 지역 정보 테이블"
+    columns:
+      - name: offer_id
+        description: "오퍼 ID"
+        data_type: STRING
+
+      - name: city_info_id
+        description: "도시 정보 ID"
+        data_type: INTEGER
+
+      - name: con_info_id
+        description: "국가 정보 ID"
+        data_type: INTEGER
+
+      - name: rgn_info_id
+        description: "지역 정보 ID"
+        data_type: INTEGER
+
+      - name: city_key_name
+        description: "도시 키 이름"
+        data_type: STRING
+
+      - name: con_key_name
+        description: "국가 키 이름"
+        data_type: STRING
+
+      - name: rgn_key_name
+        description: "지역 키 이름"
+        data_type: STRING
+
+      - name: region
+        description: "지역명"
+        data_type: STRING
+
+      - name: is_representative
+        description: "대표 여부"
+        data_type: BOOLEAN
+

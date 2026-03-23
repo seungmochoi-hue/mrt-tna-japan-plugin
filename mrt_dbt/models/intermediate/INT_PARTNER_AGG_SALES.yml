@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: INT_PARTNER_AGG_SALES
+    description: |
+      파트너별 판매 실적 집계 중간 모델.
+      MART_SALE_D(KIND=1, PARTNER_ID IS NOT NULL)를 기준으로 취소 제외 예약 수, 판매 금액, 구매 유저 수,
+      현재 여행 예정 예약 수를 파트너별로 집계.
+      CURRENT_RESVE_CNT는 dbt 변수 logical_start_date_kst 이후 출발 예정이고 취소되지 않은 예약.
+      이 모델은 RESVE_CNT, SALES_KRW_PRICE, USER_CNT, CURRENT_RESVE_CNT 컬럼만
+      실제 값을 산출하고 나머지 지표 컬럼은 NULL로 출력.
+      Grain: PARTNER_ID (파트너당 1행).
+      Upstream: MART_SALE_D.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - PARTNER_ID
+          config:
+            severity: warn
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID (STRING으로 캐스팅된 PARTNER_ID)."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - unique:
+              config:
+                severity: warn
+      - name: RESVE_CNT
+        description: |
+          파트너의 누적 예약 수 (취소 제외).
+          계산식: COUNT(DISTINCT IF(RECENT_STATUS <> 'cancel', RESVE_ID, NULL))
+          MART_SALE_D 기준 KIND=1인 파트너 상품 예약 중 취소 상태가 아닌 건.
+        data_type: INT64
+      - name: SALES_KRW_PRICE
+        description: |
+          파트너의 누적 판매 금액 (원, 취소 제외).
+          계산식: CAST(SUM(IF(RECENT_STATUS <> 'cancel', PAID_KRW_PRICE, 0)) AS INT64)
+          취소 건은 0으로 처리하여 합산에서 제외.
+        data_type: INT64
+      - name: USER_CNT
+        description: |
+          파트너 상품을 구매한 유저 수 (취소 제외).
+          계산식: COUNT(DISTINCT IF(RECENT_STATUS <> 'cancel', USER_ID, NULL))
+          동일 유저의 복수 예약은 1명으로 집계.
+        data_type: INT64
+      - name: CURRENT_RESVE_CNT
+        description: |
+          현재 여행 예정 예약 수 (취소 제외).
+          계산식: COUNT(DISTINCT IF(TRAVEL_START_KST_DATE >= logical_start_date_kst AND RECENT_STATUS <> 'cancel', RESVE_ID, NULL))
+          logical_start_date_kst: dbt 변수로 주입되는 기준 출발일(KST).
+          해당 날짜 이후 출발 예정이며 취소되지 않은 예약.
+        data_type: INT64
+      - name: ONSALE_CNT
+        description: "판매 중 상품 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_ONSALE에서 산출)."
+        data_type: INT64
+      - name: MAIN_ACTIVITY_CITY_CD
+        description: "대표 액티비티 도시 코드. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: MAIN_ACTIVITY_COUNTRY_NM
+        description: "대표 액티비티 국가명. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: MAIN_ACTIVITY_MRT_TYPE
+        description: "대표 액티비티 상품 유형. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: REVIEW_CNT
+        description: "리뷰 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: INT64
+      - name: REVIEW_SCORE_AVG
+        description: "평균 리뷰 점수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: FLOAT64
+      - name: CONFIRM_RATE
+        description: "파트너 예약 확정률. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_CONFIRM_RATE에서 산출)."
+        data_type: FLOAT64

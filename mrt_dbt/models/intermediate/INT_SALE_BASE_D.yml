@@ -1,0 +1,258 @@
+version: 2
+
+models:
+  - name: INT_SALE_BASE_D
+    description: |
+      도메인별 매출 원본 모델을 예약 기준 공통 스키마로 통합한 매출 베이스 테이블.
+      `MART_SALE_D`, `DIM_CROSS_SELL`, `DIM_RESVE_TYPE`의 공통 upstream 입력으로 사용한다.
+      Grain: `RESVE_ID` + `KIND`.
+    config:
+      tags: ["INT", "SALE"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자"
+        data_type: DATE
+
+      - name: RESVE_ID
+        description: "예약 아이디"
+        data_type: STRING
+
+      - name: ORDER_ID
+        description: "주문 아이디"
+        data_type: STRING
+
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+
+      - name: USER_ID
+        description: "유저 아이디"
+        data_type: STRING
+
+      - name: KIND
+        description: "예약 종류"
+        data_type: INTEGER
+
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+
+      - name: CANCEL_KST_DT
+        description: "취소 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: DOMAIN_NM
+        description: "도메인 명"
+        data_type: STRING
+
+      - name: PRODUCT_ID
+        description: "상품 아이디"
+        data_type: STRING
+
+      - name: GID
+        description: "GID"
+        data_type: STRING
+
+      - name: GPID
+        description: "GPID"
+        data_type: STRING
+
+      - name: CONFIRM_KST_DT
+        description: "확정 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작 KST 일자"
+        data_type: DATE
+
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료 KST 일자"
+        data_type: DATE
+
+      - name: RESVE_TYPE
+        description: "예약 유형"
+        data_type: STRING
+
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형"
+        data_type: STRING
+
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드"
+        data_type: STRING
+
+      - name: SALE_FORM_TYPE
+        description: "판매 형태 타입"
+        data_type: STRING
+
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형"
+        data_type: STRING
+
+      - name: BRANCH_CD
+        description: "지점 코드"
+        data_type: STRING
+
+      - name: PARTNER_ID
+        description: "파트너 아이디"
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+
+      - name: PAYMENT_LATER_FLAG
+        description: "후불 결제 여부"
+        data_type: STRING
+
+      - name: PAYMENT_LIMIT_KST_DT
+        description: "결제 마감 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: PARTNERSHIP_CD
+        description: "제휴 코드"
+        data_type: STRING
+
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형"
+        data_type: STRING
+
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드"
+        data_type: STRING
+
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 ID"
+        data_type: STRING
+
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 ID"
+        data_type: STRING
+
+      - name: PROVIDER_CD
+        description: "공급사 코드"
+        data_type: STRING
+
+      - name: CITY_CD
+        description: "도시 코드"
+        data_type: STRING
+
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: "도시 대표 여부"
+        data_type: STRING
+
+      - name: PG_NM
+        description: "PG 명"
+        data_type: STRING
+
+      - name: RESVE_PAID_KST_DT
+        description: "예약 결제 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: SALES_PRICE
+        description: "판매가"
+        data_type: FLOAT
+
+      - name: SALES_PRICE_CUR_TYPE
+        description: "판매가 통화 유형"
+        data_type: STRING
+
+      - name: SALES_KRW_PRICE
+        description: "판매가 KRW"
+        data_type: FLOAT
+
+      - name: PAID_PRICE
+        description: "결제 금액"
+        data_type: FLOAT
+
+      - name: PAID_PRICE_CUR_TYPE
+        description: "결제 통화"
+        data_type: STRING
+
+      - name: PAID_KRW_PRICE
+        description: "결제 금액 KRW"
+        data_type: FLOAT
+
+      - name: COUPON_PRICE
+        description: "총 쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 ID"
+        data_type: INTEGER
+
+      - name: POINT_PRICE
+        description: "포인트 사용 금액"
+        data_type: INTEGER
+
+      - name: DISCOUNT_PRICE
+        description: "할인 금액"
+        data_type: FLOAT
+
+      - name: COMMISSION_PRICE
+        description: "커미션 금액"
+        data_type: FLOAT
+
+      - name: COMMISSION_RATE
+        description: "커미션 비율"
+        data_type: FLOAT
+
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 커미션 금액"
+        data_type: INTEGER
+
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 커미션 비율"
+        data_type: FLOAT
+
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형"
+        data_type: STRING
+
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "소아 예약 인원"
+        data_type: INTEGER
+
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 예약 인원"
+        data_type: INTEGER
+
+      - name: RESVE_PRSNL_CNT
+        description: "총 예약 인원"
+        data_type: INTEGER
+
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+
+      - name: CREATE_KST_DT
+        description: "생성 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: UPDATE_KST_DT
+        description: "업데이트 KST 일시"
+        data_type: TIMESTAMP
+
+      - name: PACKAGE_PNR_NO
+        description: "패키지 pnr no"
+        data_type: INTEGER
+
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: rewards
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: special_deal_hunter_episode
+    identifier: DW_MRT_REWARDS_SPECIAL_DEAL_HUNTER_EPISODE
+    description: 특가헌터 에피소드. 마지막 적재일 2026-03-12.
+    columns:
+    - name: id
+      description: ID
+    - name: episode_name
+      description: 에피소드 이름
+    - name: start_date
+      description: 시작 일자
+    - name: expire_date
+      description: Expire 일자
+    - name: reward_grant_date
+      description: Reward grant 일자
+    - name: description
+      description: 설명
+    - name: ranking_title_image_url
+      description: Ranking 제목 이미지 URL
+    - name: rewards_mapping
+      description: Rewards 매핑
+    - name: max_benefit_amount_per_person
+      description: Max 혜택 금액 per person
+    - name: policy_description
+      description: Policy 설명
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,40 @@
+name: save-to-gsheets-cross-platform
+description: save-to-gsheets skill의 조직 전체 공유 절차가 wrapper hook 기준으로 macOS/Linux와 Windows PowerShell에서 모두 올바르게 안내되는지 검증
+
+tests:
+  - name: mac_domain_share_uses_shell_hook
+    prompt: |
+      너는 save-to-gsheets skill이야. macOS에서 50행 미만 결과를 Google Sheets에 저장한 뒤
+      조직 전체(`myrealtrip.com`) 공유까지 설정하는 절차를 설명해줘.
+      공유 명령 예시도 포함해줘.
+    expected_output:
+      contains:
+        - "./.claude/hooks/share-gsheet.sh"
+        - "OK:"
+      not_contains:
+        - "Invoke-RestMethod"
+    tags: [gsheets, macos, sharing]
+
+  - name: windows_domain_share_uses_powershell_hook
+    prompt: |
+      너는 save-to-gsheets skill이야. Windows PowerShell에서 50행 미만 결과를 Google Sheets에 저장한 뒤
+      조직 전체(`myrealtrip.com`) 공유까지 설정하는 절차를 설명해줘.
+      공유 명령 예시도 포함해줘.
+    expected_output:
+      contains:
+        - ".claude/hooks/share-gsheet.ps1"
+        - "OK:"
+      not_contains:
+        - "curl -s -X POST"
+    tags: [gsheets, windows, sharing]
+
+  - name: sharing_completion_message_required
+    prompt: |
+      너는 save-to-gsheets skill이야. Google Sheets 저장 작업이 끝난 뒤 결과 보고 문구에 반드시 들어가야 할 내용을 알려줘.
+    expected_output:
+      contains:
+        - "Google Sheets에 저장했어요!"
+        - "탭"
+        - "행"
+        - "조직 전체 공유 완료"
+    tags: [gsheets, reporting]

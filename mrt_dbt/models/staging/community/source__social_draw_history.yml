@@ -1,0 +1,30 @@
+version: 2
+sources:
+- name: community_social
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: social_draw_history
+    identifier: DW_MRT_COMMUNITY_SOCIAL_SOCIAL_DRAW_HISTORY
+    description: 소셜 뽑기 이력.
+    columns:
+    - name: id
+      description: ID
+    - name: social_avatars_id
+      description: 소셜 avatars ID
+    - name: social_benefit_schemes_id
+      description: 소셜 혜택 스킴 ID
+    - name: social_benefit_scheme_gifts_id
+      description: 소셜 혜택 스킴 gifts ID
+    - name: social_mileage_history_id
+      description: 소셜 마일리지 이력 ID
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,29 @@
+{{
+    config(
+        materialized='table',
+        schema='edw_mart',
+        alias='MART_HOTEL_MISSING_CITY_NM_D',
+        pre_hook=[
+        "
+        DELETE {{ this }} m
+        WHERE m.AFFILIATE_NM || '-' || m.CITY_NM NOT IN (SELECT t.AFFILIATE_NM || '-' || t.CITY_NM from {{ ref('TEMP_MART_HOTEL_MISSING_CITY_NM_D') }} t)
+        "
+        ]
+    )
+}}
+
+SELECT T.AFFILIATE_NM AS AFFILIATE_NM
+    ,  T.CITY_NM AS CITY_NM
+    ,  MAX(T.SEND_SLACK_MESSAGE_FLAG) AS SEND_SLACK_MESSAGE_FLAG
+  FROM (
+SELECT A.AFFILIATE_NM AS AFFILIATE_NM
+    ,  A.CITY_NM AS CITY_NM
+    ,  A.SEND_SLACK_MESSAGE_FLAG AS SEND_SLACK_MESSAGE_FLAG
+  FROM {{ this }} A
+UNION ALL
+SELECT B.AFFILIATE_NM AS AFFILIATE_NM
+    ,  B.CITY_NM AS CITY_NM
+    ,  B.SEND_SLACK_MESSAGE_FLAG AS SEND_SLACK_MESSAGE_FLAG
+  FROM {{ ref('TEMP_MART_HOTEL_MISSING_CITY_NM_D')}} B
+) T
+GROUP BY T.AFFILIATE_NM, T.CITY_NM

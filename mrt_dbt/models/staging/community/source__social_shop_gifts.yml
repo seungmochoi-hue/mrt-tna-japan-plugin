@@ -1,0 +1,28 @@
+version: 2
+sources:
+- name: community_social
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: social_shop_gifts
+    identifier: DW_MRT_COMMUNITY_SOCIAL_SOCIAL_SHOP_GIFTS
+    description: 소셜 상점 경품. 마지막 적재일 2025-07-08. 최근 90일 기준 신규 적재 미확인.
+    columns:
+    - name: id
+      description: ID
+    - name: social_pet_gift_id
+      description: 소셜 펫 경품 ID
+    - name: mileage_price
+      description: 마일리지 금액
+    - name: display_order
+      description: 노출 주문
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: FACT_USER_LOGIN_D
+    description: 유저 로그인 로그 데이터
+    config:
+      tags: ["FACT", "USER"]
+    columns:
+      - name: BASIS_DT
+        description: 기준 날짜
+        data_type: DATE
+
+      - name: USER_ID
+        description: 마리트 유저 아이디
+        data_type: STRING
+
+      - name: LOGIN_KST_DT
+        description: 로그인 시간
+        data_type: TIMESTAMP
+
+      - name: LOGIN_PLATFORM
+        description: 로그인 플랫폼
+        data_type: STRING
+
+      - name: USE_PLATFORMS
+        description: 유저의 사용중인 플랫폼들
+        data_type: STRING
+
+      - name: data_type
+        description: 원천 종류
+        data_type: STRING
+
+      - name: dw_load_dt
+        description: "DW 적재 일시(KST)"
+        data_type: DATETIME
+

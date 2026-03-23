@@ -1,0 +1,67 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mypack_component_product_daily_stock_price
+    identifier: DW_MRT_PACKAGE_SOLUTION_MYPACK_COMPONENT_PRODUCT_DAILY_STOCK_PRICE
+    description: 마이팩 상품 일자 재고 가격. 하위 모델 MART_PACKAGE_OPTION_SALE_D에서 사용함. 마지막 적재일
+      2026-03-19.
+    columns:
+    - name: id
+      description: id
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: arrival_date
+      description: 귀국일
+    - name: component_product_id
+      description: 구성상품 ID
+    - name: air_price
+      description: 항공료
+    - name: fuel_surcharge
+      description: 유류할증료
+    - name: tax
+      description: 세금
+    - name: total_supply_price
+      description: 공급가 합계 금액
+    - name: registered_stock
+      description: 등록 재고
+    - name: actual_stock
+      description: 실제 재고
+    - name: using_date
+      description: 기준일
+    - name: tasf
+      description: TASF
+    - name: sale_air_price
+      description: 항공료 판매가 NET (할인 적용)
+    - name: additional_information
+      description: 부가 정보
+    - name: component_product_option_id
+      description: 구성상품 옵션 ID
+    - name: origin_total_supply_price
+      description: 원본 통화 공급가
+    - name: origin_total_supply_price_currency_type
+      description: 원본 통화 공급가의통화 정보
+    - name: additional_members
+      description: Additional Members
+    - name: additional_options
+      description: Additional Options
+    - name: fixed_sale_price
+      description: 고정 판매가
+    - name: price_policy_type
+      description: 가격 정책 타입
+    - name: meta_channel
+      description: 항공 운임조회 채널
+    - name: dw_load_dt
+      description: DW 적재 일시

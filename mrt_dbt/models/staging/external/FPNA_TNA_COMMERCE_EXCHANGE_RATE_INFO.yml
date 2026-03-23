@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: FPNA_TNA_COMMERCE_EXCHANGE_RATE_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [T&A 커머스 적용환율](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=739399760#gid=739399760)
+
+    columns:
+      - name: CURRENCY
+        description: "통화"
+      - name: KRW
+        description: "KRW 환율"
+      - name: START_DATE
+        description: "시작 날짜"
+      - name: END_DATE
+        description: "종료 날짜"
+      - name: REMARK
+        description: "비고"
+      - name: REMARK_2
+        description: "비고2 (기타 메모)"
+      - name: REMARK_3
+        description: "비고3 (기타 메모2)"
+

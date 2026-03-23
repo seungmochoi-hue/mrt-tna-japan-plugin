@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_BIZ_TYPE_INFO"
+        identifier: "FPNA_BIZ_TYPE_INFO"
+        description: "BIZ TYPE 구분 정보 (스프레드시트관리), 사용 여부 확인 필요"
+        columns:
+          - name: "TYPE"
+            description: "BIZ_TYPE"
+          - name: "MRT_TYPE"
+            description: "MRT 타입"
+          - name: "BIZ_TYPE"
+            description: "BIZ_TYPE 이름"
+          - name: "PARTNER_ID"
+            description: "파트너 ID"
+          - name: "PARTNER_NM"
+            description: "파트너 이름"
+          - name: "GID"
+            description: "GID"
+          - name: "PRODUCT_TITLE"
+            description: "상품 제목"
+          - name: "REMARK_1"
+            description: "비고"
+          - name: "REMARK_2"
+            description: "비고2"
+          - name: "REMARK_3"
+            description: "비고3"

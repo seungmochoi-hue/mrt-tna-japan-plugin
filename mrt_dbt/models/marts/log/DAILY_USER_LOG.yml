@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: DAILY_USER_LOG
+    description: "일일 사용자 로그"
+    config:
+      tags: ["LOG"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: platform
+        description: "플랫폼"
+        data_type: STRING
+      - name: pid
+        description: "PID"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: session_id
+        description: "세션 ID"
+        data_type: STRING
+      - name: ref_url_source
+        description: "참조 URL 소스"
+        data_type: STRING
+      - name: utm_source
+        description: "UTM 소스"
+        data_type: STRING
+      - name: utm_campaign
+        description: "UTM 캠페인"
+        data_type: STRING
+      - name: utm_medium
+        description: "UTM 미디엄"
+        data_type: STRING
+      - name: utm_content
+        description: "UTM 콘텐츠"
+        data_type: STRING
+      - name: utm_term
+        description: "UTM 용어"
+        data_type: STRING
+      - name: mylink_id
+        description: "마케팅파트너 마이링크 식별자값을 나타냄"
+        data_type: STRING

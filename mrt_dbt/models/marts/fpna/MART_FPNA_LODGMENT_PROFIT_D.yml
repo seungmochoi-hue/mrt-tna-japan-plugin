@@ -1,0 +1,328 @@
+version: 2
+
+models:
+  - name: MART_FPNA_LODGMENT_PROFIT_D
+    description: |
+      FPNA 숙박 상품별 수익 분석 마트.
+      MART_SALE_D(KIND=1, STANDARD_CATEGORY_LV_1_CD='ACCOMMODATION')를 기준으로
+      숙박 예약 건별 매출, MRT 수수료 매출, 쿠폰/포인트/할인/채널수수료/대행수수료 등 손익 항목을 산출.
+      Grain: 1 row = 1 예약(RESVE_ID). 패키지 예약(RESVE_ID LIKE '%PKG%') 및 AIR ANCILLARY 제외.
+      COMMISSION_RATE/MRT_SALES_PRICE는 기존 숙박 도메인 분기(TYPE 1~15, 99) 로직으로 산출.
+      upstream: MART_SALE_D, MART_USER_D, MART_COUPON_RESVE_D, FPNA_* 매핑 테이블 다수.
+      BigQuery 물리 최적화: partition(BASIS_DATE, month) + cluster(SALE_FORM_CD, RECENT_STATUS, DOMAIN_NM)
+    config:
+      tags: [ "MART", "FPNA", "LODGMENT" ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일"
+        data_type: DATE
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 이름 (2.0 PRODUCT / 3.0 PRODUCT 등)"
+        data_type: STRING
+      - name: TRAVEL_START_DATE
+        description: "여행 시작일"
+        data_type: DATE
+      - name: TRAVEL_END_DATE
+        description: "여행 종료일"
+        data_type: DATE
+      - name: TRAVEL_DAYS
+        description: "여행 일수. 계산식: DATE_DIFF(TRAVEL_END_DATE, TRAVEL_START_DATE, DAY)"
+        data_type: INTEGER
+      - name: CANCEL_DATE
+        description: "취소일. MART_SALE_D KIND=2 기준 취소 건의 취소 일자"
+        data_type: DATE
+      - name: RESVE_CANCEL_DAY_DIFF
+        description: "예약일~취소일 간 일수 차이. 계산식: DATE_DIFF(CANCEL_DATE, BASIS_DATE, DAY)"
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 예약 상태"
+        data_type: STRING
+      - name: RESVE_PRSNL_CNT
+        description: "예약 인원 수"
+        data_type: INTEGER
+      - name: TRAVEL_ID
+        description: "여행 ID"
+        data_type: STRING
+      - name: TRAVEL_DETAIL_ID
+        description: "여행 상세 ID"
+        data_type: INTEGER
+      - name: MRT_STAFF_FLAG
+        description: "MRT 직원 여부. MART_USER_D 기준"
+        data_type: BOOLEAN
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: CATEGORY_NM
+        description: "카테고리 이름"
+        data_type: STRING
+      - name: CATEGORY_CD
+        description: "카테고리 코드"
+        data_type: STRING
+      - name: SUB_CATEGORY_CD
+        description: "하위 카테고리 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 이름"
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "파트너십 유형"
+        data_type: STRING
+      - name: ACCOUNTING_PROJECT_CODE
+        description: "회계 프로젝트 코드. partner_settlement_configs 기준"
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: |
+          판매 형태 코드. 분기:
+          - PARTNERSHIP_TYPE='AGENCY' -> 'B2B'
+          - STANDARD_CATEGORY_LV_2_CD='B2B_ACCOMMODATION' -> 'B2B'
+          - B2B 포인트 사용 예약 -> 'B2B'
+          - STANDARD_CATEGORY_LV_2_CD='KIDS_ACCOMMODATION_TICKET' -> 'KIDS'
+          - 그 외 -> 'MRT'
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 유형 (hotel, pension, lodging, ticket_lodging 등)"
+        data_type: STRING
+      - name: BIZ_TYPE
+        description: |
+          비즈니스 유형. FPNA_BIZ_TYPE_INFO 매핑 우선, 이후 상품 특성 기반 분기:
+          - PARTNER_ID/GID 기준 BIZ_TYPE 매핑
+          - 날짜지정 숙박권 or ticket_lodging -> 'Hocance'
+          - 호텔메타 제휴사(booking/hotels/agoda/expedia/airbnb) -> 'Hotel_meta'
+          - hotel -> 'Hotel', pension -> 'Pension', lodging -> 'Lodging'
+        data_type: STRING
+      - name: BIZ_TYPE_V2
+        description: |
+          비즈니스 유형 V2. BIZ_TYPE보다 세분화된 분류.
+          B2B(AGENCY/AFFILIATE/POINT/COUPON/MYLINK), PKG_TOURTEL, KIDS,
+          LOCAL_LODGING, KOREAN_LODGING, JEJU_LODGING,
+          DIRECT_SALES_ACCOMMODATION, DOMESTIC_ACCOMMODATION, OUTBOUND_ACCOMMODATION 등으로 구분.
+        data_type: STRING
+      - name: BIZ_TYPE_V3
+        description: |
+          비즈니스 유형 V3. BIZ_TYPE_V2에서 리셀 마켓(RESELL_ACCOMMODATION),
+          B2B_ACCOMMODATION_DOM/OUT, OUTBOUND_ACCOMMODATION_STAYNET 등 추가 세분화.
+        data_type: STRING
+      - name: FPNA_CATEGORY
+        description: "FPNA 카테고리. FPNA_CATEGORY_INFO에서 STANDARD_CATEGORY_LV_3_CD 기준 매핑"
+        data_type: STRING
+      - name: TEAM_DIVISION
+        description: "팀 구분"
+        data_type: STRING
+      - name: FLIGHT_RESVE_ID
+        description: "항공 예약 ID"
+        data_type: STRING
+      - name: FLIGHT_CREATE_KST_DT
+        description: "항공 생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: FLIGHT_TRAVEL_START_KST_DATE
+        description: "항공 여행 시작 KST 날짜"
+        data_type: DATE
+      - name: HOTEL_CAMPAIGN_ID
+        description: "호텔 캠페인 ID"
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "예약 생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DT
+        description: "예약 확정 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DATE
+        description: "예약 확정 KST 날짜"
+        data_type: DATE
+      - name: CREATE_KST_DATE
+        description: "예약 생성 KST 날짜"
+        data_type: DATE
+      - name: HOTEL_AFFILIATE_NM
+        description: "호텔 제휴사 이름 (mrt, booking, hotels, agoda, expedia, airbnb 등)"
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "공급자 코드"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NM
+        description: "파트너 이름. partners.partner 테이블 기준"
+        data_type: STRING
+      - name: ACCOUNT_ID
+        description: |
+          숙소 계정 ID (OSP ID).
+          osp_mapping(lodging 테이블), hocance_normal_ticket, product_title_osp_mapping 순서로 매핑.
+        data_type: STRING
+      - name: ACCOUNT_NAME
+        description: "숙소 계정 이름. ACCOUNT_ID와 동일한 매핑 우선순위로 결정"
+        data_type: STRING
+      - name: GID
+        description: "상품 그룹 ID"
+        data_type: STRING
+      - name: GPID
+        description: "상품 그룹 상위 ID"
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품 제목. NULL이면 HOTEL_AFFILIATE_NM + '_hotel'로 대체"
+        data_type: STRING
+      - name: REGION_TYPE
+        description: "지역 유형. COUNTRY_NM이 한국이면 'Domestic', 그 외 'Outbound'"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가 이름. NULL이면 'Others'"
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름. NULL이면 'Others'"
+        data_type: STRING
+      - name: JEJU_FLAG
+        description: "제주도 여부 (Y/N). CITY_NM='Jeju' AND COUNTRY_NM='Korea, Republic of'일 때 'Y'"
+        data_type: STRING
+      - name: COUPON_ID
+        description: "대표 쿠폰 ID. 사용 이력 > 상품쿠폰 > 예약 이력 template_id > 프로모션쿠폰 순"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 템플릿 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 템플릿 ID"
+        data_type: INTEGER
+      - name: COUPON_TITLE
+        description: "쿠폰 제목. COUPON_ID와 동일한 우선순위로 결정. 매핑 불가 시 'UNKNOWN'"
+        data_type: STRING
+      - name: COUPON_PUBLISH_TEAM_NM
+        description: "쿠폰 발행 팀 이름. MART_COUPON_RESVE_D 기준. 매핑 불가 시 'UNKNOWN'"
+        data_type: STRING
+      - name: COUPON_PUBLISH_PURPOSE_NM
+        description: "쿠폰 발행 목적 이름. MART_COUPON_RESVE_D 기준. 매핑 불가 시 'UNKNOWN'"
+        data_type: STRING
+      - name: CROSS_SELL_FLAG
+        description: "크로스 셀 여부 (Y/N). NULL이면 'N'"
+        data_type: STRING
+      - name: COMMISSION_RATE
+        description: |
+          MRT 수수료율 (VAT 제외).
+          기존 숙박 도메인 15가지 분기 로직으로 산출하며, 계산식은 SAFE_DIVIDE(CASE분기, 1.1) 기반이다.
+        data_type: FLOAT
+      - name: SALES_COMMISSION_PRICE
+        description: "MART_SALE_D의 원본 commission_price"
+        data_type: FLOAT
+      - name: PARTNER_SETTLE_TYPE
+        description: "파트너 정산 유형 (internal/external)"
+        data_type: STRING
+      - name: PARTNER_SALES_TYPE
+        description: "파트너 판매 유형"
+        data_type: STRING
+      - name: PARTNERSHIP_CD
+        description: "파트너십 코드"
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 파트너십 코드"
+        data_type: STRING
+      - name: PG_NM
+        description: "PG사 이름. pg_fee_data CTE에서 결제 수단별 매핑 (TOSSPAYMENTS, KCP 등)"
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "원화 판매 금액 (GMV)"
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE
+        description: |
+          MRT 수수료 매출 (VAT 제외).
+          기존 역산 로직으로 산출하며, 분기 상세는 MRT_SALES_PRICE_TYPE 참조. NULL 시 0.
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE_TYPE
+        description: |
+          MRT_SALES_PRICE 산출 분기 번호.
+          1: 내부정산, 2: 삼성B2B(take_amount NULL), 3: 삼성B2B(take_amount 존재),
+          4: B2B net price, 5: B2B property(~10.20), 6: B2B_ACCOMMODATION(~10.20),
+          7: partner 19260, 8: 호텔메타 제휴사, 9: 직계약 호텔(mrt/external),
+          10: ONDA, 11: 펜션(external), 12: 민박(settle NULL),
+          13: 민박(13145), 14: 호캉스(MRT_TAKE_RATE), 15: rate=1 미매핑, 99: 기타
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: |
+          쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분).
+          상품쿠폰 부담분과 주문쿠폰 부담분을 각각 계산해 합산한 최종값.
+          - 호텔메타 제휴사(EXTERNAL_ACCOMMODATION)는 discount_rate 규칙, booking/hotels/agoda/expedia/airbnb는 0 처리 우선 적용
+          - 그 외 상품쿠폰은 fpna_coupon_info(type='2.0 product', '3.0 product')의 mrt_rate 또는 mrt_value 적용
+          - 3.0 쿠폰은 fpna_coupon_info(type='3.0 product')와 COUPON_EXTRA_INFO의 mrt_value 또는 mrt_contribution_rate 적용
+          - 매핑이 없으면 fallback 부담분 사용, NULL은 0 처리
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분). COUPON_PRICE 구성 요소"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분). COUPON_PRICE 구성 요소"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: |
+          포인트 사용 금액.
+          호텔메타 제휴사(booking/hotels/agoda/expedia/airbnb)는 NULL 처리.
+          그 외는 MART_SALE_D의 point_price 원본값 사용. NULL 시 0.
+        data_type: INTEGER
+      - name: EXCLUDED_POINT_PRICE
+        description: |
+          손익 계산에서 제외되는 포인트 금액.
+          FPNA_EXCEPTED_POINT_INFO의 template_id에 해당하는 포인트가 사용된 예약의 경우
+          point_price를 그대로 반환. 해당하지 않으면 0.
+        data_type: INTEGER
+      - name: DISCOUNT_PRICE
+        description: |
+          할인 금액 (VAT 제외).
+          계산식: MART_SALE_D.DISCOUNT_PRICE / 1.1.
+          B2B_ACCOMMODATION(2024-10-21 이후)은 0 처리. NULL 시 0.
+        data_type: FLOAT
+      - name: CHANNEL_FEE_PRICE
+        description: |
+          채널 수수료 (PG 수수료).
+          계산식: SALES_KRW_PRICE * pg_com_rate. pg_com_rate는 FPNA_PG_INFO에서 PG사/기간별 매핑.
+          pg_com_rate 매핑 실패 시 기본값 2%(0.02) 적용.
+          호텔메타 제휴사(booking/hotels/agoda/expedia/airbnb)는 0. NULL 시 0.
+        data_type: FLOAT
+      - name: AGENCY_FEE
+        description: |
+          대행사 수수료.
+          payment_product_closing 테이블의 partnership_commission 합계. NULL 시 0.
+        data_type: INTEGER
+      - name: MARKETING_PARTNER_FEE
+        description: |
+          마케팅 파트너 수수료.
+          payment_product_closing 테이블의 marketing_partnership_commission 합계. NULL 시 0.
+        data_type: INTEGER
+      - name: AFFILIATE_POINT_FEE
+        description: |
+          B2B 제휴 포인트 수수료.
+          B2B 포인트를 사용한 예약(b2b_point_rsv)에 한해 point_price * 0.02(2%).
+          해당하지 않으면 0. NULL 시 0.
+        data_type: FLOAT
+      - name: NET_PRICE
+        description: "순 판매금액. 현재 NULL로 고정 (CAST(NULL AS FLOAT64))"
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시 (KST 기준)"
+        data_type: TIMESTAMP

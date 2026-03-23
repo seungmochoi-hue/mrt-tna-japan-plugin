@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: DIM_TEST_USER
+    description: >
+      마리트 테스트 사용자 [테스트 계정](https://docs.google.com/spreadsheets/d/1rHPugjhFCWY5i5Y4QfYaPAyvILBdeAabZNEkfzPPxtE/edit?gid=0#gid=0)
+    columns:
+      - name: USER_ID
+        description: "사용자 ID"
+      - name: DOMAIN_NM
+        description: "도메인명"
+      - name: USER_NAME
+        description: "사용자 이름"
+      - name: EMAIL
+        description: "이메일 (테스트 계정, 개인정보 X)"
+      - name: TEAM
+        description: "팀"
+

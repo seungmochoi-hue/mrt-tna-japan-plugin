@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: MART_BIZ_LOG_EURORAIL_PID_CONVERSION_D
+    description: "유럽기차(EUROPE_TRAIN) 전환 퍼널(PID) 일별 집계(검색→checkout→checkout_complete)"
+    config:
+      tags: ["MART", "BIZ_LOG"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일자"
+        data_type: DATE
+      - name: PID
+        description: "PID"
+        data_type: STRING
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: ITEM_ID
+        description: "상품/아이템 ID"
+        data_type: STRING
+      - name: DEPARTURE_NM
+        description: "출발지"
+        data_type: STRING
+      - name: ARRIVAL_NM
+        description: "도착지"
+        data_type: STRING
+      - name: JOURNEY_CD
+        description: "여정 코드"
+        data_type: STRING
+      - name: DIRECTION_CD
+        description: "편도/왕복 등 방향 코드"
+        data_type: STRING
+      - name: REF_URL
+        description: "ref_url"
+        data_type: STRING
+      - name: UTM_SOURCE
+        description: "UTM source(최근값 우선)"
+        data_type: STRING
+      - name: UTM_CAMPAIGN
+        description: "UTM campaign(최근값 우선)"
+        data_type: STRING
+      - name: UTM_MEDIUM
+        description: "UTM medium(최근값 우선)"
+        data_type: STRING
+      - name: UTM_CONTENT
+        description: "UTM content(최근값 우선)"
+        data_type: STRING
+      - name: UTM_TERM
+        description: "UTM term(최근값 우선)"
+        data_type: STRING
+      - name: N_AD
+        description: "네이버 광고 이름(최근값 우선)"
+        data_type: STRING
+      - name: N_CAMPAIGN_TYPE
+        description: "네이버 캠페인 타입(최근값 우선)"
+        data_type: STRING
+      - name: OFFER_DETAIL_DT
+        description: "검색/상세(offer) 이벤트 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_DT
+        description: "checkout 이벤트 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_DT
+        description: "checkout_complete 이벤트 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_ORDER_ID
+        description: "checkout_complete 시점 주문 ID"
+        data_type: STRING
+      - name: CHECKOUT_COMPLETE_RESVE_ID
+        description: "checkout_complete 시점 예약 ID"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

@@ -1,0 +1,53 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: flight_component_product_information
+    identifier: DW_MRT_PACKAGE_SOLUTION_FLIGHT_COMPONENT_PRODUCT_INFORMATION
+    description: 항공 구성상품 정보. 마지막 적재일 2025-07-09. 최근 90일 기준 신규 적재 미확인. 주요 타입값 DEPARTURE/RETURN/STOPOVER
+      확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: arrival_airport_code
+      description: Arrival airport code
+    - name: arrival_time
+      description: Arrival time
+    - name: departure_airport_code
+      description: Departure airport code
+    - name: departure_time
+      description: Departure time
+    - name: flight_number
+      description: 항공 number
+    - name: flight_order
+      description: 항공 order
+    - name: flight_type
+      description: 항공 타입
+    - name: component_product_id
+      description: 구성상품 상품 ID
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: over_midnight_flag
+      description: Over midnight flag
+    - name: luggage_info
+      description: Luggage info
+    - name: remarks
+      description: Remarks
+    - name: flight_segment_id
+      description: 항공 segment ID
+    - name: stopover_duration
+      description: Stopover duration

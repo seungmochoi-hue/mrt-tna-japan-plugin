@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: FPNA_TNA_NAVER_SMARTSTORE_OFFERS
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [T&A 네이버 스마트스토어](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=2049775466#gid=2049775466)
+    columns:
+      - name: PRODUCT_ID
+        description: "상품 ID"
+      - name: PRODUCT_NM
+        description: "상품 이름"
+

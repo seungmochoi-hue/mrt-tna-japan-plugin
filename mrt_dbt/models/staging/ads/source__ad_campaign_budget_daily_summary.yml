@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_campaign_budget_daily_summary
+    identifier: DW_MRT_ADS_AD_CAMPAIGN_BUDGET_DAILY_SUMMARY
+    description: 검색광고 일예산 소진 요약.
+    columns:
+    - name: id
+      description: ID
+    - name: ad_campaign_id
+      description: 광고 캠페인 ID
+    - name: budget_date
+      description: 예산 일자
+    - name: daily_budget
+      description: 일예산
+    - name: spent_amount
+      description: 총 소진 금액
+    - name: spent_credit_amount
+      description: 크레딧 소진 금액
+    - name: spent_paid_amount
+      description: 유상 소진 금액
+    - name: spent_paid_deductible_amount
+      description: 차감형 유상 소진 금액
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

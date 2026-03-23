@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: MART_PRODUCT_TOTAL_AGG_D
+    description: "GID별 예약 및 퍼널 지표를 포함한 집계 테이블입니다."
+    columns:
+      - name: GID
+        description: GID
+        data_type: STRING
+      - name: TOTAL_RESERVATION_CNT
+        description: 전체 예약 유저 건수
+        data_type: INTEGER
+      - name: TOTAL_SALE_PRICE
+        description: 전체 판매 금액
+        data_type: INTEGER
+      - name: LAST_RESVE_KST_DATE
+        description: 최종 예약 KST 일시
+        data_type: DATE
+      - name: FIRST_RESVE_KST_DATE
+        description: 최초 예약 KST 일시
+        data_type: DATE
+

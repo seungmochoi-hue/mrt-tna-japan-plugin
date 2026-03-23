@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: FPNA_KIDS_CIC_MADE_PRODUCT_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      KIDS_오퍼별 손익_V202308 [FPNA](https://docs.google.com/spreadsheets/d/122ApXoHVUIKnGyMb95RnkvB8NqSgdKWCkezd9MM6DsE/edit?gid=180739630#gid=180739630)
+    columns:
+      - name: PRODUCT_ID
+        description: "상품 ID"
+      - name: MRT_TAKE_RATE
+        description: "MRT 수수료율"
+

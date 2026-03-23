@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: flight_option_reservation_refund_transactions
+        identifier: DW_MRT_SETTLES_FLIGHT_OPTION_RESERVATION_REFUND_TRANSACTIONS
+        description: |
+          항공 옵션 환불 트랜잭션 원천. 옵션 단위 환불 금액/수수료를 제공하며, 항공 인디비 원천 쿼리에서 옵션 환불 분해 집계에 사용함.
+        columns:
+          - name: id
+            description: "pk"
+          - name: created_at
+            description: "생성 일시"
+          - name: created_by
+            description: "생성자"
+          - name: deleted_at
+            description: "삭제 일시"
+          - name: updated_at
+            description: "수정 일시"
+          - name: updated_by
+            description: "수정자"
+          - name: canceled_at
+            description: "취소 일시"
+          - name: reservation_refund_id
+            description: "예약 환불 FK"
+          - name: option_reservation_id
+            description: "항공 티켓 UK"
+          - name: option_reservation_refund_id
+            description: "예약 환불 ID"
+          - name: ticket_no
+            description: "티켓번호"
+          - name: origin_ticket_no
+            description: "원 티켓번호"
+          - name: refund_amount
+            description: "환불 금액"
+          - name: total_cancel_commission
+            description: "총 취소 수수료"
+          - name: mrt_cancel_commission
+            description: "마리트 취소 수수료"
+          - name: partner_cancel_commission
+            description: "파트너 취소 수수료"
+          - name: supply_price
+            description: "항공료"
+          - name: tax
+            description: "세금 + 유류할증료"
+          - name: tasf_commission
+            description: "TASF 수수료"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

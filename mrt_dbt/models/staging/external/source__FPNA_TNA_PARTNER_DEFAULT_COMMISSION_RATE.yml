@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TNA_PARTNER_DEFAULT_COMMISSION_RATE"
+        identifier: "FPNA_TNA_PARTNER_DEFAULT_COMMISSION_RATE"
+        description: "T&A 파트너 디폴트 수수료율 (스프레드 시트 관리)"
+        columns:
+          - name: "PARTNER_ID"
+            description: "파트너 ID"
+          - name: "PARTNER_NM"
+            description: "파트너 이름"
+          - name: "COMMISSION_RATE"
+            description: "커미션 비율"
+          - name: "REMARK"
+            description: "비고"

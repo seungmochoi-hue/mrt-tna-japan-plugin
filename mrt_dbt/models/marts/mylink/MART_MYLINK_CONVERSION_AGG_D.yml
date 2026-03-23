@@ -1,0 +1,165 @@
+version: 2
+
+models:
+  - name: MART_MYLINK_CONVERSION_AGG_D
+    description: 마이링크 퍼포먼스 집계 테이블입니다.
+    config:
+      tags: [ 'MYLINK', 'MART', "AGG" ]
+    columns:
+      - name: BASIS_DATE
+        description: '기준 날짜'
+        data_type: DATE
+      - name: MYLINK_ID
+        description: '마이링크 ID'
+        data_type: STRING
+      - name: GID
+        description: 'GID'
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: '도메인 이름'
+        data_type: STRING
+      - name: PLATFORM
+        description: '플랫폼'
+        data_type: STRING
+      - name: MYLINK_ITEM_FLAG
+        description: '마이링크 아이템 여부 플래그'
+        data_type: STRING
+      - name: TODAY_OFFER_DETAIL_CNT
+        description: "오늘 오퍼 디테일 발생 건수"
+        data_type: INTEGER
+      - name: TODAY_CHECKOUT_CNT
+        description: "오늘 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: TODAY_CHECKOUT_COMPLETE_CNT
+        description: "오늘 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: TODAY_CHECKOUT_WITHOUT_INFLOW_CNT
+        description: "오늘 인플로우 없이 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: TODAY_CHECKOUT_COMPLETE_WITHOUT_INFLOW_CNT
+        description: "오늘 인플로우 없이 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: WEEKLY_OFFER_DETAIL_CNT
+        description: "주간 오퍼 디테일 발생 건수"
+        data_type: INTEGER
+      - name: WEEKLY_CHECKOUT_CNT
+        description: "주간 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: WEEKLY_CHECKOUT_COMPLETE_CNT
+        description: "주간 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: WEEKLY_CHECKOUT_WITHOUT_INFLOW_CNT
+        description: "주간 인플로우 없이 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: WEEKLY_CHECKOUT_COMPLETE_WITHOUT_INFLOW_CNT
+        description: "주간 인플로우 없이 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: MONTHLY_OFFER_DETAIL_CNT
+        description: "월간 오퍼 디테일 발생 건수"
+        data_type: INTEGER
+      - name: MONTHLY_CHECKOUT_CNT
+        description: "월간 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: MONTHLY_CHECKOUT_COMPLETE_CNT
+        description: "월간 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: MONTHLY_CHECKOUT_WITHOUT_INFLOW_CNT
+        description: "월간 인플로우 없이 체크아웃 발생 건수"
+        data_type: INTEGER
+      - name: MONTHLY_CHECKOUT_COMPLETE_WITHOUT_INFLOW_CNT
+        description: "월간 인플로우 없이 체크아웃 완료 건수"
+        data_type: INTEGER
+      - name: TODAY_RESVE_USER_CNT
+        description: "오늘 예약 사용자 수"
+        data_type: INTEGER
+      - name: TODAY_RESVE_QUANTITY_CNT
+        description: "오늘 예약 수량"
+        data_type: INTEGER
+      - name: TODAY_SALE_QUANTITY_CNT
+        description: "오늘 판매 수량"
+        data_type: INTEGER
+      - name: TODAY_SALE_PRICE
+        description: "오늘 판매 가격"
+        data_type: FLOAT
+      - name: TODAY_SALE_COMMISSION_PRICE
+        description: "오늘 판매 수수료 가격"
+        data_type: INTEGER
+      - name: TODAY_CANCEL_RESVE_USER_CNT
+        description: "오늘 예약 취소 사용자 수"
+        data_type: INTEGER
+      - name: TODAY_CANCEL_RESVE_QUANTITY_CNT
+        description: "오늘 예약 취소 수량"
+        data_type: INTEGER
+      - name: TODAY_CANCEL_SALE_QUANTITY_CNT
+        description: "오늘 판매 취소 수량"
+        data_type: INTEGER
+      - name: TODAY_CANCEL_SALE_PRICE
+        description: "오늘 판매 취소 가격"
+        data_type: FLOAT
+      - name: TODAY_CANCEL_SALE_COMMISSION_PRICE
+        description: "오늘 판매 취소 수수료 가격"
+        data_type: INTEGER
+      - name: WEEKLY_RESVE_USER_CNT
+        description: "주간 예약 사용자 수"
+        data_type: INTEGER
+      - name: WEEKLY_RESVE_QUANTITY_CNT
+        description: "주간 예약 수량"
+        data_type: INTEGER
+      - name: WEEKLY_SALE_QUANTITY_CNT
+        description: "주간 판매 수량"
+        data_type: INTEGER
+      - name: WEEKLY_SALE_PRICE
+        description: "주간 판매 가격"
+        data_type: FLOAT
+      - name: WEEKLY_SALE_COMMISSION_PRICE
+        description: "주간 판매 수수료 가격"
+        data_type: INTEGER
+      - name: WEEKLY_CANCEL_RESVE_USER_CNT
+        description: "주간 예약 취소 사용자 수"
+        data_type: INTEGER
+      - name: WEEKLY_CANCEL_RESVE_QUANTITY_CNT
+        description: "주간 예약 취소 수량"
+        data_type: INTEGER
+      - name: WEEKLY_CANCEL_SALE_QUANTITY_CNT
+        description: "주간 판매 취소 수량"
+        data_type: INTEGER
+      - name: WEEKLY_CANCEL_SALE_PRICE
+        description: "주간 판매 취소 가격"
+        data_type: FLOAT
+      - name: WEEKLY_CANCEL_SALE_COMMISSION_PRICE
+        description: "주간 판매 취소 수수료 가격"
+        data_type: INTEGER
+      - name: MONTHLY_RESVE_USER_CNT
+        description: "월간 예약 사용자 수"
+        data_type: INTEGER
+      - name: MONTHLY_RESVE_QUANTITY_CNT
+        description: "월간 예약 수량"
+        data_type: INTEGER
+      - name: MONTHLY_SALE_QUANTITY_CNT
+        description: "월간 판매 수량"
+        data_type: INTEGER
+      - name: MONTHLY_SALE_PRICE
+        description: "월간 판매 가격"
+        data_type: FLOAT
+      - name: MONTHLY_SALE_COMMISSION_PRICE
+        description: "월간 판매 수수료 가격"
+        data_type: INTEGER
+      - name: MONTHLY_CANCEL_RESVE_USER_CNT
+        description: "월간 예약 취소 사용자 수"
+        data_type: INTEGER
+      - name: MONTHLY_CANCEL_RESVE_QUANTITY_CNT
+        description: "월간 예약 취소 수량"
+        data_type: INTEGER
+      - name: MONTHLY_CANCEL_SALE_QUANTITY_CNT
+        description: "월간 판매 취소 수량"
+        data_type: INTEGER
+      - name: MONTHLY_CANCEL_SALE_PRICE
+        description: "월간 판매 취소 가격"
+        data_type: FLOAT
+      - name: MONTHLY_CANCEL_SALE_COMMISSION_PRICE
+        description: "월간 판매 취소 수수료 가격"
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 로드 시간"
+        data_type: TIMESTAMP
+

@@ -1,0 +1,32 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: theme_offer_search_condition_mapping
+    identifier: DW_MRT_STAY_THEME_OFFER_SEARCH_CONDITION_MAPPING
+    description: 통합숙소 테마 오퍼 검색 조건 매핑. 마지막 적재일 2026-03-18.
+    columns:
+    - name: mapping_id
+      description: 매핑 ID
+    - name: search_condition
+      description: 검색 조건
+    - name: search_value
+      description: 검색 값
+    - name: theme_offer_id
+      description: 테마 오퍼 ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

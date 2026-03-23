@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: FPNA_KIDS_CIC_LEGACY_OFFER_COMMISSION_RATE
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      KIDS 기획상품 손익 & 정산 관리 시트 [기존상품_오퍼별_수수료율](https://docs.google.com/spreadsheets/d/1-mq1-dncwraqmEryeUb10X54MfstnIBu7L4-8s1yJu8/edit?gid=1082038473#gid=1082038473)
+    columns:
+      - name: PRODUCT_ID
+        description: "상품 ID"
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+      - name: TARGET_TR
+        description: "대상 수수료율 (TR%: Take Rate)"
+      - name: ACTURAL_TR
+        description: "실제 수수료율 (TR%: Take Rate)"
+      - name: REMARK
+        description: "비고"
+

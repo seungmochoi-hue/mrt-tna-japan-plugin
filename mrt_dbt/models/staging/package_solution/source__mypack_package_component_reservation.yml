@@ -1,0 +1,72 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mypack_package_component_reservation
+    identifier: DW_MRT_PACKAGE_SOLUTION_MYPACK_PACKAGE_COMPONENT_RESERVATION
+    description: 마이팩 예약. 하위 모델 MART_PACKAGE_OPTION_SALE_D에서 사용함. 마지막 적재일 2026-03-19.
+      주요 상태값 TEMP/LINKAGE_RESERVE_CANCEL/CANCEL/WAIT_CONFIRM 확인. 주요 타입값 ACCOMMODATION_STAYNET
+      확인.
+    columns:
+    - name: id
+      description: id
+    - name: product_type
+      description: 상품 타입
+    - name: mrt_reservation_no
+      description: 예약 번호
+    - name: component_product_id
+      description: 구성상품 ID
+    - name: component_product_option_id
+      description: 구성상품 옵션 ID
+    - name: component_product_daily_stock_price_id
+      description: 구성상품 일별 재고가격 ID
+    - name: package_product_option_id
+      description: 패키지 옵션 ID
+    - name: linkage_sub_key
+      description: 연동 보조키
+    - name: partner_id
+      description: 파트너 ID
+    - name: package_component_reservation_group_id
+      description: 패키지 구성상품 예약 그룹 ID
+    - name: pnr_sequence_no
+      description: PNR 일련번호
+    - name: gds_reservation_id
+      description: GDS 예약 ID
+    - name: pay_tl
+      description: 결제/발권 시한
+    - name: deactivated_flag
+      description: 비활성화 여부
+    - name: reservation_status
+      description: 예약 상태
+    - name: supply_price
+      description: 공급가
+    - name: sale_price
+      description: 판매가
+    - name: option_reservation_id
+      description: 주문 옵션 ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: Deleted By
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: accommodation_reservation_info
+      description: 숙소 예약 정보
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: accommodation_supply_price
+      description: 숙소 공급가
+    - name: air_price
+      description: 항공요금
+    - name: fuel_surcharge
+      description: 항공 유류할증료
+    - name: tax
+      description: 항공료 세금

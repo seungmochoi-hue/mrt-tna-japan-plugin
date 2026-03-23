@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gsheets": {
+      "command": "uvx",
+      "args": ["mcp-google-sheets"]
+    }
+  }
+}

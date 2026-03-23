@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fpna_external_commission_flight_gds_vi
+    description: "항공 GDS VI(수수료) 추정/이력 정보"
+    config:
+      meta:
+        owner: "FPNA"
+    columns:
+      - name: BASIS_DATE
+        description: "기준일자"
+        data_type: DATE
+      - name: HISTORICAL_VI_RATE
+        description: "이력 VI 비율"
+        data_type: FLOAT64
+      - name: ESTIMATED_VI_RATE
+        description: "추정 VI 비율"
+        data_type: FLOAT64
+      - name: REMARK_1
+        description: "비고 1"
+        data_type: STRING
+      - name: REMARK_2
+        description: "비고 2"
+        data_type: STRING
+

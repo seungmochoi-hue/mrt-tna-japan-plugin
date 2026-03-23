@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: MART_COUPON_RESVE_D
+    description: "쿠폰 예약 이력 (그레인: 쿠폰 1건=1행, RESVE_ID당 N행 가능)"
+    config:
+      tags: [ "mart", "coupon" ]
+    columns:
+      - name: RESVE_ID
+        description: 예약 아이디
+        data_type: string
+
+      - name: COUPON_ID
+        description: 쿠폰 아이디
+        data_type: integer
+
+      - name: COUPON_NM
+        description: 쿠폰 명
+        data_type: string
+
+      - name: COUPON_PUBLISH_TYPE
+        description: 쿠폰 배포 유형
+        data_type: string
+
+      - name: COUPON_PUBLISH_TEAM
+        description: 쿠폰 배포 팀
+        data_type: string
+
+      - name: COUPON_PUBLISH_PURPOSE
+        description: 쿠폰 배포 목적
+        data_type: string
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: datetime

@@ -1,0 +1,79 @@
+{{
+    config(
+        materialized='table',
+        schema='edw_mart',
+        alias='MART_REVIEW_TREND_AGG_D',
+        partition_by={
+            'field': 'BASIS_DATE',
+            'data_type': 'date',
+            'granularity': 'month'
+        },
+        cluster_by=['GID']
+    )
+}}
+
+
+WITH SOURCE AS (
+    SELECT
+        DATE(R.created_at, 'Asia/Seoul') AS BASIS_DATE
+      , CAST(R.product_id AS STRING) AS GID
+      , CAST(R.product_partner_id AS STRING) AS PARTNER_ID
+      , R.vertical_id AS VERTICAL_ID
+      , R.id AS REVIEW_ID
+      , R.score AS SCORE
+      , R.created_at AS REVIEW_CREATE_DT
+    FROM {{ source("reviews", "reviews") }} R
+    WHERE R.blocked = FALSE
+      AND R.deleted_at IS NULL
+)
+
+, LATEST_ATTR AS (
+    -- 동일 BASIS_DATE, GID에서 다중 PARTNER_ID/VERTICAL_ID가 관측되어 최신 리뷰 기준값을 사용함.
+    SELECT
+        BASIS_DATE
+      , GID
+      , ARRAY_AGG(
+            STRUCT(PARTNER_ID, VERTICAL_ID)
+            ORDER BY REVIEW_CREATE_DT DESC, REVIEW_ID DESC
+            LIMIT 1
+        )[OFFSET(0)] AS LATEST_ATTR
+    FROM SOURCE
+    GROUP BY BASIS_DATE, GID
+)
+
+, DAILY_AGG AS (
+    SELECT
+        BASIS_DATE
+      , GID
+      , COUNT(DISTINCT REVIEW_ID) AS REVIEW_CNT
+      , FLOOR(AVG(SCORE) * 100) / 100 AS AVG_SCORE
+      , COUNTIF(SCORE = 1.0) AS SCORE1_REVIEW_CNT
+      , COUNTIF(SCORE = 2.0) AS SCORE2_REVIEW_CNT
+      , COUNTIF(SCORE = 3.0) AS SCORE3_REVIEW_CNT
+      , COUNTIF(SCORE = 4.0) AS SCORE4_REVIEW_CNT
+      , COUNTIF(SCORE = 5.0) AS SCORE5_REVIEW_CNT
+      , COUNTIF(SCORE IN (4.0, 5.0)) AS HIGH_SCORE_CNT
+      , COUNTIF(SCORE IN (1.0, 2.0)) AS LOW_SCORE_CNT
+    FROM SOURCE
+    GROUP BY BASIS_DATE, GID
+)
+
+SELECT
+    A.BASIS_DATE AS BASIS_DATE
+  , A.GID AS GID
+  , L.LATEST_ATTR.PARTNER_ID AS PARTNER_ID
+  , L.LATEST_ATTR.VERTICAL_ID AS VERTICAL_ID
+  , A.REVIEW_CNT AS REVIEW_CNT
+  , A.AVG_SCORE AS AVG_SCORE
+  , A.SCORE1_REVIEW_CNT AS SCORE1_REVIEW_CNT
+  , A.SCORE2_REVIEW_CNT AS SCORE2_REVIEW_CNT
+  , A.SCORE3_REVIEW_CNT AS SCORE3_REVIEW_CNT
+  , A.SCORE4_REVIEW_CNT AS SCORE4_REVIEW_CNT
+  , A.SCORE5_REVIEW_CNT AS SCORE5_REVIEW_CNT
+  , A.HIGH_SCORE_CNT AS HIGH_SCORE_CNT
+  , A.LOW_SCORE_CNT AS LOW_SCORE_CNT
+  , DATETIME_ADD(CURRENT_TIMESTAMP(), INTERVAL 9 HOUR) AS DW_LOAD_DT
+FROM DAILY_AGG A
+INNER JOIN LATEST_ATTR L
+        ON A.BASIS_DATE = L.BASIS_DATE
+       AND A.GID = L.GID

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: FPNA_B2B_GID_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [B2B제휴 GID 관리](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=237837578#gid=237837578)
+    columns:
+      - name: TYPE
+        description: "TYPE"
+      - name: MRT_TYPE
+        description: "MRT 타입"
+      - name: BIZ_TYPE
+        description: "BIZ_TYPE"
+      - name: GID
+        description: "GID"
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+      - name: REMARK_1
+        description: "비고 1"
+      - name: REMARK_2
+        description: "비고 2"
+      - name: REMARK_3
+        description: "비고 3"
+

@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: MART_SETTLEMENT_SEPARATE_SETTLEMENT_M
+    description: "별도 정산을 위한 마트 테이블(임시 - 2.0 기준, 일부 3.0)"
+    config:
+      tags: ["SEPARATE_SETTLEMENT", "MART"]
+    columns:
+      - name: BASIS_MONTH
+        description: "기준 날짜"
+        data_type: DATE
+      - name: GUIDE_ID
+        description: "가이드 ID"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: OFFER_ID
+        description: "오퍼 ID"
+        data_type: STRING
+      - name: OFFER_NAME
+        description: "오퍼 이름"
+        data_type: STRING
+      - name: KIND
+        description: "1=결제행, 2=취소행"
+        data_type: INTEGER
+      - name: CREATE_KST_DT
+        description: "예약 생성 날짜"
+        data_type: TIMESTAMP
+      - name: RESVE_PAID_KST_DT
+        description: "예약 지불 날짜"
+        data_type: TIMESTAMP
+      - name: RESVE_CONFIRM_KST_DT
+        description: "예약 확인 완료 날짜"
+        data_type: TIMESTAMP
+      - name: CANCEL_KST_DT
+        description: "예약 취소 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 마지막 날짜"
+        data_type: DATE
+      - name: SALES_PRICE
+        description: "판매 가격"
+        data_type: FLOAT
+      - name: PAID_KRW_PRICE
+        description: "지불 비용"
+        data_type: FLOAT
+      - name: COUPON_PRICE
+        description: "쿠폰 비용"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "포인트 사용 비용"
+        data_type: INTEGER
+      - name: COMMISSION_RATE
+        description: "커미션 비율"
+        data_type: FLOAT
+      - name: COMMISSION_PRICE
+        description: "커미션 비용"
+        data_type: FLOAT
+      - name: ISTANBUL_RESERVATION_KEY
+        description: "예약 매칭 키"
+        data_type: STRING
+      - name: PERSON_CNT
+        description: "인원 수"
+        data_type: INTEGER
+      - name: NET_PRICE
+        description: "공급 가격"
+        data_type: FLOAT
+      - name: STATUS
+        description: "예약 상태"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "데이터 적재 날짜"
+        data_type: DATETIME
+
+

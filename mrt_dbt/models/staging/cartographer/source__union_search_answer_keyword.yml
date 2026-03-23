@@ -1,0 +1,34 @@
+version: 2
+sources:
+- name: cartographer
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: union_search_answer_keyword
+    identifier: DW_MRT_CARTOGRAPHER_UNION_SEARCH_ANSWER_KEYWORD
+    description: 통합검색 답변 키워드. 마지막 적재일 2026-03-19. 주요 타입값 ANSWER 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: keyword
+      description: 키워드
+    - name: type
+      description: 타입
+    - name: gid
+      description: GID
+    - name: agent
+      description: Agent
+    - name: created_by
+      description: 생성자
+    - name: created_at
+      description: 생성일시
+    - name: updated_by
+      description: 수정자
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_by
+      description: 삭제자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

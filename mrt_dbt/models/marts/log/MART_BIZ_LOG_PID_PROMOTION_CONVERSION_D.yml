@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: MART_BIZ_LOG_PID_PROMOTION_CONVERSION_D
+    description: "비즈니스 로그 PID 프로모션 전환 데이터"
+    config:
+      tags: ["BIZ_LOG", "MART"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 날짜"
+        data_type: DATE
+      - name: PID
+        description: "PID"
+        data_type: STRING
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: CAMPAIGN_ID
+        description: "캠페인 ID"
+        data_type: STRING
+      - name: REF_URL
+        description: "참조 URL"
+        data_type: STRING
+      - name: UTM_SOURCE
+        description: "UTM 소스"
+        data_type: STRING
+      - name: UTM_CAMPAIGN
+        description: "UTM 캠페인"
+        data_type: STRING
+      - name: UTM_MEDIUM
+        description: "UTM 미디엄"
+        data_type: STRING
+      - name: UTM_CONTENT
+        description: "UTM 콘텐츠"
+        data_type: STRING
+      - name: N_AD
+        description: "광고 수"
+        data_type: STRING
+      - name: N_CAMPAIGN_TYPE
+        description: "캠페인 타입 수"
+        data_type: STRING
+      - name: PROMOTION_DETAIL_REF_URL
+        description: "프로모션 상세 참조 URL"
+        data_type: STRING
+      - name: PROMOTION_DETAIL_FLAG
+        description: "프로모션 상세 플래그"
+        data_type: INTEGER
+      - name: PROMOTION_DETAIL_FIRST_ACCESS_DT
+        description: "프로모션 상세 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: ITEM_ID
+        description: "아이템 ID"
+        data_type: STRING
+      - name: OFFER_DETAIL_FLAG
+        description: "오퍼 상세 플래그"
+        data_type: INTEGER
+      - name: OFFER_DETAIL_FIRST_ACCESS_DT
+        description: "오퍼 상세 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: WITH_EVENT_OFFER_DETAIL_FLAG
+        description: "이벤트 오퍼 상세 플래그"
+        data_type: INTEGER
+      - name: WITH_EVENT_OFFER_DETAILT_FIRST_ACCESS_DT
+        description: "이벤트 오퍼 상세 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_FLAG
+        description: "체크아웃 플래그"
+        data_type: INTEGER
+      - name: CHECKOUT_FIRST_ACCESS_DT
+        description: "체크아웃 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: WITH_EVENT_CHECKOUT_FLAG
+        description: "이벤트 체크아웃 플래그"
+        data_type: INTEGER
+      - name: WITH_EVENT_CHECKOUT_FIRST_ACCESS_DT
+        description: "이벤트 체크아웃 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_FLAG
+        description: "체크아웃 완료 플래그"
+        data_type: INTEGER
+      - name: CHECKOUT_COMPLETE_FIRST_ACCESS_DT
+        description: "체크아웃 완료 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: WITH_EVENT_CHECKOUT_COMPLETE_FLAG
+        description: "이벤트 체크아웃 완료 플래그"
+        data_type: INTEGER
+      - name: WITH_EVENT_CHECKOUT_COMPLETE_FIRST_ACCESS_DT
+        description: "이벤트 체크아웃 완료 최초 접근 일시"
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

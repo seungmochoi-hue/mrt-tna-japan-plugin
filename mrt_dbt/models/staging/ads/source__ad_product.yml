@@ -1,0 +1,28 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_product
+    identifier: DW_MRT_ADS_AD_PRODUCT
+    description: 검색광고 상품.
+    columns:
+    - name: id
+      description: ID
+    - name: ad_inventory_id
+      description: 광고 인벤토리 ID
+    - name: gid
+      description: GID
+    - name: ad_provider_code
+      description: 광고 제공자 코드
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

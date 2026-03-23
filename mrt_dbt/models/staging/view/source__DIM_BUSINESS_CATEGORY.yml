@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: "mrt_mart_view"
+    database: "mrtdata"
+    schema: "edw_mart"
+    tables:
+      - name: "DIM_BUSINESS_CATEGORY"
+        identifier: "DIM_BUSINESS_CATEGORY"
+        description: |
+          DIM_STANDARD_CATEGORY 기반 VIEW. LV3 코드를 business_category로 매핑함.
+          MART_SALE_D.STANDARD_CATEGORY_LV_3_CD와 LEFT JOIN하여 버티컬 집계에 사용한다.
+          동일 LV_1_CD라도 LV_2_CD가 KIDS_* 계열이면 KIDS로 분류되어 다른 business_category에 매핑될 수 있다.
+          276행, 14 LV_1 → 78 LV_2 → 276 LV_3 → 7 business_category(+ null 10건).
+        columns:
+          - name: "LV_1_NM"
+            description: "표준 카테고리 레벨 1 명"
+          - name: "LV_1_CD"
+            description: "표준 카테고리 레벨 1 코드 (FLIGHT, ACCOMMODATION, TOUR 등)"
+          - name: "LV_2_NM"
+            description: "표준 카테고리 레벨 2 명"
+          - name: "LV_2_CD"
+            description: "표준 카테고리 레벨 2 코드. KIDS_* 접두사면 business_category가 KIDS로 분류됨"
+          - name: "LV_3_NM"
+            description: "표준 카테고리 레벨 3 명"
+          - name: "LV_3_CD"
+            description: "표준 카테고리 레벨 3 코드. MART_SALE_D.STANDARD_CATEGORY_LV_3_CD와 조인 키"
+          - name: "LV"
+            description: "카테고리 레벨 (항상 3)"
+          - name: "business_category"
+            description: |
+              비즈니스 카테고리. 버티컬 집계에 사용되는 상위 그룹핑.
+              ACCOMMODATION, TOURACTIVITY, FLIGHT, INSURANCE, RENTALCAR, B2B, KIDS.
+              FLIGHT_ANCILLARY, ONDEMAND 계열은 null.
+          - name: "business_sub_category"
+            description: |
+              비즈니스 서브 카테고리.
+              ACCOMMODATION: HOTEL(20), PENSION(50), LODGING(2), B2B_ACCOMMODATION(1), TICKET_LODGING(1).
+              TOURACTIVITY: TOUR(56), TICKET(29), CONVENIENCE(19).
+              FLIGHT: B2C_FLIGHT, B2B_FLIGHT, AIR_IND, AIR_PKG, AIR_NDC 등(10).
+              B2B: PACKAGE(23), ORDER_MADE(6).
+              KIDS: KIDS(44, 여러 LV_1에서 매핑됨).
+              RENTALCAR: RENTALCAR(3), TIKCET_RENTALCAR(1).

@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TNA_COMMERCE_EXCHANGE_RATE_INFO"
+        identifier: "FPNA_TNA_COMMERCE_EXCHANGE_RATE_INFO"
+        description: "T&A 커머스 적용환율 정보 (스프레드시트관리)"
+        columns:
+          - name: "CURRENCY"
+            description: "통화"
+          - name: "KRW"
+            description: "KRW 환율"
+          - name: "START_DATE"
+            description: "시작 날짜"
+          - name: "END_DATE"
+            description: "종료 날짜"
+          - name: "REMARK"
+            description: "비고"
+          - name: "REMARK2"
+            description: "REMARK2"
+          - name: "REMARK3"
+            description: "REMARK3"

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: MART_PRODUCT_LOG_D
+    description: 플랫폼 및 GID 단위 퍼널 지표 요약 테이블
+    columns:
+      - name: BASIS_DT
+        description: 기준_일자
+        data_type: DATE
+
+      - name: PLATFORM
+        description: 플랫폼
+        data_type: STRING
+
+      - name: GID
+        description: GID
+        data_type: STRING
+
+      - name: TOTAL_RESERVATION_CNT
+        description: 전체_예약_건수
+        data_type: INTEGER
+
+      - name: TOTAL_RESERVATION_USER_CNT
+        description: 전체_예약_유저_건수
+        data_type: INTEGER
+
+      - name: TOTAL_SALE_PRICE
+        description: 전체_판매_금액
+        data_type: INTEGER
+
+      - name: OFFER_IMPRESSION_CNT
+        description: 오퍼_노출_건수
+        data_type: INTEGER
+
+      - name: OFFER_CLICK_CNT
+        description: 오퍼_클릭_건수
+        data_type: INTEGER
+
+      - name: OFFER_CLICK_RT
+        description: 오퍼_클릭_비율
+        data_type: FLOAT
+
+      - name: OFFER_DETAIL_UV
+        description: 오퍼_상세_UV
+        data_type: INTEGER
+
+      - name: OFFER_TO_CHECKOUT_RT
+        description: 오퍼_부터_체크아웃_비율
+        data_type: FLOAT
+
+      - name: CHECKOUT_UV
+        description: 체크아웃_UV
+        data_type: INTEGER
+
+      - name: CHECKOUT_TO_COMPLETE_RT
+        description: 체크아웃_부터_구매완료_비율
+        data_type: FLOAT
+
+      - name: CHECKOUT_COMPLETE_UV
+        description: 구매완료_비율
+        data_type: INTEGER
+
+      - name: DW_LOAD_DT
+        description: DW_적재_일시
+        data_type: TIMESTAMP
+

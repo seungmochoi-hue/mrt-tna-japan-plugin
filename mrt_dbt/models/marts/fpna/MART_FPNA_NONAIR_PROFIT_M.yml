@@ -1,0 +1,151 @@
+version: 2
+
+models:
+  - name: MART_FPNA_NONAIR_PROFIT_M
+    description: |
+      [시트 원천] NONAIR 월 집계 + 매관 기준 결제/환불 보강 컬럼 제공 모델임.
+      `MART_FPNA_NONAIR_PROFIT_D` 월 집계를 베이스로 사용하고,
+      `MART_FPNA_CONFIRMATION_CLOSING_D` 결제/환불 거래를 `(ORDER_NO, RESERVATION_NO)` 기준 매핑해 보강함.
+
+      월별 GMV/Revenue 귀속은 매관 정산 기준 적용함.
+      시트 net 계산은 `GMV + REFUND_GMV`, `REVENUE + REFUND_REVENUE` 구조 사용함.
+      `REFUND_MONTH`는 매관 확정일 기준 환불 월이며, 환불 구성요소(`REFUND_*`)는 음수 컬럼으로 제공함.
+
+      Revenue는 Closing 결제 Revenue(`SALE_COMMISSION + MRT_CANCEL_COMMISSION`) 우선 사용함.
+      미매칭 시 `MART_FPNA_NONAIR_PROFIT_D.REVENUE` 폴백 사용함.
+      환불 Revenue는 Closing 환불 Revenue 기준 계산함.
+
+      `PARTNER_SETTLE_TYPE`는 upstream 원본값 그대로 전달하며 복합값 가능성 존재함.
+      `REVENUE/REFUND_REVENUE`는 VAT 포함 노출값이며 내부 계산은 VAT 제외 기준을 사용함.
+      공헌이익 대사 고도화 시 `REVENUE/COUPON/DISCOUNT` VAT 기준 통일 작업 필요함.
+    config:
+      tags: [ "MART", "FPNA", "TABLE", "SHEET" ]
+    columns:
+      - name: BASIS_MONTH
+        description: "기준월 (MONTH 단위)"
+        data_type: DATE
+      - name: CONFIRM_MONTH
+        description: "확정월 (MONTH 단위)"
+        data_type: DATE
+      - name: REFUND_MONTH
+        description: |
+          환불 월 (MONTH 단위). 매관 확정일(REFUND_DATE) 기준.
+          REFUND_DATE가 없는 건(Closing 환불 없음)은 NULL.
+          시트 Outbound에서 환불 월 배정에 사용.
+        data_type: DATE
+      - name: PARTNER_SETTLE_TYPE
+        description: "정산타입 원본값. internal/external/복합값('external, internal')/NULL 가능함. 파트너별 내부정산/별도정산 구분 조회 기준 테이블은 DW_MRT_SETTLEMENTS_PARTNER_SETTLEMENT_CONFIGS 사용함."
+        data_type: STRING
+      - name: ACCOUNTING_PROJECT_CODE
+        data_type: STRING
+      - name: PARTNER_ID
+        data_type: STRING
+      - name: FPNA_TYPE_LV_1
+        data_type: STRING
+      - name: FPNA_TYPE_LV_2
+        data_type: STRING
+      - name: FPNA_TYPE_LV_3
+        data_type: STRING
+
+      - name: GMV
+        description: "확정 GMV 합 (양수)"
+        data_type: FLOAT
+      - name: REVENUE
+        description: |
+          확정 Revenue 합 (양수, VAT 포함).
+          Closing 결제 Revenue(`SALE_COMMISSION + MRT_CANCEL_COMMISSION`)를 1순위로 사용하고, 없으면 `MART_FPNA_NONAIR_PROFIT_D.REVENUE`를 fallback으로 사용한다.
+          모델 내부에서는 VAT 제외 기준으로 저장 후 최종 집계에서 * 1.1로 VAT 포함 금액을 노출한다.
+          - 우선순위: Closing 결제 Revenue -> Profit Revenue fallback
+        data_type: FLOAT
+
+      - name: MRT_COUPON_AMOUNT
+        description: "결제 쿠폰 금액 합 (VAT 포함 노출). Closing 결제 MRT_COUPON_DISCOUNT_AMOUNT를 /1.1로 VAT 제외 기준 반영 후 최종 집계에서 *1.1로 노출."
+        data_type: FLOAT
+      - name: MRT_POINT_AMOUNT
+        description: "결제 포인트 순액 합(Closing 결제 FREE_POINT_AMOUNT - 제외 포인트)"
+        data_type: FLOAT
+      - name: MRT_DISCOUNT_AMOUNT
+        description: "결제 할인 금액 합 (VAT 포함 노출). Closing 결제 할인값을 /1.1로 VAT 제외 기준 반영 후 최종 집계에서 *1.1로 노출."
+        data_type: FLOAT
+      - name: PG_FEE
+        description: |
+          채널수수료(PG fee) 결제분 합. PG_AMOUNT(PG 결제액)과 구분되는 개념.
+          Closing 결제 PAYMENT_PG_AMOUNT * PG_COM_RATE 기반 산출을 우선 사용.
+        data_type: FLOAT
+      - name: MARKETING_PARTNER_FEE
+        description: "채널수수료(마케팅파트너) 결제분 합(Closing 결제 MARKETING_PARTNERSHIP_COMMISSION 우선)"
+        data_type: FLOAT
+      - name: AGENCY_FEE
+        description: "채널수수료(대리점) 결제분 합(Closing 결제 PARTNERSHIP_COMMISSION 우선)"
+        data_type: FLOAT
+      - name: AFFILIATE_POINT_FEE
+        description: "채널수수료(제휴포인트 비용) 결제분 합(Closing 결제 B2B 포인트 기준)"
+        data_type: FLOAT
+      - name: CON_MARGIN
+        description: |
+          공헌이익(Contribution Margin) 월별 합계.
+          시트 전용 결제측 Closing 보강값을 적용해 모델에서 재계산한 공헌이익 월별 합계.
+          계산식(행 단위):
+          - REVENUE (VAT 제외)
+          - (MRT_COUPON_AMOUNT + MRT_POINT_AMOUNT + MRT_DISCOUNT_AMOUNT)
+          - (PG_FEE + MARKETING_PARTNER_FEE + AGENCY_FEE + AFFILIATE_POINT_FEE)
+        data_type: FLOAT
+
+      - name: ORDER_CNT
+        description: "주문(예약) 수 (DISTINCT)"
+        data_type: INTEGER
+      - name: C_ORDER_CNT
+        description: "확정 주문(예약) 수 (CONFIRM_KST_DATE 존재 건만)"
+        data_type: INTEGER
+      - name: USER_CNT
+        description: "유저 수 (DISTINCT)"
+        data_type: INTEGER
+      - name: C_USER_CNT
+        description: "확정 유저 수 (CONFIRM_KST_DATE 존재 건만)"
+        data_type: INTEGER
+
+      - name: REFUND_MRT_COUPON_AMOUNT
+        description: "환불 쿠폰 금액 합 (음수). Closing 환불 MRT_COUPON_DISCOUNT_AMOUNT raw 집계(/1.1 미적용). FIXME: 공헌이익 대사 시작 시 /1.1 필요."
+        data_type: FLOAT
+      - name: REFUND_MRT_POINT_AMOUNT
+        description: "환불 포인트 금액 합 (음수). Closing 환불 FREE_POINT_AMOUNT 기반이며 제외 포인트 대상은 제외."
+        data_type: FLOAT
+      - name: REFUND_MRT_DISCOUNT_AMOUNT
+        description: "환불 할인 금액 합 (음수). Closing 환불 할인 raw 집계(/1.1 미적용). FIXME: 공헌이익 대사 시작 시 /1.1 필요."
+        data_type: FLOAT
+      - name: REFUND_PG_FEE
+        description: |
+          환불 PG 수수료 합 (음수).
+          Closing 환불 REFUND_PG_AMOUNT * PG_COM_RATE(기본 2%) 기반 산출.
+        data_type: FLOAT
+      - name: REFUND_MARKETING_PARTNER_FEE
+        description: "환불 마케팅 파트너 수수료 합 (음수). MARKETING_PARTNERSHIP_COMMISSION 기반."
+        data_type: FLOAT
+      - name: REFUND_AGENCY_FEE
+        description: "환불 제휴여행사 수수료 합 (음수). PARTNERSHIP_COMMISSION 기반."
+        data_type: FLOAT
+      - name: REFUND_AFFILIATE_POINT_FEE
+        description: "환불 제휴 포인트 수수료 합 (음수). B2B 포인트 예약에 FREE_POINT_AMOUNT * 0.02 적용."
+        data_type: FLOAT
+      - name: REFUND_GMV
+        description: |
+          [매관팀 환불] 매관 기준 실제 환불 CGMV (음수).
+          구성요소 합산: MRT_COUPON_DISCOUNT + PARTNER_COUPON_DISCOUNT + MRT_INSTANT_DISCOUNT + MARGIN_DISCOUNT + AFFILIATE_INSTANT_DISCOUNT + FREE_POINT + PG_AMOUNT.
+          (ORDER_NO, RESERVATION_NO) 기준으로 MART_FPNA_CONFIRMATION_CLOSING_D 환불 거래와 예약 단위 매핑.
+        data_type: FLOAT
+      - name: REFUND_REVENUE
+        description: |
+          [매관팀 환불] 매관 기준 환불 Revenue (VAT 포함, 음수).
+          모델 내부에서 Closing 환불 Revenue(VAT 포함)를 /1.1로 환산한 뒤 집계 후 *1.1로 노출한다.
+          FIXME: 공헌이익 대사 시작 시 REFUND_REVENUE/REFUND_COUPON/REFUND_DISCOUNT를 /1.1로 VAT 제외 기준 통일 필요.
+          (ORDER_NO, RESERVATION_NO) 기준으로 MART_FPNA_CONFIRMATION_CLOSING_D 환불 거래와 예약 단위 매핑.
+        data_type: FLOAT
+      - name: REFUND_CON_MARGIN
+        description: |
+          [매관팀 환불] 환불 공헌이익 합 (VAT 제외, 음수).
+          FIXME: REFUND_REVENUE/REFUND_COUPON/REFUND_DISCOUNT VAT 기준 혼재 구간이므로 대사 시작 시 재정의 필요.
+          계산식:
+          - (REFUND_REVENUE / 1.1)
+          - (REFUND_MRT_COUPON_AMOUNT + REFUND_MRT_POINT_AMOUNT + REFUND_MRT_DISCOUNT_AMOUNT)
+          - (REFUND_PG_FEE + REFUND_MARKETING_PARTNER_FEE + REFUND_AGENCY_FEE + REFUND_AFFILIATE_POINT_FEE)
+        data_type: FLOAT

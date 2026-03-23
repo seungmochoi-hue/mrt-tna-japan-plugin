@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "hocance_info"
+        identifier: "hocance_info"
+        description: "숙박권 정보 ( 스프레드 시트 관리 )"
+        columns:
+          - name: "offer_id"
+            description: " 티켓 상품 아이디(상시판매는 별도 시트)"
+          - name: "title"
+            description: "제목"
+          - name: "dt"
+            description: "날짜"
+          - name: "start_date"
+            description: "시작 날짜"
+          - name: "end_date"
+            description: "종료 날짜"
+          - name: "promo_url"
+            description: "프로모션 URL"
+          - name: "promo_full_url"
+            description: "프로모션 전체 URL"
+          - name: "ref_title"
+            description: "제목(년도-월)"

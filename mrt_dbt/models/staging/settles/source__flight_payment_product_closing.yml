@@ -1,0 +1,181 @@
+version: 2
+sources:
+- name: settles
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: flight_payment_product_closing
+    identifier: DW_MRT_SETTLES_FLIGHT_PAYMENT_PRODUCT_CLOSING
+    description: 항공 결제일 상품 마감 원천. 하위 모델 MART_MYLINK_CONVERSION_AGG_D에서 사용함. 마지막 적재일
+      2026-03-12. 주요 타입값 PAYMENT 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 변경 일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제 일시
+    - name: payment_date
+      description: 결제일
+    - name: closing_type
+      description: 마감 타입
+    - name: system_provider
+      description: 버티컬
+    - name: option_type
+      description: 옵션 구분
+    - name: reservation_id
+      description: 항공 예약 ID
+    - name: reservation_no
+      description: 항공 예약 번호
+    - name: reservation_refund_id
+      description: 예약 환불 ID
+    - name: option_reservation_id
+      description: 항공 티켓 UK
+    - name: option_reservation_refund_id
+      description: 옵션 환불 ID
+    - name: flight_payment_daily_closing_id
+      description: 결제 일마감 FK
+    - name: option_id
+      description: 옵션 ID
+    - name: partner_id
+      description: 파트너 ID
+    - name: partner_snapshot_id
+      description: 결제 시점 파트너 ID
+    - name: partner_settlement_config_snapshot_id
+      description: 제휴사 정산 설정 스냅샷 ID
+    - name: product_type
+      description: 상품 타입
+    - name: product_category
+      description: 상품 카테고리
+    - name: product_title
+      description: 상품 타이틀
+    - name: product_block_type
+      description: 상품 출처 속성
+    - name: union_product_id
+      description: GID
+    - name: sale_price
+      description: 판매 금액
+    - name: product_price
+      description: 상품 금액
+    - name: payment_amount
+      description: 결제 금액
+    - name: pg_amount
+      description: PG 금액
+    - name: supply_price
+      description: 항공료
+    - name: tax
+      description: 세금 + 유류할증료
+    - name: free_point_amount
+      description: 무료 포인트 금액
+    - name: instant_discount_amount
+      description: 즉시 할인 금액
+    - name: mrt_instant_discount_amount
+      description: 마리트 즉시 할인 금액
+    - name: affiliate_instant_discount_amount
+      description: 제휴사 즉시 할인 금액
+    - name: mrt_instant_discount_rate
+      description: 마리트 즉시 할인 비율
+    - name: total_coupon_discount_amount
+      description: 총 쿠폰 할인 금액
+    - name: mrt_coupon_discount_amount
+      description: 마리트 쿠폰 할인 금액
+    - name: partner_coupon_discount_amount
+      description: 파트너 쿠폰 할인 금액
+    - name: mrt_coupon_discount_rate
+      description: 마리트 쿠폰 할인율
+    - name: margin_discount_amount
+      description: 마진 할인 금액
+    - name: tasf_commission
+      description: 발권 수수료
+    - name: sale_commission
+      description: 판매 수수료
+    - name: total_cancel_commission
+      description: 총 취소 수수료
+    - name: mrt_cancel_commission
+      description: 마리트 취소 수수료
+    - name: partner_cancel_commission
+      description: 파트너 취소 수수료
+    - name: product_price_snapshot
+      description: 상품 금액 스냅샷
+    - name: payment_amount_snapshot
+      description: 결제 금액 스냅샷
+    - name: pg_amount_snapshot
+      description: PG 금액 스냅샷
+    - name: free_point_amount_snapshot
+      description: 무료 포인트 스냅샷
+    - name: instant_discount_amount_snapshot
+      description: 즉시 할인 금액 스냅샷
+    - name: margin_discount_amount_snapshot
+      description: 마진 할인 금액 스냅샷
+    - name: mrt_coupon_discount_amount_snapshot
+      description: 마리트 쿠폰 할인 금액 스냅샷
+    - name: partner_coupon_discount_amount_snapshot
+      description: 파트너 쿠폰 할인 금액 스냅샷
+    - name: tasf_commission_snapshot
+      description: 발권 수수료 스냅샷
+    - name: sale_commission_snapshot
+      description: 판매 수수료 스냅샷
+    - name: mrt_cancel_commission_snapshot
+      description: 마리트 취소 수수료 스냅샷
+    - name: partner_cancel_commission_snapshot
+      description: 파트너 취소 수수료 스냅샷
+    - name: tax_snapshot
+      description: 세금 스냅샷
+    - name: que_amount
+      description: Q차지
+    - name: fee_rate
+      description: 판매컴(%)
+    - name: fee_w
+      description: 판매컴(W)
+    - name: fee_vat
+      description: 판매컴(VAT)
+    - name: promotion_discount_rate
+      description: 자사 할인율
+    - name: promotion_discount_fare
+      description: 자사 할인금액
+    - name: partner_promotion_amount
+      description: 제휴사 할인금액
+    - name: total_promotion_amount
+      description: 총 할인금액
+    - name: promotion_discount_fare_sub
+      description: 할인/할증 금액
+    - name: card_pay_amount
+      description: 카드결제금액
+    - name: cash_pay_amount
+      description: 현금결제금액
+    - name: flight_billing_settlement_plan_id
+      description: 항공 빌링 ID
+    - name: reservation_type
+      description: 항공 예약 타입
+    - name: ticket_type
+      description: 티켓타입
+    - name: ticket_no
+      description: 티켓번호
+    - name: origin_ticket_no
+      description: 원 티켓번호
+    - name: pax_title
+      description: 탑승객 성별
+    - name: all_itin_content
+      description: 전체 여정정보
+    - name: marketing_partnership_partner_id
+      description: 마케팅 파트너 ID
+    - name: marketing_partnership_partner_snapshot_id
+      description: 마케팅 파트너 스냅샷 ID
+    - name: marketing_partnership_partner_settlement_config_snapshot_id
+      description: 마케팅 파트너 정산 설정 스냅샷 ID
+    - name: marketing_partnership_commission_policy_snapshot_id
+      description: 마케팅 제휴사 수수료 정책 스냅샷 ID
+    - name: marketing_partnership_commission
+      description: 마케팅 파트너 수수료
+    - name: marketing_partnership_commission_rate
+      description: 마케팅 수수료율
+    - name: marketing_partnership_commission_snapshot
+      description: 마케팅 파트너 수수료 스냅샷
+    - name: dw_load_dt
+      description: DW 적재 일시

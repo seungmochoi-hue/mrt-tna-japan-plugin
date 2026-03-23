@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: recommendation
+    identifier: DW_MRT_STAY_RECOMMENDATION
+    description: 숙소 추천.
+    columns:
+    - name: recommendation_id
+      description: 추천 ID
+    - name: property_id
+      description: 숙소 ID
+    - name: apply_start_at
+      description: Apply start at
+    - name: apply_end_at
+      description: Apply end at
+    - name: rec_labels
+      description: Rec labels
+    - name: rec_strength
+      description: Rec strength
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

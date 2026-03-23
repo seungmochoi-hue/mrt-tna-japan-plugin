@@ -1,0 +1,262 @@
+name: analyst-routing
+description: 요청 유형별로 올바른 agent/skill/model로 라우팅되는지, EDA 스타일 응답이 지켜지는지 검증
+
+tests:
+  # === 데이터 분석 라우팅 (analyst, opus) ===
+
+  - name: simple_data_query_routes_to_analyst_opus
+    prompt: |
+      최근 7일 항공 거래액 뽑아줘
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다
+      - model 파라미터가 opus이거나 기본값(opus)을 사용한다
+      - redash-analyzer, chart-builder, setup-helper를 호출하지 않는다
+      - bq query를 실행하여 MART_SALE_D 등 매출 테이블을 조회한다
+    tags: [routing, analyst, opus, simple-query]
+
+  - name: cause_analysis_routes_to_analyst_opus
+    prompt: |
+      왜 최근 숙박 매출이 떨어졌는지 분석해줘
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다
+      - model 파라미터가 opus이거나 기본값(opus)을 사용한다
+      - "원인", "왜" 키워드가 포함되어 있으므로 원인 분석을 수행한다
+      - redash-analyzer를 호출하지 않는다
+    tags: [routing, analyst, opus, cause-analysis]
+
+  - name: dbt_model_question_routes_to_analyst
+    prompt: |
+      MART_SALE_D 테이블 어디서 오는 거야? upstream 알려줘
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다
+      - SQL 파일과 YAML 파일을 모두 읽는다
+      - ref()/source()에서 의존성을 추출한다
+    tags: [routing, analyst, dbt-model]
+
+  - name: knowledge_search_routes_to_analyst
+    prompt: |
+      항공 매출 집계 관련 논의 찾아줘
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다
+      - Slack, Confluence, Jira를 병렬로 검색한다
+      - redash-analyzer를 호출하지 않는다
+    tags: [routing, analyst, knowledge-search]
+
+  # === Slack URL 라우팅 (main agent direct + opus subagents) ===
+
+  - name: slack_url_handled_by_main_agent
+    prompt: |
+      이 스레드 봐줘 https://myrealtrip.slack.com/archives/C12345678/p1709876543210123
+    expected_behavior:
+      - main agent가 직접 Slack 스레드를 읽고 요약한다
+      - analyst subagent로 위임하지 않는다 (Slack 스레드 읽기는 main agent 담당)
+      - 스레드 내 Redash/GSheets/Confluence 링크가 있으면 opus subagent로 병렬 분사한다
+    tags: [routing, main-agent, slack-url]
+
+  # === Redash URL 라우팅 (redash-analyzer, opus) ===
+
+  - name: redash_url_routes_to_redash_analyzer_opus
+    prompt: |
+      이 쿼리 봐줘 https://redash.myrealtrip.net/queries/31615
+    expected_behavior:
+      - Agent 도구로 redash-analyzer subagent를 호출한다
+      - model이 opus이거나 기본값(opus)을 사용한다
+      - analyst를 직접 호출하지 않는다 (Redash URL은 redash-analyzer 전용)
+      - Redash API로 쿼리 SQL과 메타데이터를 조회한다
+      - SQL 로직을 분석하고 BQ에서 직접 실행하여 결과를 검증한다
+    tags: [routing, redash, opus]
+
+  # === Google Sheets URL 라우팅 (analyst, opus) ===
+
+  - name: gsheets_url_routes_to_analyst_opus
+    prompt: |
+      이 시트 봐줘 https://docs.google.com/spreadsheets/d/1abc123/edit
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다 (opus)
+      - Google Sheets MCP 도구로 시트 내용을 읽는다
+      - get_sheet_formulas로 수식을 파악한다
+      - 데이터 구조와 로직을 분석한다
+      - chart-builder나 save-to-gsheets로 라우팅하지 않는다
+    tags: [routing, analyst, opus, gsheets-url]
+
+  - name: gsheets_url_with_analysis_request
+    prompt: |
+      이 시트에서 매출 집계 로직 분석해줘 https://docs.google.com/spreadsheets/d/1abc123/edit
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출한다 (opus)
+      - Google Sheets MCP로 시트 내용과 수식을 모두 읽는다
+      - 집계 로직을 분석하여 설명한다
+    tags: [routing, analyst, opus, gsheets-url, analysis]
+
+  # === 시각화 라우팅 (chart-builder, sonnet) ===
+
+  - name: visualization_routes_to_chart_builder_sonnet
+    prompt: |
+      최근 7일 거래액 추이를 시각화해줘
+    expected_behavior:
+      - chart-builder agent를 호출한다
+      - model이 sonnet이거나 기본값(sonnet)을 사용한다
+      - analyst로 라우팅하지 않는다 (시각화 요청은 chart-builder 전용)
+    tags: [routing, chart-builder, sonnet]
+
+  # === 데이터 내보내기 라우팅 (analyst, sonnet) ===
+
+  - name: save_to_sheets_routes_to_sonnet
+    prompt: |
+      이 결과 구글시트에 저장해줘
+    expected_behavior:
+      - Agent 도구로 analyst subagent를 호출하되 model=sonnet을 지정한다
+      - save-to-gsheets skill을 실행한다
+      - opus model을 사용하지 않는다 (내보내기는 sonnet)
+    tags: [routing, save-to-gsheets, sonnet]
+
+  # === 환경 설정 라우팅 (setup-helper, sonnet) ===
+
+  - name: setup_request_routes_to_setup_helper
+    prompt: |
+      초기세팅 다 되어 있나?
+    expected_behavior:
+      - setup-helper agent를 호출한다
+      - analyst로 라우팅하지 않는다 (환경 점검은 setup-helper 전용)
+      - 일반 분석 응답 형식으로 처리하지 않는다
+    tags: [routing, setup-helper, sonnet]
+
+  # === 병렬 subagent 라우팅 ===
+
+  - name: slack_thread_with_redash_link_parallel
+    prompt: |
+      이 스레드 봐줘. 안에 Redash 링크 있을거야 https://myrealtrip.slack.com/archives/C12345678/p1709876543210123
+    expected_behavior:
+      - main agent가 직접 Slack 스레드를 읽는다 (subagent 위임 아님)
+      - 스레드 내 Redash URL이 발견되면 redash-analyzer subagent를 opus로 호출한다
+      - 스레드 내 Google Sheets URL이 발견되면 analyst subagent를 opus로 호출한다
+      - 여러 링크가 있으면 한 메시지에서 동시에 subagent를 호출한다 (병렬)
+    tags: [routing, parallel, opus, slack-url, main-agent]
+
+  - name: redash_and_gsheets_parallel_analysis
+    prompt: |
+      이 두 개 봐줘
+      - https://redash.myrealtrip.net/queries/31615
+      - https://docs.google.com/spreadsheets/d/1abc123/edit
+    expected_behavior:
+      - redash-analyzer subagent (opus)와 analyst subagent (opus)를 한 메시지에서 동시에 호출한다
+      - 각각 Redash 쿼리 분석, Google Sheets 분석을 수행한다
+      - 순차 호출하지 않는다 (병렬 필수)
+    tags: [routing, parallel, opus]
+
+  # === EDA 스타일 응답 검증 ===
+
+  - name: eda_style_quick_response
+    prompt: |
+      최근 7일 전체 거래액 뽑아줘
+    expected_behavior:
+      - analyst subagent가 메인 쿼리 1개로 빠르게 결과를 반환한다
+      - 응답에 결론, 결과 표, 사용한 쿼리가 포함된다
+      - 대안 소스 교차 검증을 첫 응답에서 수행하지 않는다 (후속 옵션으로 제안)
+      - sample data 8행을 첫 응답에 포함하지 않는다 (후속 옵션으로 제안)
+      - 후속 옵션에 "교차 검증", "sample data 확인" 등이 포함된다
+    tags: [eda-style, quick-response]
+
+  - name: eda_style_no_report_format
+    prompt: |
+      숙박 카테고리별 거래액 보여줘
+    expected_behavior:
+      - 7개 섹션 보고서 형태로 응답하지 않는다
+      - 결론 + 결과 표 + 쿼리 + 후속 옵션의 간결한 형태로 응답한다
+      - 데이터 흐름 다이어그램, 데이터 소스 비교를 첫 응답에 포함하지 않는다
+    tags: [eda-style, format]
+
+  - name: eda_style_followup_options
+    prompt: |
+      최근 7일 항공 거래액 뽑아줘
+    expected_behavior:
+      - 응답 말미에 번호가 매겨진 후속 옵션을 제시한다
+      - 추가 분석 옵션 (1–4)과 결과 활용 옵션 (5–6)이 구분된다
+      - 결과 활용에 Google Sheets 내보내기, 시각화가 포함된다
+    tags: [eda-style, followup]
+
+  # === YAML/규칙 준수 검증 ===
+
+  - name: yaml_must_be_read_with_sql
+    prompt: |
+      MART_SALE_D 어떤 데이터야?
+    expected_behavior:
+      - analyst subagent가 SQL 파일과 YAML 파일을 모두 읽는다
+      - SQL만 읽고 YAML을 건너뛰지 않는다
+      - YAML의 column description을 참조하여 설명한다
+    tags: [compliance, yaml-sql]
+
+  - name: query_must_be_included_in_response
+    prompt: |
+      최근 7일 거래액 뽑아줘
+    expected_behavior:
+      - 응답에 사용한 쿼리 원문이 반드시 포함된다
+      - 쿼리 원문이 누락되지 않는다
+    tags: [compliance, query-inclusion]
+
+  # === 모델 라우팅 검증 (네거티브 케이스) ===
+
+  - name: export_must_not_use_opus
+    prompt: |
+      방금 결과 구글시트에 저장해줘
+    expected_behavior:
+      - sonnet model로 subagent를 호출한다
+      - opus model을 사용하지 않는다 (내보내기는 가벼운 작업)
+    tags: [model-routing, sonnet, negative-case]
+
+  - name: analysis_must_not_use_sonnet
+    prompt: |
+      왜 최근 항공 매출이 떨어졌는지 분석해줘
+    expected_behavior:
+      - opus model로 analyst subagent를 호출한다
+      - sonnet model을 사용하지 않는다 (분석은 opus 필수)
+    tags: [model-routing, opus, negative-case]
+
+  - name: redash_analysis_must_use_opus
+    prompt: |
+      이 Redash 쿼리 분석해줘 https://redash.myrealtrip.net/queries/31615
+    expected_behavior:
+      - redash-analyzer subagent를 opus model로 호출한다
+      - sonnet model을 사용하지 않는다
+      - 쿼리 SQL을 조회하고 로직을 분석한다
+    tags: [model-routing, opus, redash]
+
+  # === Main Agent 오케스트레이터 검증 ===
+
+  - name: main_agent_reviews_subagent_result
+    prompt: |
+      최근 7일 항공 거래액 뽑아줘
+    expected_behavior:
+      - main agent가 analyst subagent에 작업을 위임한다
+      - subagent 결과를 받은 후 main agent가 검수한다 (쿼리 원문 포함 여부, YAML 확인 여부, 규칙 준수 여부)
+      - 검수 통과한 결과만 사용자에게 전달한다
+      - main agent가 후속 옵션을 직접 구성한다
+    tags: [main-agent, orchestrator, review]
+
+  - name: main_agent_rejects_bad_result
+    prompt: |
+      MART_SALE_D에서 버티컬별 거래액 뽑아줘
+    expected_behavior:
+      - subagent가 DOMAIN_NM으로 버티컬을 분류했다면 main agent가 반려한다
+      - STANDARD_CATEGORY_LV_1_CD를 사용하도록 재지시한다
+      - 잘못된 결과를 사용자에게 그대로 전달하지 않는다
+    tags: [main-agent, orchestrator, rejection]
+
+  - name: main_agent_handles_slack_directly
+    prompt: |
+      이 스레드 봐줘 https://myrealtrip.slack.com/archives/C12345678/p1709876543210123
+    expected_behavior:
+      - main agent가 직접 Slack MCP 도구를 호출하여 스레드를 읽는다
+      - analyst subagent로 스레드 읽기를 위임하지 않는다
+      - 스레드 내 Redash/GSheets 링크가 있으면 opus subagent로 병렬 분사한다
+      - main agent가 스레드 요약 + subagent 분석 결과를 종합하여 최종 응답을 구성한다
+    tags: [main-agent, slack, direct-handling]
+
+  - name: main_agent_composes_final_response
+    prompt: |
+      최근 7일 거래액 뽑아줘
+    expected_behavior:
+      - subagent 결과를 그대로 사용자에게 전달하지 않는다
+      - main agent가 EDA 스타일에 맞게 결론+결과표+쿼리+후속옵션으로 재구성한다
+      - 후속 옵션은 main agent가 직접 생성한다
+    tags: [main-agent, response-composition]

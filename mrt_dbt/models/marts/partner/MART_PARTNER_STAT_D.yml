@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: MART_PARTNER_STAT_D
+    description: 파트너 활동 요약 통계 테이블입니다.
+    columns:
+    - name: BASIS_DATE
+      description: 기준_일자
+      data_type: DATE
+    - name: ACTIVE_PARTNER_CNT
+      description: 활동_파트너_건수
+      data_type: INTEGER
+    - name: REST_PARTNER_CNT
+      description: 휴면_파트너_건수
+      data_type: INTEGER
+    - name: NEW_PARTNER_CNT
+      description: 신규_파트너_건수
+      data_type: INTEGER
+    - name: SALES_PARTNER_CNT
+      description: 매출_파트너_건수
+      data_type: INTEGER
+    - name: RESVE_CONFIRM_PARTNER_CNT
+      description: 예약_확정_파트너_건수
+      data_type: INTEGER
+    - name: DW_LOAD_DT
+      description: DW_적재_일시
+      data_type: TIMESTAMP
+

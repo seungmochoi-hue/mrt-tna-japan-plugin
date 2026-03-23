@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_HOTEL_META_INFO"
+        identifier: "FPNA_HOTEL_META_INFO"
+        description: "숙박 메타 손익 관리 시트 (스프레드시트관리)"
+        columns:
+          - name: "MRT_TYPE"
+            description: "마리트 타입"
+          - name: "HOTEL_AFFILIATE_NM"
+            description: "호텔 제휴 이름"
+          - name: "COMMISSION_RATE"
+            description: "커미션 비율"
+          - name: "DISCOUNT_RATE"
+            description: "할인 비율"
+          - name: "START_DATE"
+            description: "시작 날짜"
+          - name: "END_DATE"
+            description: "종료 날짜"

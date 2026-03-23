@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: INT_RESVE_COUPON_PRICE_D
+    description: "예약 kind별 쿠폰 금액"
+    config:
+      tags: ["INT", "COUPON"]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_ID
+            - KIND
+          config:
+            severity: warn
+    columns:
+      - name: RESVE_ID
+        description: "예약 아이디"
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: KIND
+        description: "1=결제행, 2=취소행"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 금액"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 금액"
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: "총 쿠폰 금액"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "kind별 상품쿠폰 대표 템플릿 ID. 금액 우선, 동률 시 mapping/template ID 큰 값 우선"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "kind별 주문쿠폰 대표 템플릿 ID. 금액 우선, 동률 시 mapping/template ID 큰 값 우선"
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: MART_COUPON_D
+    description: "마트 쿠폰"
+    config:
+      tags: ["mart", "coupon"]
+    columns:
+      - name: COUPON_ID
+        data_type: integer
+        description: "쿠폰 ID"
+        data_tests:
+          - not_null
+      - name: TEMPLATE_ID
+        data_type: integer
+        description: "템플릿 ID"
+      - name: ISSUED_USER_ID
+        data_type: integer
+        description: "발급자 ID"
+      - name: RECENT_STATUS
+        data_type: string
+        description: "최근 상태"
+      - name: TEMPLATE_NM
+        data_type: string
+        description: "템플릿 명"
+      - name: TEMPLATE_DESCRIPTION
+        data_type: string
+        description: "템플릿 설명"
+      - name: PUBLISHED_KST_DT
+        data_type: datetime
+        description: "발행일시"
+      - name: START_KST_DT
+        data_type: datetime
+        description: "시작일시"
+      - name: END_KST_DT
+        data_type: datetime
+        description: "종료일시"
+      - name: COUPON_TYPE
+        data_type: string
+        description: "쿠폰 종류"
+      - name: DISCOUNT_TYPE
+        data_type: string
+        description: "할인 종류"
+      - name: CREATED_KST_DT
+        data_type: datetime
+        description: "생성일시"
+      - name: UPDATED_KST_DT
+        data_type: datetime
+        description: "수정일시"
+      - name: DELETED_KST_DT
+        data_type: datetime
+        description: "삭제일시"
+      - name: CREATED_BY_NM
+        data_type: string
+        description: "생성자 명"
+      - name: UPDATED_BY_NM
+        data_type: string
+        description: "수정자 명"
+      - name: MIN_PAYMENT_PRICE
+        data_type: integer
+        description: "최소 결제 금액"
+      - name: MAX_DISCOUNT_PRICE
+        data_type: integer
+        description: "최대 할인 금액"
+      - name: COUPON_DICOUNT_PRICE
+        data_type: integer
+        description: "쿠폰 할인 금액"
+      - name: COUPON_DISCOUNT_RATE
+        data_type: integer
+        description: "쿠폰 할인율"
+      - name: ACTUAL_DISCOUNT_PRICE
+        data_type: integer
+        description: "실제 할인 금액"
+      - name: LAST_RESVE_ID
+        data_type: integer
+        description: "최종 예약 ID"
+      - name: LAST_RESVE_DT
+        data_type: datetime
+        description: "최종 예약 일시"
+      - name: LAST_CANCELED_AT
+        data_type: datetime
+        description: "최종 취소 일시"
+      - name: LAST_CANCELED_REASON_VALUE
+        data_type: string
+        description: "최종 취소 사유 값"
+      - name: PARTNER_CONTRIBUTION_RATE
+        data_type: integer
+        description: "파트너 기여율"
+      - name: MRT_CONTRIBUTION_RATE
+        data_type: integer
+        description: "MRT 기여율"
+      - name: TEMPLATE_PUBLISH_TEAM_NM
+        data_type: string
+        description: "템플릿 발행팀 명"
+      - name: TEMPALTE_PUBLISH_PURPOSE
+        data_type: string
+        description: "템플릿 발행 목적"
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: datetime
+

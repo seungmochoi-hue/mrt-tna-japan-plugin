@@ -1,0 +1,227 @@
+version: 2
+
+models:
+  - name: MART_STOCK_STATUS_D
+    description: "상품 옵션 일별 재고 요약"
+    config:
+      tags: [ "STOCK", "MART" ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자"
+        data_type: DATE
+
+      - name: GID
+        description: "상품 GID"
+        data_type: STRING
+
+      - name: GPID
+        description: "글로벌 상품 ID"
+        data_type: STRING
+
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+
+      - name: PRODUCT_RECENT_STATUS
+        description: "상품 최근 상태"
+        data_type: STRING
+
+      - name: PRODUCT_NM
+        description: "상품명"
+        data_type: STRING
+
+      - name: OPTION_ID
+        description: "옵션 ID"
+        data_type: STRING
+
+      - name: OPTION_NM
+        description: "옵션명"
+        data_type: STRING
+
+      - name: SKU_ID
+        description: "SKU ID"
+        data_type: STRING
+
+      - name: VOUCHER_TYPE
+        description: "바우처 타입"
+        data_type: STRING
+
+      - name: AVAILABLE_STOCK_CNT
+        description: "가용 재고 수"
+        data_type: INTEGER
+
+      - name: TOTAL_STOCK_CNT
+        description: "전체 재고 수"
+        data_type: INTEGER
+
+      - name: AVG_STOCK_UNIT_PRICE
+        description: "평균 재고 단가"
+        data_type: FLOAT
+
+      - name: TOTAL_STOCK_PRICE
+        description: "전체 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_UPLOAD_STATUS_CNT
+        description: "오늘 업로드 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_SOLD_STATUS_CNT
+        description: "오늘 판매 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_SALES_CNT
+        description: "오늘 판매 수"
+        data_type: INTEGER
+
+      - name: SOLD_DIFF_CNT
+        description: "판매 차이 수"
+        data_type: INTEGER
+
+      - name: TODAY_RESTORE_STATUS_CNT
+        description: "오늘 복구 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_SALES_CANCEL_CNT
+        description: "오늘 판매 취소 수"
+        data_type: INTEGER
+
+      - name: CANCEL_DIFF_CNT
+        description: "취소 차이 수"
+        data_type: INTEGER
+
+      - name: TODAY_END_STATUS_CNT
+        description: "오늘 종료 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_DELETE_STATUS_CNT
+        description: "오늘 삭제 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_CANCEL_STATUS_CNT
+        description: "오늘 취소 상태 수"
+        data_type: INTEGER
+
+      - name: TODAY_UPLOAD_STATUS_STOCK_PRICE
+        description: "오늘 업로드 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_SOLD_STATUS_STOCK_PRICE
+        description: "오늘 판매 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_RESTORE_STATUS_STOCK_PRICE
+        description: "오늘 복구 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_END_STATUS_STOCK_PRICE
+        description: "오늘 종료 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_DELETE_STATUS_STOCK_PRICE
+        description: "오늘 삭제 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_CANCEL_STATUS_STOCK_PRICE
+        description: "오늘 취소 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: UPLOAD_STATUS_CNT
+        description: "업로드 상태 수"
+        data_type: INTEGER
+
+      - name: SOLD_STATUS_CNT
+        description: "판매 상태 수"
+        data_type: INTEGER
+
+      - name: RESTORE_STATUS_CNT
+        description: "복구 상태 수"
+        data_type: INTEGER
+
+      - name: END_STATUS_CNT
+        description: "종료 상태 수"
+        data_type: INTEGER
+
+      - name: DELETE_STATUS_CNT
+        description: "삭제 상태 수"
+        data_type: INTEGER
+
+      - name: CANCEL_STATUS_CNT
+        description: "취소 상태 수"
+        data_type: INTEGER
+
+      - name: UPLOAD_STATUS_STOCK_PRICE
+        description: "업로드 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: SOLD_STATUS_STOCK_PRICE
+        description: "판매 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: RESTORE_STATUS_STOCK_PRICE
+        description: "복구 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: END_STATUS_STOCK_PRICE
+        description: "종료 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: DELETE_STATUS_STOCK_PRICE
+        description: "삭제 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: CANCEL_STATUS_STOCK_PRICE
+        description: "취소 상태 재고 금액"
+        data_type: FLOAT
+
+      - name: TODAY_SALES_KRW_PRICE
+        description: "오늘 판매 금액"
+        data_type: FLOAT
+
+      - name: TODAY_CANCEL_KRW_PRICE
+        description: "오늘 취소 금액"
+        data_type: FLOAT
+
+      - name: STOCK_OOS_DAY
+        description: "재고 품절 일 수"
+        data_type: FLOAT
+
+      - name: WEEK_SALES_KRW_PRICE
+        description: "주간 판매 금액"
+        data_type: FLOAT
+
+      - name: WEEK_SALES_CNT
+        description: "주간 판매 수"
+        data_type: INTEGER
+
+      - name: WEEK_SALES_AVG_UNIT_PRICE
+        description: "주간 평균 단가"
+        data_type: FLOAT
+
+      - name: MONTH_SALES_KRW_PRICE
+        description: "월간 판매 금액"
+        data_type: FLOAT
+
+      - name: MONTH_SALES_CNT
+        description: "월간 판매 수"
+        data_type: INTEGER
+
+      - name: MONTH_SALES_AVG_UNIT_PRICE
+        description: "월간 평균 단가"
+        data_type: FLOAT
+
+      - name: LAST_MONTH_SALES_CNT
+        description: "전월 판매 수"
+        data_type: INTEGER
+
+      - name: SALES_CHANGE_RATE
+        description: "판매 증감률"
+        data_type: FLOAT
+
+      - name: REQUIRED_STOCK_CNT
+        description: "필요 재고 수"
+        data_type: FLOAT
+
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

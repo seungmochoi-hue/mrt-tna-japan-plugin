@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: "mrt_20"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "update_histories"
+        identifier: "DW_MRT_SERVICE_UPDATE_HISTORIES"
+        description: "MRT 2.0 변경 이력"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "historiable_id"
+            description: "Historiable ID"
+          - name: "historiable_type"
+            description: "Historiable Type"
+          - name: "before"
+            description: "Before"
+          - name: "after"
+            description: "After"
+          - name: "user_id"
+            description: "사용자 ID"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_at_kst"
+            description: "Created At Kst"
+          - name: "updated_at"
+            description: "수정일시"
+          - name: "updated_at_kst"
+            description: "Updated At Kst"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

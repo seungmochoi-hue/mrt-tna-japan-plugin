@@ -1,0 +1,97 @@
+version: 2
+sources:
+- name: orders
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: estimate_proposals
+    identifier: DW_MRT_ORDERS_ESTIMATE_PROPOSALS
+    description: 견적 제안. 주요 상태값 TEMP/RESERVED/CLOSED/ORDER_READY 확인. 주요 타입값 PARTNER_REASON/TRAVELER_REASON
+      확인.
+    columns:
+    - name: id
+      description: ID
+    - name: trip_ended_at
+      description: Trip ended at
+    - name: trip_started_at
+      description: Trip started at
+    - name: cancel_reason_type
+      description: Cancel 사유 타입
+    - name: cancel_reason
+      description: Cancel 사유
+    - name: canceled_by
+      description: Canceled by
+    - name: partner_id
+      description: Partner ID
+    - name: option_id
+      description: 옵션 ID
+    - name: quantity
+      description: Quantity
+    - name: total_sale_price
+      description: Total sale 금액
+    - name: trip_days
+      description: Trip days
+    - name: trip_hours
+      description: Trip hours
+    - name: trip_mins
+      description: Trip mins
+    - name: gid
+      description: GID
+    - name: zone_id
+      description: Zone ID
+    - name: status
+      description: 상태
+    - name: custom_request
+      description: Custom request
+    - name: partner_comment
+      description: Partner comment
+    - name: reservation_no
+      description: 예약 no
+    - name: modified_at
+      description: Modified at
+    - name: requested_at
+      description: Requested at
+    - name: proposal_at
+      description: Proposal at
+    - name: closed_at
+      description: Closed at
+    - name: user_id
+      description: 사용자 ID
+    - name: type
+      description: 타입
+    - name: category
+      description: Category
+    - name: sub_type
+      description: Sub 타입
+    - name: vertical
+      description: Vertical
+    - name: product_title
+      description: 상품 제목
+    - name: product_image_url
+      description: 상품 image URL
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: change_content
+      description: Change content
+    - name: order_id
+      description: Order ID
+    - name: order_no
+      description: Order no
+    - name: product_subtitle
+      description: 상품 subtitle
+    - name: supply_price
+      description: Supply 금액
+    - name: estimate_type
+      description: 견적 타입
+    - name: mrt_commission_rate
+      description: MRT commission rate

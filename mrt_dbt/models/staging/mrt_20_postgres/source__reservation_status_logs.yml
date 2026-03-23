@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: "mrt_20"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "reservation_status_logs"
+        identifier: "DW_MRT_SERVICE_RESERVATION_STATUS_LOGS"
+        description: "MRT 2.0 예약 상태 이력"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "reservation_id"
+            description: "예약 ID"
+          - name: "prev_status"
+            description: "Prev Status"
+          - name: "status"
+            description: "상태"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_at_kst"
+            description: "Created At Kst"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

@@ -1,0 +1,50 @@
+version: 2
+sources:
+- name: promotions
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: content_block_item_history
+    identifier: DW_MRT_PROMOTIONS_CONTENT_BLOCK_ITEM_HISTORY
+    description: 콘텐츠 블록 아이템 이력. 마지막 적재일 2026-03-18. 주요 타입값 PRODUCT_CARD 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: REV
+      description: REV
+    - name: REVTYPE
+      description: REVTYPE
+    - name: content_block_id
+      description: Content 블록 ID
+    - name: content_block_item_group_id
+      description: Content 블록 아이템 그룹 ID
+    - name: code
+      description: 코드
+    - name: content_block_item_type
+      description: Content 블록 아이템 타입
+    - name: name
+      description: 이름
+    - name: mapping_id
+      description: 매핑 ID
+    - name: data
+      description: Data
+    - name: display_order
+      description: 노출 주문
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: display_start_at
+      description: 노출 시작 at
+    - name: display_end_at
+      description: 노출 종료 at
+    - name: fixed_order
+      description: Fixed 주문

@@ -1,0 +1,48 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: nights_discount
+    identifier: DW_MRT_STAYNET_NIGHTSSCOUNT
+    description: 호텔 박수 할인. 마지막 적재일 2026-03-15. 주요 타입값 ALL 확인.
+    columns:
+    - name: discount_id
+      description: 할인 ID
+    - name: property_id
+      description: 숙소 ID
+    - name: name
+      description: 이름
+    - name: apply_exclusive_dates
+      description: Apply exclusive dates
+    - name: apply_type
+      description: Apply 타입
+    - name: reservation_date_apply_type
+      description: 예약 일자 apply 타입
+    - name: reservation_apply_start_date
+      description: 예약 apply 시작 일자
+    - name: reservation_apply_end_date
+      description: 예약 apply 종료 일자
+    - name: checkin_date_apply_type
+      description: Checkin 일자 apply 타입
+    - name: checkin_apply_start_date
+      description: Checkin apply 시작 일자
+    - name: checkin_apply_end_date
+      description: Checkin apply 종료 일자
+    - name: enabled
+      description: Enabled
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

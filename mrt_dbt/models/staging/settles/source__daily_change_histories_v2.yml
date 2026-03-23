@@ -1,0 +1,80 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: daily_change_histories_v2
+        identifier: DW_MRT_SETTLES_DAILY_CHANGE_HISTORIES_V2
+        description: |
+          일마감 변경 이력(SETTLES V2) 원천. 예약/정산 데이터의 변경 추적 로그를 제공하며, 파트너 정산 원예약 대체 금액 산정 쿼리에서 변경 전후 대체 로직 검증에 사용함.
+        columns:
+          - name: id
+            description: "id"
+          - name: history_type
+            description: "히스토리 타입"
+          - name: changed_at
+            description: "히스토리 실제 발생 시간"
+          - name: change_reason
+            description: "변경 사유"
+          - name: pkg_order_id
+            description: "패키지 주문 아이디"
+          - name: pkg_reservation_id
+            description: "패키지 예약 아이디"
+          - name: pkg_reservation_refund_id
+            description: "패키지 예약 환불 아이디"
+          - name: pkg_option_reservation_id
+            description: "패키지 옵션 예약 아이디"
+          - name: pkg_option_reservation_refund_id
+            description: "패키지 옵션 예약 환불 아이디"
+          - name: pkg_option_reservation_status
+            description: "패키지 옵션 예약 상태"
+          - name: pkg_union_product_id
+            description: "패키지 gid"
+          - name: pkg_option_id
+            description: "패키지 옵션 아이디"
+          - name: pkg_option_title
+            description: "패키지 옵션 타이틀"
+          - name: pkg_option_type
+            description: "패키지 옵션 타입"
+          - name: pkg_option_group_type
+            description: "패키지 옵션 그룹 타입"
+          - name: pkg_option_partner_id
+            description: "패키지 옵션 파트너 아이디"
+          - name: pkg_option_quantity
+            description: "패키지 옵션 수량"
+          - name: pkg_option_display_stock_unit_currency_sale_price
+            description: "패키지 옵션 재고 유닛 판매 금액"
+          - name: pkg_option_sale_price
+            description: "패키지 옵션 판매금액"
+          - name: pkg_option_supply_price
+            description: "패키지 옵션 공급가"
+          - name: pkg_option_sale_commission
+            description: "패키지 옵션 판매수수료"
+          - name: pkg_option_link_type
+            description: "패키지 옵션 링크타입"
+          - name: pkg_option_tax
+            description: "패키지 옵션 세금"
+          - name: pkg_option_fee
+            description: "패키지 옵션 수수료"
+          - name: pkg_product_tax_types
+            description: "패키지 옵션 세금 타입"
+          - name: origin_reservation_id
+            description: "원예약 아이디"
+          - name: origin_reservation_status
+            description: "원예약 상태"
+          - name: origin_reservation_refund_id
+            description: "원예약 환불 아이디"
+          - name: created_at
+            description: "생성 시간"
+          - name: created_by
+            description: "created by userId(개인정보 - null 처리)"
+          - name: deleted_at
+            description: "삭제 시간"
+          - name: updated_at
+            description: "수정 시간"
+          - name: updated_by
+            description: "updated by userId(개인정보 - null 처리)"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

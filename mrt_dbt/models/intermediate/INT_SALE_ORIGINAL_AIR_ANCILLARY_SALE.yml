@@ -1,0 +1,220 @@
+version: 2
+
+models:
+  - name: INT_SALE_ORIGINAL_AIR_ANCILLARY_SALE
+    description: |
+      항공 부대서비스(Air Ancillary) 판매 원천 데이터를 통합 판매 스키마로 변환한 중간 모델.
+      MART_AIR_ANCILLARY_SALE_D를 (BASIS_DATE, RESVE_UNIQUE_ID, KIND, SALE_FORM_CD, SALE_AGG_TYPE)
+      기준으로 집계하여 예약 단위 1행으로 정규화.
+      도메인 고정값: DOMAIN_NM='AIR ANCILLARY', PRODUCT_ID='100000010', GID='2000006'.
+      Upstream: MART_AIR_ANCILLARY_SALE_D.
+      Downstream: 통합 판매 마트 계열 모델.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BASIS_DATE
+            - RESVE_ID
+            - KIND
+            - SALE_FORM_CD
+            - SALE_AGG_TYPE
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: "기준일자 (MART_AIR_ANCILLARY_SALE_D.BASIS_DATE)."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: |
+          예약 고유 식별자.
+          MART_AIR_ANCILLARY_SALE_D.RESVE_UNIQUE_ID를 그대로 사용.
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ORDER_ID
+        description: |
+          주문 식별자.
+          Air Ancillary는 RESVE_ID와 동일값 (RESVE_UNIQUE_ID).
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: USER_ID
+        description: |
+          사용자 ID.
+          동일 예약에 복수 USER_ID가 존재할 경우 MIN_BY로 가장 짧은 값을 선택.
+        data_type: STRING
+      - name: KIND
+        description: "예약 구분 코드 (GROUP BY 기준 컬럼)."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RECENT_STATUS
+        description: |
+          최신 예약 상태.
+          상태 우선순위: reserved=1, paid=2, cancelled=3. MAX_BY로 가장 높은 우선순위 상태 선택.
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST). CANCEL_KST_DATE를 TIMESTAMP로 캐스팅한 최솟값."
+        data_type: TIMESTAMP
+      - name: DOMAIN_NM
+        description: "도메인명 고정값 ('AIR ANCILLARY')."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID 고정값 ('100000010')."
+        data_type: STRING
+      - name: GID
+        description: "상품 그룹 ID 고정값 ('2000006')."
+        data_type: STRING
+      - name: GPID
+        description: "상품 그룹 부모 ID. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: CONFIRM_KST_DT
+        description: "예약 확정 일시 (KST). CREATED_KST_DT의 최솟값."
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작일. DEPART_KST_DT를 DATE로 캐스팅한 최솟값."
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료일. ARRIVE_KST_DT를 DATE로 캐스팅한 최댓값."
+        data_type: DATE
+      - name: RESVE_TYPE
+        description: "예약 유형 고정값 ('flight ancillary')."
+        data_type: STRING
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드 (GROUP BY 기준 컬럼)."
+        data_type: STRING
+      - name: SALE_FORM_TYPE
+        description: "판매 형태 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형 (GROUP BY 기준 컬럼)."
+        data_type: STRING
+      - name: BRANCH_CD
+        description: "지점 코드. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 1단계 코드 고정값 ('AIR_ANCILLARY')."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 2단계 코드 고정값 ('AIR_ANCILLARY')."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 3단계 코드 고정값 ('AIR_ANCILLARY')."
+        data_type: STRING
+      - name: PAYMENT_LATER_FLAG
+        description: "후불 결제 여부 플래그. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PAYMENT_LIMIT_KST_DT
+        description: "결제 기한 일시 (KST). Air Ancillary 미사용 (NULL 고정)."
+        data_type: TIMESTAMP
+      - name: PARTNERSHIP_CD
+        description: "제휴 코드. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 ID. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 ID. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: |
+          공급사 코드.
+          MIN_BY로 출발일(DEPART_KST_DT)이 가장 이른 구간의 STOCK_AIRLINE_CD를 선택.
+        data_type: STRING
+      - name: CITY_CD
+        description: |
+          도시 코드.
+          MAX_BY로 도착일(ARRIVE_KST_DT)이 가장 늦은 구간의 ARRIVE_AIRPORT_CD를 선택.
+        data_type: STRING
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: "대표 도시 여부 플래그. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PG_NM
+        description: "PG사명. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 및 결제 일시 (KST). CREATED_KST_DT의 최솟값."
+        data_type: TIMESTAMP
+      - name: SALES_PRICE
+        description: "판매 원가 (통화 단위 무관). Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: SALES_PRICE_CUR_TYPE
+        description: "판매 원가 통화 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "판매 금액 (KRW). SUM(SALES_KRW_PRICE)."
+        data_type: FLOAT64
+      - name: PAID_PRICE
+        description: "실결제 금액 (통화 단위 무관). Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: PAID_PRICE_CUR_TYPE
+        description: "실결제 금액 통화 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: PAID_KRW_PRICE
+        description: "실결제 금액 (KRW). SUM(SALES_KRW_PRICE)로 SALES_KRW_PRICE와 동일값."
+        data_type: FLOAT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인 금액. Air Ancillary 미사용 (0 고정)."
+        data_type: INT64
+      - name: POINT_PRICE
+        description: "포인트 사용 금액. Air Ancillary 미사용 (0 고정)."
+        data_type: INT64
+      - name: DISCOUNT_PRICE
+        description: "할인 금액. Air Ancillary 미사용 (0 고정)."
+        data_type: INT64
+      - name: COMMISSION_PRICE
+        description: "커미션 금액. Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: COMMISSION_RATE
+        description: "커미션 율. Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 커미션 금액. Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 커미션 율. Air Ancillary 미사용 (NULL 고정)."
+        data_type: FLOAT64
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "소아 예약 인원수. Air Ancillary 미사용 (NULL 고정)."
+        data_type: INT64
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 예약 인원수. SUM(RESVE_CNT)를 INT64로 캐스팅."
+        data_type: INT64
+      - name: RESVE_PRSNL_CNT
+        description: "총 예약 인원수. SUM(RESVE_CNT)를 INT64로 캐스팅. ADULT_RESVE_PRSNL_CNT와 동일값."
+        data_type: INT64
+      - name: PLATFORM
+        description: "결제 플랫폼. Air Ancillary 미사용 (NULL 고정)."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "생성 일시 (KST). CREATED_KST_DT의 최솟값."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "최종 수정 일시 (KST). UPDATED_KST_DT의 최댓값."
+        data_type: TIMESTAMP
+      - name: PACKAGE_PNR_NO
+        description: "패키지 PNR 번호. Air Ancillary 미사용 (NULL 고정)."
+        data_type: INT64

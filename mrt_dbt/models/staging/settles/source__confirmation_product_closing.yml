@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: confirmation_product_closing
+        identifier: DW_MRT_SETTLES_CONFIRMATION_PRODUCT_CLOSING
+        description: |
+          확정일 마감 원천. `confirmation_date` 기준 이벤트 키를 제공하며 `payment_product_closing_id`로 결제마감 연결 키로 사용함. 확정일 기준 집계·환불충당부채·잔액명세서 쿼리에서 확정일 축 집계 기준으로 사용함. 결제/환불/공제 마감유형 분기와 예상 매출일 산식 검증의 시작점으로 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: updated_at
+            description: "변경일시"
+          - name: deleted_at
+            description: "삭제일"
+          - name: confirmation_date
+            description: "예약 확정일"
+          - name: closing_type
+            description: "마감 구분"
+          - name: partner_id
+            description: "파트너 ID"
+          - name: partner_snapshot_id
+            description: "파트너 스냅샷 ID"
+          - name: reservation_id
+            description: "예약 ID"
+          - name: reservation_no
+            description: "예약 NO"
+          - name: reservation_refund_id
+            description: "예약 환불 ID"
+          - name: payment_product_closing_id
+            description: "결제 상품 마감 ID"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

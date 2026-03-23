@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "fpna_external_commission_tna_connected"
+        identifier: "fpna_external_commission_tna_connected"
+        description: "T&A 연동 TR% 평균 (스프레드시트관리)"
+        columns:
+          - name: "product_id"
+            description: "상품 ID"
+          - name: "product_title"
+            description: "상품 제목"
+          - name: "avg_tr"
+            description: "평균 수수료율 (TR%: Take Rate)"

@@ -1,0 +1,194 @@
+version: 2
+
+models:
+  - name: MART_USER_HIST_D
+    description: "마리트 유저 이력 데이터"
+    config:
+      tags: ["MART", "USER"]
+    columns:
+      - name: BASIS_DT
+        description: "기준 날짜"
+        data_type: DATE
+      - name: USER_ID
+        description: "마리트 유저 아이디"
+        data_type: STRING
+      - name: JOIN_KST_DT
+        description: "가입 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: JOIN_PLATFORM
+        description: "가입 플랫폼"
+        data_type: STRING
+      - name: APP_INSTALL_FLAG
+        description: "앱 설치 여부"
+        data_type: BOOLEAN
+      - name: JOIN_OAUTH_TYPE
+        description: "가입 인증 플랫폼"
+        data_type: STRING
+      - name: LAST_LOGIN_PLATFORM
+        description: "마지막 로그인 플랫폼"
+        data_type: STRING
+      - name: LAST_LOGIN_KST_DT
+        description: "마지막 로그인 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: DORMANT_FLAG
+        description: "휴면 여부"
+        data_type: BOOLEAN
+      - name: DORMANT_KST_DT
+        description: "휴면 전환 일자 (KST)"
+        data_type: DATE
+      - name: LEAVE_FLAG
+        description: "탈퇴 여부"
+        data_type: BOOLEAN
+      - name: LEAVE_KST_DT
+        description: "탈퇴 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: SMS_RECV_AGREE
+        description: "SMS 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: PUSH_RECV_AGREE
+        description: "PUSH 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: MAIL_RECV_AGREE
+        description: "메일 수신 동의 여부"
+        data_type: BOOLEAN
+      - name: POSITION_ARGREEMENT_FLAG
+        description: "위치 정보 제공 동의 여부"
+        data_type: BOOLEAN
+      - name: PHONE_VALID_FLAG
+        description: "휴대폰 인증 여부"
+        data_type: BOOLEAN
+      - name: REP_AGE
+        description: "대표 연령대"
+        data_type: STRING
+      - name: USER_GENDER_NM
+        description: "유저 성별"
+        data_type: STRING
+      - name: COMPANION_AGE_GENDER_GROUP
+        description: "동반자 연령대 성별 그룹"
+        data_type: STRING
+      - name: GUIDE_FLAG
+        description: "파트너(가이드) 여부"
+        data_type: BOOLEAN
+      - name: MRT_STAFF_FLAG
+        description: "마이리얼트립 직원 여부"
+        data_type: BOOLEAN
+      - name: INVITE_FRND_CNT
+        description: "초대한 친구 수"
+        data_type: INTEGER
+      - name: REVIEW_CNT
+        description: "작성한 리뷰 수"
+        data_type: INTEGER
+      - name: OWN_COUPON_CNT
+        description: "보유한 쿠폰 수"
+        data_type: INTEGER
+      - name: OWN_COUPON_NO
+        description: "보유한 쿠폰 번호"
+        data_type: STRING
+      - name: TOTAL_ORDER_BUY_CNT
+        description: "총 주문 구매 건수"
+        data_type: INTEGER
+      - name: TOTAL_BUY_CNT
+        description: "총 구매 수"
+        data_type: INTEGER
+      - name: TOTAL_BUY_PRICE
+        description: "총 구매 금액"
+        data_type: FLOAT
+      - name: FIRST_BUY_KST_DT
+        description: "첫 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: FIRST_BUY_TYPE
+        description: "첫 구매 유형"
+        data_type: STRING
+      - name: FIRST_BUY_ORDER_ID
+        description: "첫 구매 주문 아이디"
+        data_type: STRING
+      - name: FIRST_BUY_RESVE_ID
+        description: "첫 구매 예약 아이디"
+        data_type: STRING
+      - name: LAST_BUY_KST_DT
+        description: "마지막 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: LAST_BUY_TYPE
+        description: "마지막 구매 유형"
+        data_type: STRING
+      - name: LAST_BUY_ORDER_ID
+        description: "마지막 구매 주문 아이디"
+        data_type: STRING
+      - name: LAST_BUY_RESVE_ID
+        description: "마지막 구매 예약 아이디"
+        data_type: STRING
+      - name: FLIGHT_ORDER_BUY_CNT
+        description: "항공 구매 건수"
+        data_type: INTEGER
+      - name: FLIGHT_BUY_CNT
+        description: "항공 구매 수"
+        data_type: INTEGER
+      - name: FLIGHT_BUY_PRICE
+        description: "항공 구매 금액"
+        data_type: FLOAT
+      - name: LAST_FLIGHT_BUY_KST_DT
+        description: "마지막 항공 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: STAY_ORDER_BUY_CNT
+        description: "숙박 구매 건수"
+        data_type: INTEGER
+      - name: STAY_BUY_CNT
+        description: "숙박 구매 수"
+        data_type: INTEGER
+      - name: STAY_BUY_PRICE
+        description: "숙박 구매 금액"
+        data_type: FLOAT
+      - name: LAST_STAY_BUY_KST_DT
+        description: "마지막 숙박 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: RIDE_ORDER_BUY_CNT
+        description: "교통 구매 건수"
+        data_type: INTEGER
+      - name: RIDE_BUY_CNT
+        description: "교통 구매 수"
+        data_type: INTEGER
+      - name: RIDE_BUY_PRICE
+        description: "교통 구매 금액"
+        data_type: FLOAT
+      - name: LAST_RIDE_BUY_KST_DT
+        description: "마지막 교통 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: TNA_ORDER_BUY_CNT
+        description: "TNA 구매 건수"
+        data_type: INTEGER
+      - name: TNA_BUY_CNT
+        description: "TNA 구매 수"
+        data_type: INTEGER
+      - name: TNA_BUY_PRICE
+        description: "TNA 구매 금액"
+        data_type: FLOAT
+      - name: LAST_TNA_BUY_KST_DT
+        description: "마지막 TNA 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: ETC_ORDER_BUY_CNT
+        description: "기타 구매 건수"
+        data_type: INTEGER
+      - name: ETC_BUY_CNT
+        description: "기타 구매 수"
+        data_type: INTEGER
+      - name: ETC_BUY_PRICE
+        description: "기타 구매 금액"
+        data_type: FLOAT
+      - name: LAST_ETC_BUY_KST_DT
+        description: "마지막 기타 구매 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "데이터 변경 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+      - name: TEST_FLAG
+        description: "테스트 계정 여부"
+        data_type: BOOLEAN
+
+
+
+
+
+

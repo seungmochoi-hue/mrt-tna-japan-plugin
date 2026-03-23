@@ -1,0 +1,241 @@
+version: 2
+
+models:
+  - name: DAILY_UPDATE_ATTRIBUTE
+    description: "DAILY_UPDATE_ATTRIBUTE"
+    config:
+      tags: ["BRAZE"]
+    columns:
+      - name: BASIS_DATE
+        description: 기준_일자
+        data_type: DATE
+      - name: USER_ID
+        description: 유저_아이디
+        data_type: STRING
+      - name: EXCLUDED_USER
+        description: 제외_유저
+        data_type: N/A
+      - name: JOIN_KST_DT
+        description: 가입_KST_일시
+        data_type: TIMESTAMP
+      - name: USERNAME
+        description: 유저이름
+        data_type: N/A
+      - name: MRT_STAFF_FLAG
+        description: 마이리얼트립_직원_여부
+        data_type: STRING
+      - name: REP_AGE
+        description: 추정_나이
+        data_type: INT
+      - name: EMAIL
+        description: 이메일
+        data_type: N/A
+      - name: PHONE_NO
+        description: 핸드폰_번호
+        data_type: BIGINT
+      - name: APP_INSTALL_FLAG
+        description: 앱_설치_여부
+        data_type: STRING
+      - name: SMS_RECV_ARGREEMENT
+        description: SMS_수신_동의
+        data_type: N/A
+      - name: MAIL_RECV_ARGREEMENT
+        description: 메일_수신_동의
+        data_type: N/A
+      - name: PUSH_RECV_ARGREEMENT
+        description: PUSH_수신_동의
+        data_type: N/A
+      - name: PHONE_VALID_FLAG
+        description: 핸드폰_확인_여부
+        data_type: STRING
+      - name: DORMANT_FLAG
+        description: 휴면_여부
+        data_type: STRING
+      - name: DORMANT_KST_FLAG
+        description: 휴면_KST_여부
+        data_type: STRING
+      - name: LEAVE_FLAG
+        description: 탈퇴_여부
+        data_type: STRING
+      - name: LEAVE_KST_FLAG
+        description: 탈퇴_KST_여부
+        data_type: STRING
+      - name: OWN_COUPON_NO
+        description: 보유_쿠폰_번호
+        data_type: BIGINT
+      - name: OWN_COUPON_CNT
+        description: 보유_쿠폰_건수
+        data_type: BIGINT / INT
+      - name: COUPON_JOIN_EXPR_DATE
+        description: 쿠폰_가입_만료_일자
+        data_type: DATE
+      - name: COUPON_REVIEW_EXPR_DATE
+        description: 쿠폰_리뷰_만료_일자
+        data_type: DATE
+      - name: COUPON_FIRST_REVIEW_EXPR_DATE
+        description: 쿠폰_최초_리뷰_만료_일자
+        data_type: DATE
+      - name: TOTAL_BUY_CNT
+        description: 전체_구매_건수
+        data_type: BIGINT / INT
+      - name: TOTAL_BUY_PRICE
+        description: 전체_구매_금액
+        data_type: DOUBLE / BIGINT
+      - name: FIRST_BUY_KST_DT
+        description: 최초_구매_KST_일시
+        data_type: TIMESTAMP
+      - name: FIRST_BUY_TYPE
+        description: 최초_구매_유형
+        data_type: STRING
+      - name: RECENT_TRAVEL_RESVE_ID
+        description: 최근_여행_예약_아이디
+        data_type: STRING
+      - name: RECENT_PRODUCT_RESVE_ID
+        description: 최근_상품_예약_아이디
+        data_type: STRING
+      - name: RECENT_TRAVEL_MRT_TYPE
+        description: 최근_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: RECENT_TRAVEL_ARRIVE_KST_DT
+        description: 최근_여행_도착_KST_일시
+        data_type: TIMESTAMP
+      - name: RECENT_TRAVEL_RESVE_PURPOSE
+        description: 최근_여행_예약_목적
+        data_type: N/A
+      - name: RECENT_TRAVEL_CITY
+        description: 최근_여행_도시
+        data_type: N/A
+      - name: EXPT_FLIGHT_TRAVEL_RESVE_ID
+        description: 예정_항공_여행_예약_아이디
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_PRODUCT_ID
+        description: 예정_항공_여행_상품_아이디
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_MRT_TYPE
+        description: 예정_항공_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: EXPT_FLIGHT_TRAVEL_DEPART_KST_DATE
+        description: 예정_항공_여행_출발_KST_일자
+        data_type: DATE
+      - name: EXPT_FLIGHT_TRAVEL_ARRIVE_KST_DATE
+        description: 예정_항공_여행_도착_KST_일자
+        data_type: DATE
+      - name: EXPT_FLIGHT_TRAVEL_RESVE_PURPOSE
+        description: 예정_항공_여행_예약_목적
+        data_type: N/A
+      - name: EXPT_FLIGHT_TRAVEL_CITY
+        description: 예정_항공_여행_도시
+        data_type: N/A
+      - name: EXPT_FLIGHT_TRAVEL_RESVE_DATE
+        description: 예정_항공_여행_예약_일자
+        data_type: DATE
+      - name: EXPT_FLIGHT_TRAVEL_ARRIVE_AIRPORT
+        description: 예정_항공_여행_도착_공항
+        data_type: N/A
+      - name: EXPT_STAY_TRAVEL_RESVE_ID
+        description: 예정_숙박_여행_예약_아이디
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_PRODUCT_ID
+        description: 예정_숙박_여행_상품_아이디
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_MRT_TYPE
+        description: 예정_숙박_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_DEPART_KST_DATE
+        description: 예정_숙박_여행_출발_KST_일자
+        data_type: DATE
+      - name: EXPT_STAY_TRAVEL_ARRIVE_KST_DATE
+        description: 예정_숙박_여행_도착_KST_일자
+        data_type: DATE
+      - name: EXPT_STAY_TRAVEL_RESVE_PURPOSE
+        description: 예정_숙박_여행_예약_목적
+        data_type: N/A
+      - name: EXPT_STAY_TRAVEL_CITY
+        description: 예정_숙박_여행_도시
+        data_type: N/A
+      - name: HOTEL_AFFILIATE_NM
+        description: 호텔_제휴_명
+        data_type: STRING
+      - name: EXPT_STAY_TRAVEL_RESVE_DATE
+        description: 예정_숙박_여행_예약_일자
+        data_type: DATE
+      - name: EXPT_RIDE_TRAVEL_RESVE_ID
+        description: 예정_교통_여행_예약_아이디
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_PRODUCT_ID
+        description: 예정_교통_여행_상품_아이디
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_MRT_TYPE
+        description: 예정_교통_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: EXPT_RIDE_TRAVEL_DEPART_KST_DATE
+        description: 예정_교통_여행_출발_KST_일자
+        data_type: DATE
+      - name: EXPT_RIDE_TRAVEL_ARRIVE_KST_DATE
+        description: 예정_교통_여행_도착_KST_일자
+        data_type: DATE
+      - name: EXPT_RIDE_TRAVEL_RESVE_PURPOSE
+        description: 예정_교통_여행_예약_목적
+        data_type: N/A
+      - name: EXPT_RIDE_TRAVEL_CITY
+        description: 예정_교통_여행_도시
+        data_type: N/A
+      - name: EXPT_RIDE_TRAVEL_RESVE_DATE
+        description: 예정_교통_여행_예약_일자
+        data_type: DATE
+      - name: EXPT_TNA_TRAVEL_RESVE_ID
+        description: 예정_TNA_여행_예약_아이디
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_PRODUCT_ID
+        description: 예정_TNA_여행_상품_아이디
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_MRT_TYPE
+        description: 예정_TNA_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: EXPT_TNA_TRAVEL_DEPART_KST_DATE
+        description: 예정_TNA_여행_출발_KST_일자
+        data_type: DATE
+      - name: EXPT_TNA_TRAVEL_ARRIVE_KST_DATE
+        description: 예정_TNA_여행_도착_KST_일자
+        data_type: DATE
+      - name: EXPT_TNA_TRAVEL_RESVE_PURPOSE
+        description: 예정_TNA_여행_예약_목적
+        data_type: N/A
+      - name: EXPT_TNA_TRAVEL_CITY
+        description: 예정_TNA_여행_도시
+        data_type: N/A
+      - name: EXPT_TNA_TRAVEL_RESVE_DATE
+        description: 예정_TNA_여행_예약_일자
+        data_type: DATE
+      - name: EXPT_ETC_TRAVEL_RESVE_ID
+        description: 예정_기타_여행_예약_아이디
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_PRODUCT_ID
+        description: 예정_기타_여행_상품_아이디
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_MRT_TYPE
+        description: 예정_기타_여행_마이리얼트립_유형
+        data_type: STRING
+      - name: EXPT_ETC_TRAVEL_DEPART_KST_DATE
+        description: 예정_기타_여행_출발_KST_일자
+        data_type: DATE
+      - name: EXPT_ETC_TRAVEL_ARRIVE_KST_DATE
+        description: 예정_기타_여행_도착_KST_일자
+        data_type: DATE
+      - name: EXPT_ETC_TRAVEL_RESVE_PURPOSE
+        description: 예정_기타_여행_예약_목적
+        data_type: N/A
+      - name: EXPT_ETC_TRAVEL_CITY
+        description: 예정_기타_여행_도시
+        data_type: N/A
+      - name: EXPT_ETC_TRAVEL_RESVE_DATE
+        description: 예정_기타_여행_예약_일자
+        data_type: DATE
+      - name: GIFTCARD_SUCC_CNT
+        description: 기프트카드_성공_건수
+        data_type: BIGINT / INT
+      - name: DW_LOAD_DT
+        description: DW_적재_일시
+        data_type: TIMESTAMP
+
+

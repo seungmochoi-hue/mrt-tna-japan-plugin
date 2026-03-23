@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: MART_REVIEW_TREND_AGG_D
+    description: |
+      상품별 리뷰 추이 집계 테이블임.
+      활성 리뷰(`blocked = FALSE`, `deleted_at IS NULL`)를 한국 시간 기준 리뷰 작성일과 `GID` grain으로 집계함.
+      `PARTNER_ID`, `VERTICAL_ID`는 동일 `BASIS_DATE`, `GID` 내 최신 리뷰 기준 값을 사용함.
+      Grain은 `BASIS_DATE`, `GID` 조합임.
+    config:
+      tags: ["MART", "REVIEW"]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BASIS_DATE
+            - GID
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: "한국 시간 기준 리뷰 작성일."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+
+      - name: GID
+        description: "상품 식별자."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+
+      - name: PARTNER_ID
+        description: "동일 BASIS_DATE, GID 내 최신 리뷰 기준 파트너 식별자."
+        data_type: STRING
+
+      - name: VERTICAL_ID
+        description: "동일 BASIS_DATE, GID 내 최신 리뷰 기준 버티컬 식별자."
+        data_type: INT64
+
+      - name: REVIEW_CNT
+        description: "일자·상품 기준 리뷰 건수."
+        data_type: INT64
+
+      - name: AVG_SCORE
+        description: "일자·상품 기준 평균 리뷰 점수. 소수점 둘째 자리까지 내림."
+        data_type: FLOAT64
+
+      - name: SCORE1_REVIEW_CNT
+        description: "1점 리뷰 건수."
+        data_type: INT64
+
+      - name: SCORE2_REVIEW_CNT
+        description: "2점 리뷰 건수."
+        data_type: INT64
+
+      - name: SCORE3_REVIEW_CNT
+        description: "3점 리뷰 건수."
+        data_type: INT64
+
+      - name: SCORE4_REVIEW_CNT
+        description: "4점 리뷰 건수."
+        data_type: INT64
+
+      - name: SCORE5_REVIEW_CNT
+        description: "5점 리뷰 건수."
+        data_type: INT64
+
+      - name: HIGH_SCORE_CNT
+        description: "4점 또는 5점 리뷰 건수."
+        data_type: INT64
+
+      - name: LOW_SCORE_CNT
+        description: "1점 또는 2점 리뷰 건수."
+        data_type: INT64
+
+      - name: DW_LOAD_DT
+        description: "DW 적재 시각."
+        data_type: TIMESTAMP

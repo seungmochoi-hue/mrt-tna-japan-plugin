@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: MART_POINT_D
+    description: 포인트 이력 테이블
+    columns:
+    - name: BASIS_DATE
+      description: 기준일
+      data_type: DATE
+    - name: POINT_ID
+      description: 포인트 아이디
+      data_type: STRING
+    - name: TEMPLATE_ID
+      description: 포인트 템플릿 아이디
+      data_type: STRING
+    - name: TEMPLATE_NM
+      description: 포인트 템플릿 명
+      data_type: STRING
+    - name: POINT_CATEGORY_NM
+      description: 포인트 카테고리 명
+      data_type: STRING
+    - name: USER_ID
+      description: 사용자 아이디
+      data_type: STRING
+    - name: FLIGHT_FLAG
+      description: 항공편 여부
+      data_type: STRING
+    - name: POINT_RECENT_STATUS
+      description: 포인트 최근 상태
+      data_type: STRING
+    - name: INITIAL_AMOUNT
+      description: 초기 포인트 금액
+      data_type: INTEGER
+    - name: POINT_HISTORY_STATUS
+      description: 포인트 이력 상태
+      data_type: STRING
+    - name: RESVE_ID
+      description: 예약 아이디
+      data_type: STRING
+    - name: RESVE_GID
+      description: 예약 GID
+      data_type: STRING
+    - name: RESVE_PRODUCT_TITLE
+      description: 예약 상품 제목
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_1_CD
+      description: "표준 카테고리 레벨 1 코드"
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_1_NM
+      description: '표준 카테고리 레벨 1 명'
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_2_CD
+      description: "표준 카테고리 레벨 2 코드"
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_2_NM
+      description: "표준 카테고리 레벨 2 명"
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_3_CD
+      description: "표준 카테고리 레벨 3 코드"
+      data_type: STRING
+    - name: STANDARD_CATEGORY_LV_3_NM
+      description: "표준 카테고리 레벨 3 명"
+      data_type: STRING
+    - name: ACTION_AMOUNT
+      description: "포인트 액션 금액"
+      data_type: INTEGER
+    - name: AFTER_ACTION_AMOUNT
+      description: "포인트 액션 후 금액"
+      data_type: INTEGER
+    - name: CREATED_KST_DT
+      description: "포인트 생성 KST 일시"
+      data_type: TIMESTAMP
+    - name: UPDATED_KST_DT
+      description: "포인트 수정 KST 일시"
+      data_type: TIMESTAMP
+    - name: POINT_CREATED_DATE
+      description: "포인트 생성 일자"
+      data_type: DATE
+    - name: EXPIRE_DT
+      description: "포인트 만료 일자"
+      data_type: TIMESTAMP
+    - name: DAYS_SINCE_POINT_CREATED_DATE
+      description: "포인트 생성 일자로부터의 일수"
+      data_type: INTEGER
+    - name: TEMPLATE_START_KST_DT
+      description: "포인트 템플릿 시작 KST 일시"
+      data_type: TIMESTAMP
+    - name: TEMPLATE_EXPIRE_KST_DT
+      description: "포인트 템플릿 만료 KST 일시"
+      data_type: TIMESTAMP
+    - name: POINT_EXIST_FLAG
+      description: "포인트 존재 여부 플래그"
+      data_type: STRING
+    - name: DW_LOAD_DT
+      description: "DW 로드 일시"
+      data_type: TIMESTAMP

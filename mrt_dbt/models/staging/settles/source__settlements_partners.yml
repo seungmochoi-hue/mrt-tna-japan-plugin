@@ -1,0 +1,85 @@
+version: 2
+sources:
+- name: settles
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: settlements_partners
+    identifier: DW_MRT_SETTLEMENTS_PARTNERS
+    description: 정산 파트너 스냅샷. 하위 모델 MART_FPNA_CONFIRMATION_CLOSING_D에서 사용함. 주요 상태값
+      ACTIVE/DISAPPROVE 확인. 주요 타입값 PARTNER_SNAPSHOT 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 변경일시
+    - name: updated_by
+      description: 변경자
+    - name: deleted_at
+      description: 삭제일
+    - name: snapshot_type
+      description: 파트너 스냅샷 구분
+    - name: partner_id
+      description: 파트너 ID
+    - name: partner_status
+      description: 파트너 상태
+    - name: partner_name
+      description: 파트너명
+    - name: partner_email
+      description: 파트너 기본 정보 이메일
+    - name: company_name
+      description: 상호명
+    - name: representative_name
+      description: 대표자명
+    - name: business_license_number
+      description: 사업자 번호
+    - name: settle_type
+      description: 정산유형
+    - name: sale_type
+      description: 매출유형
+    - name: manager_name
+      description: 담당자
+    - name: manager_email
+      description: 담당자 이메일
+    - name: tel_country_dialing_code
+      description: 전화번호 국가코드
+    - name: manager_tel_number
+      description: 담당자 전화번호
+    - name: hp_country_dialing_code
+      description: 휴대폰번호 국가코드
+    - name: manager_hp_number
+      description: 담당자 휴대폰번호
+    - name: remittance_currency
+      description: 통화 코드
+    - name: bank_name
+      description: 은행명
+    - name: account_number
+      description: 계좌번호
+    - name: recipient_name
+      description: 수취인 이름
+    - name: domestic
+      description: 국내 여부
+    - name: recipient_address
+      description: 수취인 주소
+    - name: bank_branch
+      description: 해외 은행 지점
+    - name: swift_code
+      description: 해외 SWIFT/BIC
+    - name: routing_number
+      description: 해외 Routing 번호
+    - name: bank_type
+      description: 은행 타입
+    - name: vat_invoice_not_issue_reason
+      description: 세금계산서 미발행 사유
+    - name: withholding
+      description: 원천징수 여부
+    - name: snapshot_date
+      description: 파트너 스냅샷 일자
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: partnership_code
+      description: 제휴 파트너 코드

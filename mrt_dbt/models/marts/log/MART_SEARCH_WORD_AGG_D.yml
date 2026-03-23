@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: MART_SEARCH_WORD_AGG_D
+    description: "검색어 집계 데이터"
+    config:
+      tags: ["SEARCH", "MART"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: search_word
+        description: "검색어"
+        data_type: STRING
+      - name: qc
+        description: "검색 수"
+        data_type: INTEGER
+      - name: qc_web
+        description: "웹 검색 수"
+        data_type: INTEGER
+      - name: qc_aos_mweb
+        description: "Android 모바일 웹 검색 수"
+        data_type: INTEGER
+      - name: qc_ios_mweb
+        description: "iOS 모바일 웹 검색 수"
+        data_type: INTEGER
+      - name: qc_aos
+        description: "Android 검색 수"
+        data_type: INTEGER
+      - name: qc_ios
+        description: "iOS 검색 수"
+        data_type: INTEGER
+

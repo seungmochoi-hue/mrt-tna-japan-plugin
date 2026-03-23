@@ -1,0 +1,29 @@
+version: 2
+sources:
+- name: orders
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: reservation_mapping
+    identifier: DW_MRT_ORDERS_RESERVATION_MAPPING
+    description: 예약 식별자 매핑 원천 테이블. 하위 모델 MART_OFFER_SALE_D, MART_PACKAGE_OPTION_RESVE_D에서
+      사용함.
+    columns:
+    - name: id
+      description: ID
+    - name: reservation_id
+      description: reservation id
+    - name: mapping_reservation_id
+      description: 맵핑되는 reservation id
+    - name: created_at
+      description: 생성 시간
+    - name: created_by
+      description: created By UserId
+    - name: deleted_at
+      description: 삭제 시간
+    - name: updated_at
+      description: 수정 시간
+    - name: updated_by
+      description: updated by UserId
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: DIM_BIZ_LOG_KEY_MAPPING
+    description: "Biz Log의 키 매핑 정보"
+    config:
+      tags: [ "BIZ_LOG", "DIM" ]
+    columns:
+      - name: basis_dt
+        data_type: date
+        description: 기준 날짜
+      - name: user_id
+        data_type: string
+        description: 사용자 ID
+      - name: session_id
+        data_type: string
+        description: 세션 ID
+      - name: pid
+        data_type: string
+        description: PID
+        data_tests:
+          - not_null:
+              config:
+                where: "basis_dt >= '2025-01-01'"
+      - name: adid
+        data_type: string
+        description: 광고 ID
+      - name: udid
+        data_type: string
+        description: 기기 ID
+      - name: start_event_timestamp_kst
+        data_type: timestamp
+        description: 시작 이벤트 시간 (KST)
+      - name: platform
+        data_type: string
+        description: 플랫폼
+      - name: dw_load_dt
+        data_type: timestamp
+        description: DW 적재 일시
+

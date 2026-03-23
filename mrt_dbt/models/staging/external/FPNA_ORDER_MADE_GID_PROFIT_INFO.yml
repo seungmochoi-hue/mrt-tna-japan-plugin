@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: FPNA_ORDER_MADE_GID_PROFIT_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      B2B 맞춤 여행 손익 트래킹 [맞춤여행_GID_PROFIT](https://docs.google.com/spreadsheets/d/1cGB8CBV1-b8PvLoR3tU-cSbN2GR7_ZIRF7dhgoe8T4g/edit?gid=637000187#gid=637000187)
+    columns:
+      - name: GID
+        description: "GID"
+      - name: CGMV
+        description: "CGMV"
+      - name: MRT_SALES
+        description: "MRT 판매"
+      - name: AGENCY_FEE
+        description: "에이전시 수수료"
+      - name: SETTLE_TAKE_RATE
+        description: "정산 수수료율"
+      - name: AVG_TAKE_RATE
+        description: "평균 수수료율"
+      - name: SETTLE_YN
+        description: "정산 연도"
+

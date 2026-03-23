@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_PG_INFO"
+        identifier: "FPNA_PG_INFO"
+        description: "결제수단별 PG 수수료/정액 비용 정보. 원천: external_business.FPNA_PG_INFO (BigQuery 적재 위치: edw_ext.FPNA_PG_INFO)."
+        columns:
+          - name: "PAYMENT_METHOD"
+            description: "결제 수단"
+          - name: "PG_COM_RATE"
+            description: "PG 수수료율. external_business.FPNA_PG_INFO에서 PG사/기간별로 관리되며 edw_ext.FPNA_PG_INFO로 적재."
+          - name: "PG_COM_AMOUNT"
+            description: "PG 수수료 정액(금액)"
+          - name: "START_DATE"
+            description: "적용 시작일"
+          - name: "END_DATE"
+            description: "적용 종료일"

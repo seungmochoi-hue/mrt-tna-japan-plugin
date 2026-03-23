@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: INT_PARTNER_AGG_CONFIRM_RATE
+    description: |
+      파트너별 예약 확정률 집계 중간 모델.
+      accounting_event_histories와 reservations를 조인하여 파트너별 confirm 이벤트 수와
+      파트너 귀책 사유 취소(cancel_after_confirm + OVER_TRAVELER/PARTNER_NO_RESPONSE/PARTNER_SCHEDULE) 수를 집계한 뒤
+      확정률(CONFIRM_RATE)을 산출.
+      이 모델은 CONFIRM_RATE 컬럼만 실제 값을 산출하고 나머지 지표 컬럼은 NULL로 출력.
+      파트너 집계 뷰 통합 모델(예: MART_PARTNER 계열)에서 UNION 또는 JOIN으로 병합하여 사용하는 단일 지표 슬라이스.
+      Grain: PARTNER_ID (파트너당 1행).
+      Upstream: settles.accounting_event_histories, orders.reservations.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - PARTNER_ID
+          config:
+            severity: warn
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID (STRING으로 캐스팅된 partner_id)."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - unique:
+              config:
+                severity: warn
+      - name: RESVE_CNT
+        description: "예약 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: SALES_KRW_PRICE
+        description: "누적 판매 금액(원). 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: USER_CNT
+        description: "구매 유저 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: CURRENT_RESVE_CNT
+        description: "현재 여행 예정 예약 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: ONSALE_CNT
+        description: "판매 중 상품 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_ONSALE에서 산출)."
+        data_type: INT64
+      - name: MAIN_ACTIVITY_CITY_CD
+        description: "대표 액티비티 도시 코드. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: MAIN_ACTIVITY_COUNTRY_NM
+        description: "대표 액티비티 국가명. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: MAIN_ACTIVITY_MRT_TYPE
+        description: "대표 액티비티 상품 유형. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_MAIN_ACTIVITY에서 산출)."
+        data_type: STRING
+      - name: REVIEW_CNT
+        description: "리뷰 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: INT64
+      - name: REVIEW_SCORE_AVG
+        description: "평균 리뷰 점수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: FLOAT64
+      - name: CONFIRM_RATE
+        description: |
+          파트너 예약 확정률.
+          계산식: FLOOR((CONFIRM_CNT - CANCEL_CNT) / CONFIRM_CNT * 100) / 100
+          - CONFIRM_CNT: event = 'confirm'인 예약 수
+          - CANCEL_CNT: event LIKE '%cancel_after_confirm%' 이면서 cancel_reason_type이
+            OVER_TRAVELER, PARTNER_NO_RESPONSE, PARTNER_SCHEDULE 중 하나인 예약 수 (파트너 귀책 취소)
+          - CONFIRM_CNT = 0이면 1(100%)로 처리
+          소수점 2자리로 내림 처리.
+        data_type: FLOAT64

@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: community_logs_v1
+    description: "커뮤니티 및 소셜 로그"
+    config:
+      tags: ["community", "logs"]
+    columns:
+      - name: basis_dt
+        description: "기준일"
+        data_type: DATE
+      - name: evnet_timestamp_kst
+        description: "이벤트 발생 시간 (KST)"
+        data_type: TIMESTAMP
+      - name: screen_name
+        description: "화면 이름"
+        data_type: STRING
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: STRING
+      - name: event_name
+        description: "이벤트 이름"
+        data_type: STRING
+      - name: platform
+        description: "플랫폼"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: pid
+        description: "pid"
+        data_type: STRING
+      - name: item_id
+        description: "아이템 ID"
+        data_type: STRING
+      - name: item_kind
+        description: "아이템 종류"
+        data_type: STRING
+      - name: board_id
+        description: "게시판 ID"
+        data_type: STRING
+      - name: board_name
+        description: "게시판 이름"
+        data_type: STRING
+      - name: category_id
+        description: "카테고리 ID"
+        data_type: STRING
+      - name: category_name
+        description: "카테고리 이름"
+        data_type: STRING
+      - name: app_version
+        description: "앱 버전"
+        data_type: STRING
+      - name: data
+        description: "추가 데이터 (JSON 형식)"
+        data_type: STRING
+      - name: updated_at
+        description: "업데이트 시간"
+        data_type: DATETIME
+      - name: item_type
+        description: "아이템 타입"
+        data_type: STRING
+      - name: item_name
+        description: "아이템 이름"
+        data_type: STRING
+      - name: tab_name
+        description: "탭 이름"
+        data_type: STRING
+      - name: marker_type
+        description: "마커 타입"
+        data_type: STRING
+      - name: geo
+        description: "위치 정보"
+        data_type: STRING
+
+

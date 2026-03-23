@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: FPNA_TNA_FIRST_MAPPING_PARTNER
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [T&A 상품 우선 매핑(참고)](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1692736911#gid=1692736911)
+    columns:
+      - name: partner_id
+        description: "파트너 ID"
+      - name: partner_nm
+        description: "파트너 이름"
+      - name: commission_rate
+        description: "커미션 비율"
+      - name: start_date
+        description: "시작 날짜"
+      - name: end_date
+        description: "종료 날짜"
+      - name: remark
+        description: "비고"
+      - name: remark_2
+        description: "비고2 (기타 메모)"
+      - name: remark_3
+        description: "비고3 (기타 메모2)"
+

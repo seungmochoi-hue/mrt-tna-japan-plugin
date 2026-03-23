@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: FPNA_B2B_PARTNER_TAKE_RATE_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [B2B제휴 손익 참고사항](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=633183776#gid=633183776)
+    columns:
+      - name: TYPE
+        description: "타입"
+      - name: MRT_TYPE
+        description: "MRT 타입"
+      - name: BIZ_TYPE
+        description: "BIZ_TYPE"
+      - name: GMV
+        description: "GMV"
+      - name: PARTENR_TAKE_RATE
+        description: "파트너 수수료율"
+      - name: START_DATE
+        description: "시작 날짜"
+      - name: END_DATE
+        description: "종료 날짜"
+      - name: REMARK_1
+        description: "비고"
+

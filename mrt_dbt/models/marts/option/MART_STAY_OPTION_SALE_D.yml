@@ -1,0 +1,210 @@
+version: 2
+
+models:
+  - name: MART_STAY_OPTION_SALE_D
+    description: |
+      숙소(STAY) 예약 옵션 단위 결제/취소 내역 마트.
+      Grain: RESVE_OPTION_ID + KIND. KIND=1(결제)과 KIND=2(취소) 각각 1건씩 존재.
+      KIND=2 취소 내역은 option_reservation_refunds를 RESVE_OPTION_ID 단위로 집약(1건)하고 SUM(refund_amount)로 환불 합산 금액 산출.
+      숙소 예약 대상 범위: unionstay.reservation에 매핑된 예약만 포함.
+      객실 정보는 숙소/요금/옵션명 기준으로 조회.
+      도시/국가/지역 정보는 숙소 대표 지역 정보 기준으로 조회.
+    config:
+      tags: ['STAY', 'MART']
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_OPTION_ID
+            - KIND
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: |
+          집계 기준 일자.
+          KIND=1(결제): 첫 결제일.
+          KIND=2(취소): 최초 환불 완료일.
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: USER_ID
+        description: "예약자 사용자 ID."
+        data_type: STRING
+      - name: RESVE_ID
+        description: "숙소 예약 ID."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_OPTION_ID
+        description: "예약 옵션 ID. RESVE_OPTION_ID + KIND가 행 고유 식별자."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ROOM_ID
+        description: "객실 ID. 옵션 ID 복합 키 문자열에서 정규식으로 추출 (:-:숫자:-:숫자:-:{room_id}:-:숫자 패턴)."
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "숙소 상품 ID."
+        data_type: STRING
+      - name: GID
+        description: "상품 그룹 ID."
+        data_type: STRING
+      - name: OPTION_ID
+        description: "옵션 원문 ID (복합 키 문자열 그대로 사용)."
+        data_type: STRING
+      - name: ROOM_OPTION_ID
+        description: "객실 옵션 ID."
+        data_type: STRING
+      - name: PROVIDER_TYPE
+        description: "숙소 제공자 유형."
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "숙소 제공자 코드."
+        data_type: STRING
+      - name: PROPERTY_ID
+        description: "숙소 ID."
+        data_type: STRING
+      - name: KIND
+        description: "결제/취소 구분. 1: 결제, 2: 취소."
+        data_type: INTEGER
+      - name: PRODUCT_TITLE
+        description: "숙소 상품명."
+        data_type: STRING
+      - name: PROPERTY_NM
+        description: "숙소명."
+        data_type: STRING
+      - name: ROOM_NM
+        description: "객실명."
+        data_type: STRING
+      - name: ROOM_OPTION_NM
+        description: "객실 옵션명."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: RECENT_STATUS
+        description: "예약 최근 상태 코드 (소문자 변환)."
+        data_type: STRING
+      - name: TRAVEL_START_KST_DATE
+        description: "체크인 일자 (KST)."
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "체크아웃 일자 (KST)."
+        data_type: DATE
+      - name: PG_NM
+        description: "PG사 명칭 (소문자 변환)."
+        data_type: STRING
+      - name: PLATFORM
+        description: "결제 플랫폼 (소문자 변환)."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "최초 결제 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 1단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 1단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 2단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 2단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 3단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 3단계 명칭."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "옵션 예약 생성 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "옵션 예약 최종 수정 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: PARTNER_ID
+        description: "파트너 ID."
+        data_type: STRING
+      - name: SALES_PRICE
+        description: |
+          판매/환불 금액 (원화).
+          KIND=1(결제): 옵션 원가 × 1.
+          KIND=2(취소): SUM(option_reservation_refunds.refund_amount) (실제 환불 합산 금액) × -1.
+        data_type: INTEGER
+      - name: PAID_PRICE
+        description: |
+          실 결제 금액 (원화). 쿠폰/포인트 할인 차감 후 금액.
+          산출식: ROUND(sale_price - 쿠폰비례배분 - 포인트비례배분, 0) × 부호(KIND=1: 1, KIND=2: -1).
+          쿠폰/포인트는 예약 전체 금액 대비 옵션 비중으로 비례 배분.
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: |
+          총 쿠폰 할인 금액 (원화)
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 할인 금액"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 할인 금액"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: |
+          포인트 사용 금액 (원화). 예약 전체 포인트 사용액을 옵션 금액 비중으로 비례 배분.
+          KIND=2(취소) 시 음수.
+        data_type: INTEGER
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 수단 상세값."
+        data_type: STRING
+      - name: PAYMENT_COMMISSION_RATE
+        description: "결제 수수료율. 원천 비율값 ÷ 100 (소수점 4자리 반올림)."
+        data_type: NUMERIC
+      - name: PAYMENT_COMMISSION_PRICE
+        description: "결제 수수료 금액 (원화). 판매 수수료 × 부호(KIND=1: 1, KIND=2: -1)."
+        data_type: INTEGER
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료율. 원천 비율값 ÷ 100 (소수점 4자리 반올림)."
+        data_type: FLOAT
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액 (원화). 정산 수수료 × 부호(KIND=1: 1, KIND=2: -1)."
+        data_type: INTEGER
+      - name: CITY_NM
+        description: "도시명."
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가명."
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역명."
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형 (소문자 변환)."
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "어린이 투숙 인원 수."
+        data_type: INTEGER
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 투숙 인원 수."
+        data_type: INTEGER
+      - name: RESVE_PRSNL_CNT
+        description: "총 투숙 인원 수. 어린이 + 성인 합산."
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시 (실행 시점 기준 KST)."
+        data_type: TIMESTAMP

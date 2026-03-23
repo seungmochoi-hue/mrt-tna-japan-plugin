@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: MART_FPNA_ETC_ADJUSTMENT_D
+    description: |
+      [시트 원천] FPNA 기타조정 수수료(원화) 상세 MART.
+
+      ## 목적
+      - `DW_MRT_SETTLEMENTS_ETC_ADJUSTMENTS`에서 REVENUE 후처리 반영 대상인 기타조정 수수료(원화) 건만 추출한다.
+      - FP&A 팀이 시트에서 `PARTNER_ID + ADJUSTMENT_DATE` 기준으로 기존 Revenue에 후처리 합산할 수 있도록 상세 행을 제공한다.
+
+      ## 필터
+      - `deleted_at IS NULL`
+      - `COALESCE(adjustment_commission, 0) != 0`
+
+      ## 주의사항
+      - 이 MART는 기존 `MART_FPNA_NONAIR_PROFIT_D`, `MART_FPNA_NONAIR_PROFIT_M` 로직을 수정하지 않는다.
+      - 수수료 부호(양수/음수)를 그대로 유지하므로, 시트 후처리 시 부호를 뒤집지 않고 합산한다.
+    config:
+      tags: [ "MART", "FPNA", "SHEET" ]
+    columns:
+      - name: ADJUSTMENT_DATE
+        description: "조정일"
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ADJUSTMENT_ID
+        description: "기타조정 ID (원천 `DW_MRT_SETTLEMENTS_ETC_ADJUSTMENTS.id`)"
+        data_type: INT64
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - unique:
+              config:
+                severity: warn
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: GID
+        description: "GID (원천 `ups_id`)"
+        data_type: INT64
+      - name: PRODUCT_TITLE
+        description: "상품명"
+        data_type: STRING
+      - name: ADJUSTMENT_COMMISSION_KRW
+        description: "기타조정 수수료(원화). FP&A 시트 후처리에서 Revenue 보정 합산값으로 사용."
+        data_type: INT64
+        tests:
+          - not_null:
+              config:
+                severity: warn

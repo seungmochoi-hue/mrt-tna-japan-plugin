@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: DIM_BIZ_LOG_USER_MAPPING
+    description: |
+      biz_log 원시 로그에서 PID-user_id 매핑을 일별로 집계하는 1단계 기초 매핑 테이블.
+      유효한 user_id만 추출하여, basis_dt + pid + user_id 기준 GROUP BY로 최초 이벤트 시각 산출.
+      DIM_BIZ_LOG_USER_MAPPING_REFINE에서 PID별 user_id 변경 이력 구성에 사용되며,
+      MART_BIZ_LOG_PID_CONVERSION_D 등 전환 마트에서도 직접 참조.
+      grain: basis_dt + pid + user_id.
+    config:
+      tags: [ "BIZ_LOG", "DIM" ]
+    columns:
+      - name: basis_dt
+        data_type: date
+        description: "기준일자. event_timestamp를 KST(+9h) 변환 후 DATE 추출."
+      - name: pid
+        data_type: string
+        description: 브라우저/앱 식별자.
+      - name: user_id
+        data_type: string
+        description: "로그인 사용자 ID. NULL, 빈문자열, 'null' 값은 제외됨."
+      - name: min_event_timestamp_kst
+        data_type: timestamp
+        description: "해당 basis_dt + pid + user_id 조합의 최초 이벤트 시각(KST). MIN(event_timestamp) + 9h."
+      - name: dw_load_dt
+        data_type: timestamp
+        description: DW 적재 일시. CURRENT_TIMESTAMP() 기준.
+

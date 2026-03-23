@@ -1,0 +1,40 @@
+version: 2
+sources:
+- name: products
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: blocks
+    identifier: DW_MRT_PRODUCTS_BLOCKS
+    description: 상품 블록. 마지막 적재일 2026-03-19. 주요 타입값 ETC 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: option_id
+      description: 옵션 ID
+    - name: product_id
+      description: 상품 ID
+    - name: start_date
+      description: 시작 일자
+    - name: end_date
+      description: 종료 일자
+    - name: amount
+      description: 금액
+    - name: block_type
+      description: 블록 타입
+    - name: details
+      description: Details
+    - name: reservation_user
+      description: 예약 사용자
+    - name: reservation_price
+      description: 예약 금액
+    - name: blocked_at
+      description: Blocked at
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

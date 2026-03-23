@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: mustang
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: mst_vehicle
+        identifier: DW_MRT_MUSTANG_MST_VEHICLE
+        description: "렌터카 차량(Vehicle)"
+
+      - name: mst_agency
+        identifier: DW_MRT_MUSTANG_MST_AGENCY
+        description: "렌터카 업체(Agency)"
+
+  - name: mustang_transport
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: transportation_reservation
+        identifier: DW_MRT_MUSTANG_TRANSPORT_TRANSPORTATION_RESERVATION
+        description: "교통 예약 관리"
+
+      - name: transportation_reservation_item
+        identifier: DW_MRT_MUSTANG_TRANSPORT_TRANSPORTATION_RESERVATION_ITEM
+        description: "교통 예약 옵션 관리"
+
+      - name: train_raileurope_route
+        identifier: DW_MRT_MUSTANG_TRANSPORT_TRAIN_RAILEUROPE_ROUTE
+        description: "유럽열차 노선 메타 정보"
+
+      - name: train_raileurope_place
+        identifier: DW_MRT_MUSTANG_TRANSPORT_TRAIN_RAILEUROPE_PLACE
+        description: "유럽열차 장소 메타 정보"
+
+  - name: mustang_esim
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: esim_reservation
+        identifier: DW_MRT_MUSTANG_SIM_ESIM_RESERVATION
+        description: "이심 예약 관리"
+
+      - name: esim_reservation_option
+        identifier: DW_MRT_MUSTANG_SIM_ESIM_RESERVATION_OPTION
+        description: "이심 예약 옵션 관리"
+
+      - name: esim_management
+        identifier: DW_MRT_MUSTANG_SIM_ESIM_MANAGEMENT
+        description: "이심 상태 관리(발급, 선물, 활성화)"
+
+      - name: usimsa_product
+        identifier: DW_MRT_MUSTANG_SIM_USIMSA_PRODUCT
+        description: "usimsa 상품"
+
+      - name: mcc_country
+        identifier: DW_MRT_MUSTANG_SIM_MCC_COUNTRY
+        description: "MCC 국가"
+
+      - name: mcc_city
+        identifier: DW_MRT_MUSTANG_SIM_MCC_CITY
+        description: "MCC 도시"

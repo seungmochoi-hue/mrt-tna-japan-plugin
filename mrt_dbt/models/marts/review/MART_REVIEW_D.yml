@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: MART_REVIEW_D
+    description: 상품(GID)-파트너별 리뷰 통계 요약 테이블
+    config:
+      tags: ["MART", "REVIEW"]
+    columns:
+      - name: GID
+        description: GID
+        data_type: STRING
+
+      - name: PARTNER_ID
+        description: 파트너 아이디
+        data_type: STRING
+
+      - name: REVIEW_CNT
+        description: 전체 리뷰 건수
+        data_type: INTEGER
+
+      - name: AVG_SCORE
+        description: 평균 점수
+        data_type: FLOAT
+
+      - name: SCORE1_REVIEW_CNT
+        description: 1점 리뷰 건수
+        data_type: INTEGER
+
+      - name: SCORE2_REVIEW_CNT
+        description: 2점 리뷰 건수
+        data_type: INTEGER
+
+      - name: SCORE3_REVIEW_CNT
+        description: 3점 리뷰 건수
+        data_type: INTEGER
+
+      - name: SCORE4_REVIEW_CNT
+        description: 4점 리뷰 건수
+        data_type: INTEGER
+
+      - name: SCORE5_REVIEW_CNT
+        description: 5점 리뷰 건수
+        data_type: INTEGER
+
+      - name: FIRST_REVIEW_CREATE_DT
+        description: 최초 리뷰 생성 일시
+        data_type: TIMESTAMP
+
+      - name: LAST_REVIEW_CREATE_DT
+        description: 최종 리뷰 생성 일시
+        data_type: TIMESTAMP
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: TIMESTAMP

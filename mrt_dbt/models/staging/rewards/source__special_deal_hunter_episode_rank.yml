@@ -1,0 +1,38 @@
+version: 2
+sources:
+- name: rewards
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: special_deal_hunter_episode_rank
+    identifier: DW_MRT_REWARDS_SPECIAL_DEAL_HUNTER_EPISODE_RANK
+    description: 특가헌터 에피소드 랭킹. 마지막 적재일 2025-09-07. 최근 90일 기준 신규 적재 미확인.
+    columns:
+    - name: id
+      description: ID
+    - name: event_key
+      description: Event key
+    - name: user_id
+      description: 사용자 ID
+    - name: episode_id
+      description: 에피소드 ID
+    - name: total_benefit_amount
+      description: Total 혜택 금액
+    - name: paid_reward_amount
+      description: Paid reward 금액
+    - name: rank_no
+      description: 랭킹 no
+    - name: reason
+      description: 사유
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: INT_FPNA_AGENCY_COMMISSION
+    description: |
+      예약별 제휴여행사/마케팅 파트너 수수료.
+      payment_product_closing에서 예약 단위로 partnership_commission, marketing_partnership_commission을 합산.
+      삭제(deleted_at IS NOT NULL) 건 제외.
+      Grain: RESVE_ID (예약당 1행).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_ID
+          config:
+            severity: warn
+    columns:
+      - name: RESVE_ID
+        description: "예약 ID (reservation_no)"
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: PARTNERSHIP_COMMISSION
+        description: "제휴여행사 수수료 합계. NULL이면 0으로 치환 후 합산."
+      - name: MARKETING_PARTNERSHIP_COMMISSION
+        description: "마케팅 파트너 수수료 합계. NULL이면 0으로 치환 후 합산."

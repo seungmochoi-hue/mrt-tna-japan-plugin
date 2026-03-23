@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: "cartographer"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "region_airport"
+        identifier: "DW_MRT_CARTOGRAPHER_REGION_AIRPORT"
+        description: "cartographer region 과 IATA 공항 코드 및 metro 코드를 연결하는 source 테이블임. region_id, iata_airport_code, iata_airport_metro_code, updated_at, deleted_at 값을 포함함."
+        columns:
+          - name: "region_id"
+            description: "Region ID"
+          - name: "iata_airport_code"
+            description: "Iata Airport Code"
+          - name: "iata_airport_metro_code"
+            description: "Iata Airport Metro Code"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_by"
+            description: "생성자"
+          - name: "updated_at"
+            description: "수정일시"
+          - name: "updated_by"
+            description: "수정자"
+          - name: "deleted_at"
+            description: "삭제일시"
+          - name: "deleted_by"
+            description: "Deleted By"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

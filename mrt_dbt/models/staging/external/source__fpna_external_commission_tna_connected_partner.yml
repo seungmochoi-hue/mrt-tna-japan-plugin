@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "fpna_external_commission_tna_connected_partner"
+        identifier: "fpna_external_commission_tna_connected_partner"
+        description: "T&A 연동 TR% 평균 (파트너) (스프레드시트관리)"
+        columns:
+          - name: "partner_id"
+            description: "파트너 ID"
+          - name: "partner_nm"
+            description: "Partner Name"
+          - name: "avg_tr"
+            description: "평균 TR"

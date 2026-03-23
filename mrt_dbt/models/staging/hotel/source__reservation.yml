@@ -1,0 +1,132 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: reservation
+    identifier: DW_MRT_STAYNET_RESERVATION
+    description: 호텔 예약. 마지막 적재일 2026-03-19. 주요 상태값 PRECHECK_SUCCESS/RESERVE_CONFIRM/RESERVE_SUCCESS/CANCEL_SUCCESS/EXPIRED
+      확인. 주요 타입값 ETC_FOR_TRAVELER/PARTNER_SCHEDULE/RETRY_RESERVATION/REQUEST_FROM_TRAVELER/TICKET_DAY_OFF
+      확인.
+    columns:
+    - name: reservation_id
+      description: 예약 ID
+    - name: property_id
+      description: 숙소 ID
+    - name: property_name
+      description: 숙소명
+    - name: regular_price
+      description: 정가
+    - name: sale_price
+      description: 판매가
+    - name: deposit_price
+      description: 보증금
+    - name: final_deposit_price
+      description: 최종 보증금
+    - name: user_sale_price
+      description: 고객 판매가
+    - name: zero_margin_user_sale_price
+      description: 제로마진 고객 판매가
+    - name: daily_prices
+      description: 일자별 요금
+    - name: onsite_surcharge
+      description: 현장 결제 추가 요금
+    - name: cancel_refund_price
+      description: 취소 환불 금액
+    - name: mrt_cancel_commission
+      description: 마리트 취소 수수료
+    - name: rate_price_mode
+      description: 요금 모드
+    - name: confirm_mrt_commission_rate
+      description: 확정 마리트 수수료율
+    - name: cancel_mrt_commission_rate
+      description: 취소 마리트 수수료율
+    - name: cancel_policy
+      description: 취소 정책
+    - name: check_in_date
+      description: 체크인 일자
+    - name: check_in_start_time
+      description: 체크인 시작 시간
+    - name: check_out_date
+      description: 체크아웃 일자
+    - name: check_out_end_time
+      description: 체크아웃 종료 시간
+    - name: members
+      description: 투숙객 정보
+    - name: mrt_reservation_no
+      description: 마리트 예약 번호
+    - name: cms_reservation_no
+      description: CMS 예약 번호
+    - name: order_id
+      description: 주문 ID
+    - name: reservation_status
+      description: 예약 상태
+    - name: reservation_user
+      description: 예약자 정보
+    - name: check_in_user
+      description: 체크인 고객 정보
+    - name: special_request
+      description: 특별 요청사항
+    - name: canceled_by
+      description: 취소 주체
+    - name: cancel_reason
+      description: 취소 사유
+    - name: cancel_reason_type
+      description: 취소 사유 구분
+    - name: other_logs
+      description: 기타 로그
+    - name: booking_error_code
+      description: 예약 오류 코드
+    - name: promotion_applied
+      description: 프로모션 적용 여부
+    - name: promotion_discount_amount
+      description: 프로모션 할인 금액
+    - name: zero_margin_discount_amount
+      description: 제로마진 할인 금액
+    - name: zero_margin_applied
+      description: 제로마진 적용 여부
+    - name: confirm_type
+      description: 확정 방식
+    - name: booked_at
+      description: 예약 요청 일시
+    - name: confirmed_at
+      description: 예약 확정 일시
+    - name: canceled_at
+      description: 예약 취소 일시
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: b2b_communication_commission
+      description: B2B 커뮤니케이션 수수료
+    - name: b2b_communication_support_price
+      description: B2B 커뮤니케이션 지원 금액
+    - name: b2b_communication_supply_price
+      description: B2B 커뮤니케이션 공급 금액
+    - name: corporate_margin_discount_amount
+      description: 기업 마진 할인 금액
+    - name: nights_discount_amount
+      description: 박수 할인 금액
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: deposit_additional_option_amount
+      description: 보증금 추가 옵션 금액
+    - name: sale_additional_option_amount
+      description: 판매 추가 옵션 금액
+    - name: additional_member_amount
+      description: 추가 인원 금액
+    - name: merchant_uid
+      description: 거래 UID
+    - name: rate_plan_type
+      description: 요금 플랜 타입
+    - name: direct_contract
+      description: 직계약 여부

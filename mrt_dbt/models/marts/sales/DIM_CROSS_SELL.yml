@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: DIM_CROSS_SELL
+    description: |
+      항공 예약 기반 크로스셀 분석 dimension.
+      동일 유저의 예약을 여행 시작일 15일 이내면 같은 여행 그룹(TRAVEL_ID)으로 묶고,
+      비항공 예약이 항공과 동일 여행 그룹이면 크로스셀(CROSS_SELL_FLAG=Y)로 판정.
+      항공 이용 목적(FLIGHT_PURPOSE_TYPE)은 탑승객 성별/연령으로 추정.
+      downstream: MART_SALE_D.
+    columns:
+      - name: RESVE_ID
+        description: 예약 아이디
+        data_type: STRING
+
+      - name: USER_ID
+        description: 유저 아이디
+        data_type: STRING
+
+      - name: TRAVEL_START_KST_DATE
+        description: 여행 시작 KST 일자
+        data_type: DATE
+
+      - name: TRAVEL_END_KST_DATE
+        description: 여행 종료 KST 일자
+        data_type: DATE
+
+      - name: TRAVEL_ID
+        description: "여행 그룹 아이디. {USER_ID}-{순번} 형태. 여행 시작일 15일 이내 예약은 동일 그룹"
+        data_type: STRING
+
+      - name: TRAVEL_DETAIL_ID
+        description: "여행 그룹 내 예약 순번(TRAVEL_START_KST_DATE 순)"
+        data_type: INTEGER
+
+      - name: FLIGHT_PURPOSE_TYPE
+        description: "항공 이용 목적 추정값. alone/lover/children/parents/friends. 탑승객 성별/연령 기반"
+        data_type: STRING
+
+      - name: INCLUDE_FLIGHT_FLAG
+        description: "비항공 예약이 동일 여행 그룹에 항공 포함 시 Y. 항공 예약 자체는 N"
+        data_type: STRING
+
+      - name: CROSS_SELL_FLAG
+        description: "크로스셀 판정. 비항공+항공 미취소+왕복(당일치기 제외)+비게스트 시 Y"
+        data_type: STRING
+
+      - name: FLIGHT_RESVE_ID
+        description: 항공 예약 아이디
+        data_type: STRING
+
+      - name: FLIGHT_CREATE_KST_DT
+        description: 항공 생성 KST 일시
+        data_type: TIMESTAMP
+
+      - name: FLIGHT_TRAVEL_START_KST_DATE
+        description: 항공 여행 시작 KST 일자
+        data_type: DATE
+
+      - name: FLIGHT_TO_RESV_DATE_DIFF_VALUE
+        description: "현재 예약 생성일 - 항공 예약 생성일(일). 비항공 예약에만 값 존재"
+        data_type: INTEGER
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: TIMESTAMP
+

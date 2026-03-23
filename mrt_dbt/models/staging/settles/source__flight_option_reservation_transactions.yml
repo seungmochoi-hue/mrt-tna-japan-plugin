@@ -1,0 +1,104 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: flight_option_reservation_transactions
+        identifier: DW_MRT_SETTLES_FLIGHT_OPTION_RESERVATION_TRANSACTIONS
+        description: |
+          항공 옵션 예약 트랜잭션 원천. 옵션 단위 항공 판매/수수료 데이터를 제공하며, 항공 인디비 원천 및 항공 마케팅 파트너 쿼리에서 옵션 단위 금액 집계에 사용함.
+        columns:
+          - name: id
+            description: "pk"
+          - name: created_at
+            description: "생성 일시"
+          - name: created_by
+            description: "생성자"
+          - name: deleted_at
+            description: "삭제 일시"
+          - name: updated_at
+            description: "수정 일시"
+          - name: updated_by
+            description: "수정자"
+          - name: reservation_id
+            description: "예약 FK"
+          - name: option_reservation_id
+            description: "UK ID"
+          - name: option_id
+            description: "옵션ID"
+          - name: sale_price
+            description: "판매 금액"
+          - name: supply_price
+            description: "항공료"
+          - name: tax
+            description: "세금 + 유류할증료"
+          - name: tasf_commission
+            description: "TASF 수수료"
+          - name: marketing_partnership_code
+            description: "마케팅 파트너코드"
+          - name: period_code
+            description: "항공 정산 기간 타입"
+          - name: cabin_seat_grad
+            description: "좌석등급"
+          - name: reservation_user_id
+            description: "예약자ID"
+          - name: air_no_code
+            description: "항공사 3코드"
+          - name: air_code
+            description: "항공사 2코드"
+          - name: ticket_type
+            description: "티켓타입"
+          - name: ticket_no
+            description: "티켓번호"
+          - name: origin_ticket_no
+            description: "원 티켓번호"
+          - name: pax_title
+            description: "탑승객 성별"
+          - name: all_itin_content
+            description: "전체 여정정보"
+          - name: sale_amount
+            description: "판매금액"
+          - name: net_amount
+            description: "판매NET"
+          - name: tax_amount
+            description: "판매TAX"
+          - name: que_amount
+            description: "Q차지"
+          - name: fee_rate
+            description: "판매컴(%)"
+          - name: fee_w
+            description: "판매컴(W)"
+          - name: fee_vat
+            description: "판매컴(VAT)"
+          - name: promotion_discount_rate
+            description: "자사 할인율"
+          - name: promotion_discount_fare
+            description: "자사 할인금액"
+          - name: partner_promotion_amount
+            description: "제휴사 할인금액"
+          - name: total_promotion_amount
+            description: "총 할인금액"
+          - name: promotion_discount_fare_sub
+            description: "할인/할증 금액"
+          - name: comm_flag
+            description: "선컴/후컴 여부"
+          - name: comm_amount
+            description: "커미션 가격"
+          - name: pay_method_name
+            description: "결제수단"
+          - name: card_pay_amount
+            description: "카드결제금액"
+          - name: pay_method_detail_name
+            description: "결제세부구분(카드사,은행)"
+          - name: cash_pay_amount
+            description: "현금결제금액"
+          - name: deposit_bank
+            description: "입금은행"
+          - name: point_kind
+            description: "쿠폰/포인트 종류"
+          - name: point_amount
+            description: "쿠폰/포인트 금액"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

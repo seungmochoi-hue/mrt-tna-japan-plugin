@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TYPE_V3"
+        identifier: "FPNA_TYPE_V3"
+        description: "FPNA_TYPE_V3 (스프레드시트관리)"
+        columns:
+          - name: "BIZ_TYPE_V3"
+            description: "BIZ_TYPE V3"
+          - name: "FPNA_TYPE_LV_1"
+            description: "FPNA 타입 레벨 1"
+          - name: "FPNA_TYPE_LV_2"
+            description: "FPNA 타입 레벨 2"
+          - name: "FPNA_TYPE_LV_3"
+            description: "FPNA 타입 레벨 3"

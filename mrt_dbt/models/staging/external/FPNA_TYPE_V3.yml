@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: FPNA_TYPE_V3
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [FPNA_TYPE_V3](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1142671387#gid=1142671387)
+    columns:
+      - name: BIZ_TYPE_V3
+        description: "BIZ_TYPE V3"
+      - name: FPNA_TYPE_LV_1
+        description: "FPNA 타입 레벨 1"
+      - name: FPNA_TYPE_LV_2
+        description: "FPNA 타입 레벨 2"
+      - name: FPNA_TYPE_LV_3
+        description: "FPNA 타입 레벨 3"
+

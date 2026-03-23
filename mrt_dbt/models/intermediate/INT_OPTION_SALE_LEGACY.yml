@@ -1,0 +1,158 @@
+version: 2
+
+models:
+  - name: INT_OPTION_SALE_LEGACY
+    description: |
+      레거시 도메인(HOTEL, 2.0 PRODUCT) 옵션 판매 데이터 정규화 뷰.
+      데이터 업데이트가 종료된 과거 도메인을 MART_SALE_D에서 추출하여
+      MART_OPTION_SALE_D UNION 구조에 맞는 표준 스키마로 변환.
+      DOMAIN_NM 매핑: 'HOTEL' -> 'LEGACY-STAY', '2.0 PRODUCT' -> 'LEGACY'.
+      OPTION_TITLE은 2.0 PRODUCT 건에 한해 reservation_orders.title을 STRING_AGG로 집약하여 조인 (예약당 옵션 N개 -> 쉼표 구분 합산).
+      결제 수수료와 정산 수수료는 동일 값(COMMISSION_RATE, SALES_PRICE * COMMISSION_RATE) 사용.
+      결제 수단 상세값(PAYMENT_METHOD_VALUE)은 레거시 특성상 미제공.
+      Grain: RESVE_OPTION_ID (레거시는 RESVE_ID와 동일).
+      Downstream: MART_OPTION_SALE_D.
+    columns:
+      - name: BASIS_DATE
+        description: "집계 기준일자."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: "예약 ID."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_OPTION_ID
+        description: "옵션 단위 예약 ID (행 고유 식별자). 레거시는 RESVE_ID와 동일."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: USER_ID
+        description: "예약자 사용자 ID."
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID."
+        data_type: STRING
+      - name: KIND
+        description: "예약 구분 (신규/취소 등)."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID."
+        data_type: STRING
+      - name: OPTION_ID
+        description: "옵션 ID. 레거시는 PRODUCT_ID와 동일."
+        data_type: STRING
+      - name: GID
+        description: "상품 그룹 ID."
+        data_type: STRING
+      - name: OPTION_GID
+        description: "옵션 그룹 ID. 레거시는 GID와 동일."
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: |
+          도메인 명칭.
+          원천 MART_SALE_D.DOMAIN_NM 값 기준 변환:
+          'HOTEL' -> 'LEGACY-STAY', '2.0 PRODUCT' -> 'LEGACY'.
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품명."
+        data_type: STRING
+      - name: OPTION_TITLE
+        description: "옵션명. 2.0 PRODUCT 건은 reservation_orders.title을 STRING_AGG로 집약 (예: '어른, 청소년/어린이'). HOTEL 건은 NULL."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: RECENT_STATUS
+        description: "최근 예약 상태 코드."
+        data_type: STRING
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 출발일 (KST)."
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 귀국일 (KST)."
+        data_type: DATE
+      - name: PG_NM
+        description: "PG사 명칭."
+        data_type: STRING
+      - name: PLATFORM
+        description: "결제 플랫폼."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "결제 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 1단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 1단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 2단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 2단계 명칭."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 3단계 코드."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 3단계 명칭."
+        data_type: STRING
+      - name: OPTION_PARTNER_ID
+        description: "옵션 파트너 ID. MART_SALE_D.PARTNER_ID 기준."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "판매 금액 (원화). MART_SALE_D.SALES_KRW_PRICE 기준."
+        data_type: INT64
+      - name: PAID_PRICE
+        description: "실 결제 금액. MART_SALE_D.PAID_KRW_PRICE 기준."
+        data_type: INT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인 금액."
+        data_type: INT64
+      - name: POINT_PRICE
+        description: "포인트 사용 금액."
+        data_type: INT64
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 수단 상세값. 레거시는 데이터 미제공 (NULL)."
+        data_type: STRING
+      - name: PAYMENT_COMMISSION_RATE
+        description: "결제 수수료율. MART_SALE_D.COMMISSION_RATE 기준."
+        data_type: FLOAT64
+      - name: PAYMENT_COMMISSION_PRICE
+        description: |
+          결제 수수료 금액.
+          계산식: ROUND(SALES_PRICE * COMMISSION_RATE, 0) -> INT64 변환.
+        data_type: INT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료율. 레거시는 PAYMENT_COMMISSION_RATE와 동일."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액. 레거시는 PAYMENT_COMMISSION_PRICE와 동일."
+        data_type: INT64
+      - name: CITY_NM
+        description: "도시명. MART_SALE_D.CITY_NM 기준."
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가명. MART_SALE_D.COUNTRY_NM 기준."
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역명. MART_SALE_D.REGION_NM 기준."
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "예약 생성 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "예약 최종 수정 일시 (KST)."
+        data_type: TIMESTAMP

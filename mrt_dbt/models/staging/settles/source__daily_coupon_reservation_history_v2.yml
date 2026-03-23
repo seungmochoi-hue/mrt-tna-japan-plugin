@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: daily_coupon_reservation_history_v2
+        identifier: DW_MRT_SETTLES_DAILY_COUPON_RESERVATION_HISTORY_V2
+        description: |
+          일자 기준 쿠폰 적용 이력(SETTLES V2) 원천. 쿠폰 할인 금액의 부담 주체(마리트/파트너) 분해에 사용되며, 결제일 쿠폰 조회, 쿠폰 템플릿 기준 이력 조회 쿼리의 핵심 소스로 사용함.
+        columns:
+          - name: id
+            description: "쿠폰 예약 히스토리 맵핑 ID"
+          - name: order_no
+            description: "주문 번호"
+          - name: reservation_no
+            description: "예약 번호"
+          - name: order_refund_id
+            description: "주문 환불 id"
+          - name: reservation_refunds_id
+            description: "예약 환불 id"
+          - name: sale_price
+            description: "총 판매가"
+          - name: discount_amount
+            description: "쿠폰 할인 금액"
+          - name: mrt_contribution_rate
+            description: "mrt 분담률"
+          - name: partner_contribution_rate
+            description: "파트너 분담률"
+          - name: template_id
+            description: "쿠폰 템플릿 id"
+          - name: coupon_user_mapping_id
+            description: "쿠폰 id"
+          - name: user_id
+            description: "사용자 아이디"
+          - name: template_partner_id
+            description: "템플릿 파트너 id"
+          - name: created_at
+            description: "생성일시"
+          - name: created_by
+            description: "생성자(개인정보 - null 처리)"
+          - name: updated_at
+            description: "수정일시"
+          - name: updated_by
+            description: "수정자(개인정보 - null 처리)"
+          - name: deleted_at
+            description: "삭제일시"
+          - name: usable_type
+            description: "쿠폰 사용 타입"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

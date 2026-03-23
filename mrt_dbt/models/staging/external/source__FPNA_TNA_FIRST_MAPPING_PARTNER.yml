@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TNA_FIRST_MAPPING_PARTNER"
+        identifier: "FPNA_TNA_FIRST_MAPPING_PARTNER"
+        description: "T&A 파트너 우선 맵핑(참고) (스프레드시트관리)"
+        columns:
+          - name: "partner_id"
+            description: "파트너 ID"
+          - name: "partner_nm"
+            description: "파트너 이름"
+          - name: "commission_rate"
+            description: "커미션 비율"
+          - name: "start_date"
+            description: "시작 날짜"
+          - name: "end_date"
+            description: "종료 날짜"
+          - name: "remark"
+            description: "비고"
+          - name: "remark2"
+            description: "Remark2"
+          - name: "remark3"
+            description: "Remark3"

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: FPNA_B2B_SAMSUNG_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [B2B제휴 GID 관리](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=237837578#gid=237837578)
+    columns:
+      - name: HOTEL_PKG_ID
+        description: "호텔 패키지 ID"
+      - name: OPTION_TITLE
+        description: "옵션 제목"
+      - name: OPTION_TITLE_2
+        description: "옵션 제목 2"
+      - name: DATE
+        description: "날짜"
+      - name: TYPE
+        description: "타입"
+      - name: TAKE_AMOUNT
+        description: "수수료 금액"
+      - name: BACK_COMMISSION
+        description: "백커미션 금액"
+      - name: MRT_TAKE_AMOUNT
+        description: "MRT 수수료 금액"
+

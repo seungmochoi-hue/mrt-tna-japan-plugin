@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_MYLINK_PARTNER_INFO"
+        identifier: "FPNA_MYLINK_PARTNER_INFO"
+        description: "마케팅 파트너 팀별 관리 파트너 리스트 (스프레드시트관리)"
+        columns:
+          - name: "UPDATE_DATE"
+            description: "업데이트 날짜"
+          - name: "MANAGEMENT_TEAM"
+            description: "관리 팀"
+          - name: "MANAGER"
+            description: "매니저"
+          - name: "PARTNER_TYPE"
+            description: "파트너 타입"
+          - name: "STATUS"
+            description: "상태"
+          - name: "PARTNER_ID"
+            description: "파트너 ID"
+          - name: "PARTNER_NM"
+            description: "파트너 이름"
+          - name: "PARTNER_INFO"
+            description: "파트너 정보"
+          - name: "PARTNER_LINK"
+            description: "파트너 링크"
+          - name: "SETTLEMENT_HOLD_REGI_DATE"
+            description: "정산 보류 등록 날짜"

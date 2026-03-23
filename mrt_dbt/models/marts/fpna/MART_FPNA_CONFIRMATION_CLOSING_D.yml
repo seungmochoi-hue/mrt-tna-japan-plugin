@@ -1,0 +1,182 @@
+version: 2
+
+models:
+  - name: MART_FPNA_CONFIRMATION_CLOSING_D
+    description: |
+      [매출관리팀] NONAIR 예약 확정일 기준 옵션/상품 단위 기준 테이블임.
+      확정일 기준 매출 검증, 환불충당부채 산출, FPNA 대비 대사 기준으로 사용함.
+
+      CGMV는 `ORDER_PRICE` 부호를 그대로 사용함.
+      결제는 양수, 환불은 음수 적재 구조이며 net CGMV는 `SUM(ORDER_PRICE)`로 집계함.
+      gross 결제액은 결제 건만 합산하고, 환불액은 환불 건의 `-ORDER_PRICE` 합산으로 별도 관리함.
+
+      Revenue는 매관 기준으로 `SALE_COMMISSION` 중심 집계함.
+      downstream 비교에서는 `SALE_COMMISSION + MRT_CANCEL_COMMISSION` 기준을 사용함.
+      수수료율 100% 파트너는 `SALE_COMMISSION = ORDER_PRICE`가 발생해 Profit 마진 기준과 괴리 가능성 존재함.
+
+      마이팩(TRIP_START 정산) 건은 예약 확정일과 정산 확정일의 월 배정 차이 가능성 존재함.
+      리포트/시트 대사 시 KST 당일 데이터 제외 정책 적용을 권장함.
+    config:
+      tags: [ "MART", "FPNA", "NONAIR", "CONFIRM" ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일(예약 확정일): confirmation_product_closing.confirmation_date"
+        data_type: DATE
+      - name: SETTLEMENT_TYPE
+        description: "정산타입(라벨): payment_product_closing.settlement_type 기반(내부정산/외부정산)"
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문번호: payment_daily_closing.order_no"
+        data_type: STRING
+      - name: RESERVATION_NO
+        description: "예약번호: payment_product_closing.reservation_no"
+        data_type: STRING
+      - name: CLAIM_ID
+        description: "클레임 ID: payment_product_closing.claim_id"
+        data_type: INTEGER
+      - name: ORDER_TYPE
+        description: |
+          주문구분(라벨): payment_product_closing.closing_type 기반 매핑값.
+          - 결제: PAYMENT, PAYMENT_OF_REFUND
+          - 전체환불: REFUND
+          - 부분환불: PARTIAL_REFUND
+          - 여행종료 후 부분환불: PARTIAL_REFUND_AFTER_FINISH
+          - 파트너 공제: PARTNER_DEDUCTION
+          - 여행자 보상: 그 외 케이스
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID: payment_product_closing.partner_id"
+        data_type: STRING
+      - name: PARTNER_NAME
+        description: "파트너명(스냅샷): settlements_partners.partner_name"
+        data_type: STRING
+      - name: GID
+        description: "GID: payment_product_closing.union_product_id"
+        data_type: INTEGER
+      - name: PRODUCT_NO
+        description: "상품번호: payment_product_closing.product_no"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품명: payment_product_closing.product_title"
+        data_type: STRING
+      - name: OPTION_ID
+        description: "옵션 ID: payment_product_closing.option_id"
+        data_type: STRING
+      - name: OPTION_TITLE
+        description: "옵션명: option_reservations.option_title"
+        data_type: STRING
+      - name: MERCHANT_UID
+        description: "연동사 예약번호: reservations_v2.merchant_uid"
+        data_type: STRING
+      - name: TRIP_STARTED_AT
+        description: "여행시작일: reservations_v2.trip_started_at"
+        data_type: TIMESTAMP
+      - name: TRIP_ENDED_AT
+        description: "여행완료일: reservations_v2.trip_ended_at"
+        data_type: TIMESTAMP
+      - name: SETTLEMENT_CRITERIA_TYPE
+        description: "정산기준타입: reservations_v2.settlement_criteria_type"
+        data_type: STRING
+      - name: QUANTITY
+        description: "수량: payment_product_closing.quantity"
+        data_type: INTEGER
+      - name: SALE_PRICE
+        description: "판매가: payment_product_closing.sale_price"
+        data_type: INTEGER
+      - name: ORDER_PRICE
+        description: |
+          주문금액: payment_product_closing.order_price.
+          - 결제는 양수, 환불은 음수로 적재되므로 net(CGMV)은 `SUM(ORDER_PRICE)`로 집계함.
+        data_type: INTEGER
+      - name: SALE_TYPE
+        description: |
+          판매유형. TOTAL(사입/직매입)은 마트가 직접 매입하여 판매하는 구조로 SALE_COMMISSION = ORDER_PRICE(수수료율 100%)가 정상이며,
+          COMMISSION(위탁)은 일반 수수료 구조.
+        data_type: STRING
+      - name: COMMISSION_CONDITION_TYPE
+        description: "수수료조건: payment_product_closing.commission_condition_type"
+        data_type: STRING
+      - name: SALE_COMMISSION_RATE
+        description: "수수료율: payment_product_closing.sale_commission_rate"
+        data_type: FLOAT
+      - name: SALE_COMMISSION
+        description: "수수료금액: payment_product_closing.sale_commission. 매관팀 기준 매출 집계에 사용."
+        data_type: INTEGER
+      - name: ETC_COMMISSION
+        description: "기타수수료: payment_product_closing.etc_commission"
+        data_type: INTEGER
+      - name: TOTAL_COUPON_DISCOUNT_AMOUNT
+        description: "총 쿠폰금액: payment_product_closing.total_coupon_discount_amount"
+        data_type: INTEGER
+      - name: MRT_COUPON_DISCOUNT_AMOUNT
+        description: "마리트 쿠폰금액: payment_product_closing.mrt_coupon_discount_amount"
+        data_type: INTEGER
+      - name: PARTNER_COUPON_DISCOUNT_AMOUNT
+        description: "파트너 쿠폰금액: payment_product_closing.partner_coupon_discount_amount"
+        data_type: INTEGER
+      - name: INSTANT_DISCOUNT_AMOUNT
+        description: "총 즉시할인: payment_product_closing.instant_discount_amount"
+        data_type: INTEGER
+      - name: MRT_INSTANT_DISCOUNT_AMOUNT
+        description: "마리트 즉시할인: payment_product_closing.mrt_instant_discount_amount"
+        data_type: INTEGER
+      - name: MARGIN_DISCOUNT_AMOUNT
+        description: "마진 할인: payment_product_closing.margin_discount_amount + corp_partnership_discount_amount"
+        data_type: INTEGER
+      - name: AFFILIATE_INSTANT_DISCOUNT_AMOUNT
+        description: "제휴사 즉시할인: payment_product_closing.affiliate_instant_discount_amount"
+        data_type: INTEGER
+      - name: MRT_CANCEL_COMMISSION
+        description: "마리트 취소수수료: payment_product_closing.mrt_cancel_commission"
+        data_type: INTEGER
+      - name: PARTNER_CANCEL_COMMISSION
+        description: "파트너 취소수수료: payment_product_closing.partner_cancel_commission"
+        data_type: INTEGER
+      - name: MRT_TRAVELER_COMPENSATION
+        description: "마리트 여행자보상: payment_product_closing.mrt_traveler_compensation"
+        data_type: INTEGER
+      - name: PARTNER_TRAVELER_COMPENSATION
+        description: "파트너 여행자보상: payment_product_closing.partner_traveler_compensation"
+        data_type: INTEGER
+      - name: PAYMENT_AMOUNT
+        description: "결제금액: payment_product_closing.payment_amount"
+        data_type: INTEGER
+      - name: FREE_POINT_AMOUNT
+        description: "포인트: payment_product_closing.free_point_amount"
+        data_type: INTEGER
+      - name: PG_AMOUNT
+        description: "PG금액: payment_product_closing.pg_amount"
+        data_type: INTEGER
+      - name: SUPPLY_PRICE
+        description: "공급가: payment_product_closing.supply_price"
+        data_type: INTEGER
+      - name: MRT_SALES_CHANNEL_COMMISSION
+        description: "채널 커미션(마리트): payment_product_closing.mrt_sales_channel_commission"
+        data_type: INTEGER
+      - name: PARTNER_SALES_CHANNEL_COMMISSION
+        description: "채널 커미션(파트너): payment_product_closing.partner_sales_channel_commission"
+        data_type: INTEGER
+      - name: PARTNERSHIP_COMMISSION
+        description: "제휴 커미션: payment_product_closing.partnership_commission"
+        data_type: INTEGER
+      - name: MARKETING_PARTNERSHIP_COMMISSION
+        description: "마케팅 제휴 커미션: payment_product_closing.marketing_partnership_commission"
+        data_type: INTEGER
+      - name: ORDER_ID
+        description: "주문 ID: reservations_v2.order_id"
+        data_type: INTEGER
+      - name: USER_ID
+        description: "유저 ID: reservations_v2.user_id"
+        data_type: STRING
+      - name: RESERVATION_STATUS
+        description: "예약 상태: reservations_v2.status"
+        data_type: STRING
+      - name: CANCELED_AT
+        description: "취소일시: reservations_v2.canceled_at"
+        data_type: TIMESTAMP
+      - name: PARTNER_SETTLE_AMOUNT
+        description: "파트너정산금액: commission_settlement_type에 따른 CASE 계산식(매관팀 쿼리 동일)"
+        data_type: INTEGER
+      - name: EXPECTED_SALES_AT
+        description: "예상 매출일: closing_type에 따른 CASE(매관팀 쿼리 동일)"
+        data_type: TIMESTAMP

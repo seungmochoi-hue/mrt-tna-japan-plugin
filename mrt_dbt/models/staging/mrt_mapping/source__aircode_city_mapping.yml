@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: "mrt_mapping"
+    database: "mrtdata"
+    schema: "mrt_mapping"
+    tables:
+      - name: "aircode_city_mapping"
+        identifier: "aircode_city_mapping"
+        description: "공항 코드별 도시 코드 매핑"
+        columns:
+          - name: "airport_cd"
+            description: "Airport Cd"
+          - name: "airport_eng_nm"
+            description: "Airport Eng Name"
+          - name: "city_cd"
+            description: "City Cd"
+          - name: "key_name"
+            description: "Key Name"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

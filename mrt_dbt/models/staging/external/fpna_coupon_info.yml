@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: fpna_coupon_info
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [쿠폰](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1954335250#gid=1954335250)
+
+    columns:
+      - name: type
+        description: "FPNA 쿠폰 운영 타입"
+      - name: coupon_id
+        description: "쿠폰 ID"
+      - name: coupon_title
+        description: "쿠폰 제목"
+      - name: coupon_value
+        description: "쿠폰 금액"
+      - name: mrt_value
+        description: "MRT 금액"
+      - name: partner_value
+        description: "파트너 금액"
+      - name: coupon_rate
+        description: "쿠폰 비율"
+      - name: mrt_rate
+        description: "MRT 비율"
+      - name: partner_rate
+        description: "파트너 비율"

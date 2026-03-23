@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: DIM_CITY
+    description: |
+      도시 코드 기준 도시/국가/지역 canonical 대표값.
+      BigQuery 물리 최적화: cluster(COUNTRY)
+    config:
+      tags: [ "CITY", "DIM" ]
+    columns:
+      - name: CODE
+        description: "도시 코드"
+      - name: CITY
+        description: "canonical 도시명"
+      - name: COUNTRY
+        description: "canonical 국가명"
+      - name: REGION
+        description: "canonical 지역명"
+      - name: SOURCE
+        description: "데이터 출처"
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: DIM_PACKAGE_OPTION
+    description: 패키지 상품 및 옵션 정보 테이블입니다.
+    config:
+      tags: ['PACKAGE', 'DIM']
+    columns:
+      - name: PACKAGE_GID
+        description: "패키지 GID"
+        data_type: STRING
+      - name: SYNC_ID
+        description: 'SYNC ID'
+        data_type: STRING
+      - name: PACKAGE_OPTION_GID
+        description: '패키지 상품들의 GID'
+        data_type: STRING
+      - name: PACKAGE_TITLE
+        description: '패키지 상품 제목'
+        data_type: STRING
+      - name: PACKAGE_SYNC_TITLE
+        description: '패키지 SYNC 제목'
+        data_type: STRING
+      - name: PACKAGE_OPTION_TITLE
+        description: "패키지 옵션 제목"
+        data_type: STRING
+      - name: PRODUCT_STATUS
+        description: "패키지 상품 상태"
+        data_type: STRING
+      - name: PRODUCT_TYPE
+        description: "패키지 상품 유형"
+        data_type: STRING
+      - name: SUPPLY_START_DATE
+        description: "제공 시작 날짜"
+        data_type: DATE
+      - name: SUPPLY_END_DATE
+        description: "제공 종료 날짜"
+        data_type: DATE
+      - name: SUPPLIER_ID
+        description: "패키지 공급자 아이디"
+        data_type: INTEGER
+      - name: SUPPLIER_NM
+        description: "패키지 공급자 명"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "패키지 파트너 아이디"
+        data_type: INTEGER
+      - name: CITY_NM
+        description: "도시 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "나라 이름"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: CREATED_KST_DT
+        description: "생성 시간"
+        data_type: TIMESTAMP
+      - name: UPDATED_KST_DT
+        description: "수정 시간"
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

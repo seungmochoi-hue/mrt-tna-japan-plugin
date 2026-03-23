@@ -1,0 +1,61 @@
+version: 2
+sources:
+- name: community_social
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: resale_products
+    identifier: DW_MRT_COMMUNITY_SOCIAL_RESALE_PRODUCTS
+    description: 소셜 리셀 상품. 주요 상태값 CANCELED/REJECTED/ON_SALE/MODIFICATION_REQUESTED/SOLD
+      확인. 주요 타입값 ACCOMMODATION/TICKET/TOUR 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: user_id
+      description: 사용자 ID
+    - name: seller_name
+      description: 판매자 이름
+    - name: product_name
+      description: 상품 이름
+    - name: category
+      description: 카테고리
+    - name: city
+      description: 도시
+    - name: purchase_source
+      description: 구매 소스
+    - name: purchase_price
+      description: 구매 금액
+    - name: selling_price
+      description: 판매 금액
+    - name: travel_start_date
+      description: 여행 시작 일자
+    - name: travel_end_date
+      description: 여행 종료 일자
+    - name: status
+      description: 상태
+    - name: gid
+      description: GID
+    - name: option_id
+      description: 옵션 ID
+    - name: reservation_no
+      description: 예약 no
+    - name: admin_memo
+      description: Admin 메모
+    - name: review_requested_at
+      description: 검토 요청 at
+    - name: reviewed_at
+      description: 검토 at
+    - name: sold_at
+      description: 판매 at
+    - name: description
+      description: 설명
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

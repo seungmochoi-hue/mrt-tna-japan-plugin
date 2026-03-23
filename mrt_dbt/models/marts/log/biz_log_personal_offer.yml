@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: biz_log_personal_offer
+    description: "비즈니스 로그 개인화 오퍼"
+    config:
+      tags: ["BIZ_LOG"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: received_timestamp
+        description: "오퍼 수신 일시"
+        data_type: TIMESTAMP
+      - name: event_timestamp
+        description: "이벤트 발생 일시"
+        data_type: TIMESTAMP
+      - name: screen_name
+        description: "화면 이름"
+        data_type: STRING
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: STRING
+      - name: platform
+        description: "플랫폼"
+        data_type: STRING
+      - name: udid
+        description: "사용자 ID"
+        data_type: STRING
+      - name: adid
+        description: "광고 ID"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: lib_version
+        description: "라이브러리 버전"
+        data_type: STRING
+      - name: client_ip
+        description: "클라이언트 IP"
+        data_type: STRING
+      - name: session_id
+        description: "세션 ID"
+        data_type: STRING
+      - name: session_timestamp
+        description: "세션 타임스탬프"
+        data_type: TIMESTAMP
+      - name: event_key
+        description: "이벤트 키"
+        data_type: STRING
+      - name: data
+        description: "이벤트 데이터"
+        data_type: STRING
+      - name: utm
+        description: "UTM 파라미터"
+        data_type: STRING
+      - name: geo
+        description: "지리적 위치"
+        data_type: STRING
+      - name: device
+        description: "디바이스 정보"
+        data_type: STRING
+      - name: dw_loat_dt
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+      - name: pid
+        description: "PID"
+        data_type: STRING
+      - name: gid
+        description: "GID"
+        data_type: STRING
+      - name: personal_offer_type
+        description: "개인화 오퍼 타입"
+        data_type: STRING
+      - name: persional_offer_start_time
+        description: "개인화 오퍼 시작 시간"
+        data_type: TIMESTAMP
+      - name: personal_offer_end_time
+        description: "개인화 오퍼 종료 시간"
+        data_type: TIMESTAMP
+      - name: event_timestamp_kst
+        description: "이벤트 발생 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: basis_dt_kst
+        description: "기준 일자 (KST)"
+        data_type: DATE

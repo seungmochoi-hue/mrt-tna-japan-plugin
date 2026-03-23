@@ -1,0 +1,146 @@
+version: 2
+sources:
+- name: orders
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: option_reservations
+    identifier: DW_MRT_ORDERS_OPTION_RESERVATIONS
+    description: 3.0 옵션 예약 단위 원천 테이블. 하위 모델 MART_AIR_SALE_D, MART_FPNA_CONFIRMATION_CLOSING_D,
+      MART_FPNA_LODGMENT_PROFIT_D, MART_FPNA_TNA_PROFIT_D, MART_OFFER_SALE_D, MART_PACKAGE_OPTION_RESVE_D,
+      MART_PACKAGE_OPTION_SALE_D, MART_PACKAGE_SALE_D, MART_STAY_OPTION_SALE_D, MART_STOCK_STATUS_D,
+      MART_TNA_OPTION_SALE_D에서 사용함. 주요 상태값 TEMP/CANCEL/CONFIRM/WAIT_CONFIRM/FAIL 확인. 주요
+      타입값 NORMAL 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: canceled_at
+      description: Canceled At
+    - name: custom_extra_requires
+      description: Custom Extra Requires
+    - name: display_stock_unit_currency
+      description: Display Stock Unit Currency
+    - name: display_stock_unit_currency_sale_price
+      description: Display Stock Unit Currency Sale Price
+    - name: display_stock_unit_currency_supply_price
+      description: Display Stock Unit Currency Supply Price
+    - name: duration_size
+      description: Duration Size
+    - name: duration_unit
+      description: Duration Unit
+    - name: extra_requires_per_pax
+      description: Extra Requires Per Pax
+    - name: extra_requires_per_reservations
+      description: Extra Requires Per Reservations
+    - name: interlocked_id
+      description: Interlocked ID
+    - name: interlocked_supply_currency
+      description: Interlocked Supply Currency
+    - name: interlocked_supply_price
+      description: Interlocked Supply Price
+    - name: is_independent
+      description: Is Independent
+    - name: meeting_location
+      description: Meeting Location
+    - name: meeting_location_descriptions
+      description: Meeting Location Descriptions
+    - name: meeting_time
+      description: Meeting Time
+    - name: meeting_time_descriptions
+      description: Meeting Time Descriptions
+    - name: option_group_title
+      description: Option Group Title
+    - name: option_id
+      description: 옵션 ID
+    - name: option_title
+      description: 옵션명
+    - name: partner_id
+      description: 파트너 ID
+    - name: product_id
+      description: 상품 ID
+    - name: product_type
+      description: Product Type
+    - name: quantity
+      description: 수량
+    - name: refund_amount
+      description: Refund Amount
+    - name: sale_commission
+      description: Sale Commission
+    - name: sale_commission_rate
+      description: Sale Commission Rate
+    - name: sale_price
+      description: 판매 금액
+    - name: status
+      description: 상태
+    - name: stock_unit_code
+      description: Stock Unit Code
+    - name: stock_unit_id
+      description: Stock Unit ID
+    - name: stock_unit_name
+      description: Stock Unit Name
+    - name: supply_price
+      description: 공급 금액
+    - name: trip_started_at
+      description: Trip Started At
+    - name: reservation_id
+      description: 예약 ID
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: confirmed_at
+      description: Confirmed At
+    - name: product_no
+      description: 상품 번호
+    - name: product_category
+      description: Product Category
+    - name: used
+      description: Used
+    - name: used_at
+      description: Used At
+    - name: fee
+      description: Fee
+    - name: tax
+      description: Tax
+    - name: union_product_id
+      description: Union Product ID
+    - name: option_type
+      description: Option Type
+    - name: foreign_currency_type
+      description: Foreign Currency Type
+    - name: product_reservation_id
+      description: Product Reservation ID
+    - name: exchange_rate_date
+      description: Exchange Rate Date
+    - name: foreign_currency_sale_price
+      description: Foreign Currency Sale Price
+    - name: sale_commission_policy_id
+      description: Sale Commission Policy ID
+    - name: exchange_rate
+      description: 외화 환율을 위한 필드
+    - name: trip_ended_at
+      description: 여행 종료일시
+    - name: sale_price_policy_id
+      description: 판매가정책 ID
+    - name: foreign_currency_supply_price
+      description: 외화 공급 금액
+    - name: departure_location
+      description: 출발지
+    - name: arrival_location
+      description: 도착지
+    - name: departure_zone_id
+      description: 출발지 타임존 Id
+    - name: arrival_zone_id
+      description: 도착지 타임존 Id
+    - name: stopover_count
+      description: 경유 횟수
+    - name: link_id
+      description: 패키지 원예약 연결을 위한 아이디

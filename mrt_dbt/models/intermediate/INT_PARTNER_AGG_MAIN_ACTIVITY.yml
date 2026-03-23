@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: INT_PARTNER_AGG_MAIN_ACTIVITY
+    description: |
+      파트너별 대표 액티비티 정보 집계 중간 모델.
+      MART_SALE_D(KIND=1, MRT_TYPE not in flight/hotel)를 기준으로 파트너별로
+      상품 수(GID 기준)가 가장 많은 도시(CITY_CD), 국가(COUNTRY_NM), 상품 유형(MRT_TYPE)을 각각 산출.
+      동률 처리: DENSE_RANK 후 RANK=1인 행을 MAX로 집계하여 단일 값으로 압축.
+      이 모델은 MAIN_ACTIVITY_CITY_CD, MAIN_ACTIVITY_COUNTRY_NM, MAIN_ACTIVITY_MRT_TYPE 컬럼만
+      실제 값을 산출하고 나머지 지표 컬럼은 NULL로 출력.
+      Grain: PARTNER_ID (파트너당 1행).
+      Upstream: MART_SALE_D.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - PARTNER_ID
+          config:
+            severity: warn
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID (STRING으로 캐스팅된 PARTNER_ID)."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - unique:
+              config:
+                severity: warn
+      - name: RESVE_CNT
+        description: "예약 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: SALES_KRW_PRICE
+        description: "누적 판매 금액(원). 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: USER_CNT
+        description: "구매 유저 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: CURRENT_RESVE_CNT
+        description: "현재 여행 예정 예약 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_SALES에서 산출)."
+        data_type: INT64
+      - name: ONSALE_CNT
+        description: "판매 중 상품 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_ONSALE에서 산출)."
+        data_type: INT64
+      - name: MAIN_ACTIVITY_CITY_CD
+        description: |
+          파트너의 대표 액티비티 도시 코드.
+          MART_SALE_D 기준 GID 수가 가장 많은 도시(CITY_CD).
+          flight, hotel MRT_TYPE은 집계에서 제외.
+          동률 시 MAX로 하나의 값을 선택.
+        data_type: STRING
+      - name: MAIN_ACTIVITY_COUNTRY_NM
+        description: |
+          파트너의 대표 액티비티 국가명.
+          MART_SALE_D 기준 GID 수가 가장 많은 국가(COUNTRY_NM).
+          flight, hotel MRT_TYPE은 집계에서 제외.
+          동률 시 MAX로 하나의 값을 선택.
+        data_type: STRING
+      - name: MAIN_ACTIVITY_MRT_TYPE
+        description: |
+          파트너의 대표 액티비티 상품 유형.
+          MART_SALE_D 기준 GID 수가 가장 많은 MRT_TYPE.
+          flight, hotel MRT_TYPE은 집계에서 제외.
+          동률 시 MAX로 하나의 값을 선택.
+        data_type: STRING
+      - name: REVIEW_CNT
+        description: "리뷰 수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: INT64
+      - name: REVIEW_SCORE_AVG
+        description: "평균 리뷰 점수. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_REVIEW에서 산출)."
+        data_type: FLOAT64
+      - name: CONFIRM_RATE
+        description: "파트너 예약 확정률. 이 모델에서는 NULL로 출력 (INT_PARTNER_AGG_CONFIRM_RATE에서 산출)."
+        data_type: FLOAT64

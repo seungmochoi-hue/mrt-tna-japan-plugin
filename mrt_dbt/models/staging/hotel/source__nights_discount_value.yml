@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: hotel
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: nights_discount_value
+    identifier: DW_MRT_STAYNET_NIGHTSSCOUNT_VALUE
+    description: 호텔 박수 할인 값. 마지막 적재일 2026-03-15. 주요 타입값 PERCENT 확인.
+    columns:
+    - name: value_id
+      description: 값 ID
+    - name: discount_id
+      description: 할인 ID
+    - name: nights
+      description: Nights
+    - name: discount_type
+      description: 할인 타입
+    - name: discount_value
+      description: 할인 값
+    - name: currency
+      description: Currency
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

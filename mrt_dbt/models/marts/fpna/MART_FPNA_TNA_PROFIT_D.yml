@@ -1,0 +1,310 @@
+version: 2
+
+models:
+  - name: MART_FPNA_TNA_PROFIT_D
+    description: |
+      FPNA T&A 수익/비용 산출 일 단위 MART.
+      `MART_SALE_D`의 KIND=1 비항공·비숙박·비교통·비보험 예약 기준, grain은 예약 단위(`1 row = 1 RESVE_ID`).
+
+      `NET_PRICE`는 reservation_order_net_prices, 옵션 매핑, 커머스 재고 단가 등에서 조회하고 `MRT_SALES_PRICE = (GMV - NET_PRICE) / 1.1` 로직 사용.
+      `BIZ_TYPE`은 `FPNA_TNA_BIZ_TYPE_INFO`와 Hotdeal 기본 규칙으로 분류하고 `BIZ_TYPE_V2/V3`에서 B2B, KIDS, Commerce, 일반 T&A, 패키지/맞춤여행 세분화 반영.
+      `SALE_FORM_CD`는 B2B, KIDS, MRT 3분류이며 `RESVE_ID LIKE '%PKG%'`와 FLIGHT/ACCOMMODATION/TRANSPORTATION_V2/INSURANCE/AIR_ANCILLARY 카테고리 제외.
+      쿠폰, 포인트, 할인, 채널수수료, PG 수수료를 함께 산출해 T&A 손익과 분류 지표 제공.
+    config:
+      tags: [ "MART", "FPNA", "TNA" ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일"
+        data_type: DATE
+      - name: SALE_FORM_CD_v1
+        description: "MART_SALE_D 원본의 판매 형태 코드. SALE_FORM_CD(재분류 버전)와 구분하기 위한 v1."
+        data_type: STRING
+      - name: TRAVEL_START_DATE
+        description: "여행 시작일"
+        data_type: DATE
+      - name: TRAVEL_END_DATE
+        description: "여행 종료일"
+        data_type: DATE
+      - name: TRAVEL_DAYS
+        description: "여행 일수. DATE_DIFF(TRAVEL_END_DATE, TRAVEL_START_DATE, DAY)."
+        data_type: INTEGER
+      - name: CANCEL_DATE
+        description: "취소일. RSV_CANCEL CTE에서 KIND=2인 CANCEL_KST_DT 기반."
+        data_type: DATE
+      - name: RESVE_CANCEL_DAY_DIFF
+        description: "예약-취소 간 일수 차이. DATE_DIFF(CANCEL_DATE, BASIS_DATE, DAY)."
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "플랫폼 도메인. '2.0 PRODUCT' 또는 '3.0 PRODUCT'."
+        data_type: STRING
+      - name: RESVE_PRSNL_CNT
+        description: "예약 인원 수"
+        data_type: INTEGER
+      - name: TRAVEL_ID
+        description: "여행 ID"
+        data_type: STRING
+      - name: TRAVEL_DETAIL_ID
+        description: "여행 상세 ID"
+        data_type: INTEGER
+      - name: MRT_STAFF_FLAG
+        description: "MRT 직원 여부"
+        data_type: BOOLEAN
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: CATEGORY_NM
+        description: "카테고리 이름"
+        data_type: STRING
+      - name: CATEGORY_CD
+        description: "카테고리 코드"
+        data_type: STRING
+      - name: SUB_CATEGORY_CD
+        description: "하위 카테고리 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 이름"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 이름"
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "파트너십 유형"
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "제공자 코드"
+        data_type: STRING
+      - name: ACCOUNTING_PROJECT_CODE
+        description: "회계 프로젝트 코드. partner_settlement_configs에서 PARTNER_ID 기준 조회."
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: |
+          재분류된 판매 형태 코드. B2B/KIDS/MRT 3분류.
+          - B2B: PARTNERSHIP_CD 존재 또는 B2B 포인트 사용 건
+          - KIDS: 키즈 카테고리 또는 키즈 파트너(20859,20858 등) 건
+          - MRT: 그 외 일반 건
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 유형"
+        data_type: STRING
+      - name: BIZ_TYPE
+        description: |
+          비즈니스 유형 (1차 분류).
+          우선순위: FPNA_BIZ_TYPE_INFO(PARTNER_ID) > FPNA_BIZ_TYPE_INFO(GID) > FPNA_TNA_BIZ_TYPE_INFO(PARTNER) > FPNA_TNA_BIZ_TYPE_INFO(PRODUCT) > Hotdeal(mrt_type) > Normal(기본값).
+        data_type: STRING
+      - name: BIZ_TYPE_V2
+        description: |
+          비즈니스 유형 V2 (세분류). 주요 값:
+          - B2B_AGENCY_MYPACK/TA/MYLINK_TA/ORDER_MADE: B2B 제휴여행사 채널
+          - B2B_AFFILIATE_POINT/COUPON: B2B 제휴 포인트/쿠폰 채널
+          - B2B_PACKAGE_ONLINE/OFFLINE: 패키지 온/오프라인
+          - DOMESTIC/OUTBOUND_KIDS_*: 키즈 국내/해외
+          - DOMESTIC/OUTBOUND_COMMERCE: 커머스 국내/해외
+          - DOMESTIC/OUTBOUND_TNA: 일반 T&A 국내/해외
+          - OUTBOUND_ESIM_USIM: eSIM/USIM
+        data_type: STRING
+      - name: BIZ_TYPE_V3
+        description: |
+          비즈니스 유형 V3 (세분류, 맞춤여행/패키지 세분화 버전).
+          BIZ_TYPE_V2와 유사하나, ORDER_MADE/PKG_STAY/PKG_TNA 등 패키지 하위 분류를 추가로 세분화.
+          예: PKG_STAY_DOMESTIC, PKG_TNA_OUTBOUND, PKG_OTHERS_OUTBOUND 등.
+        data_type: STRING
+      - name: FPNA_CATEGORY
+        description: "FPNA 카테고리. FPNA_CATEGORY_INFO에서 STANDARD_CATEGORY_LV_3_CD 기준 조회."
+        data_type: STRING
+      - name: TEAM_DIVISION
+        description: "팀 구분. deprecated - 사용하지 않음"
+        data_type: STRING
+      - name: FLIGHT_RESVE_ID
+        description: "항공 예약 ID"
+        data_type: STRING
+      - name: FLIGHT_CREATE_KST_DT
+        description: "항공 생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: FLIGHT_TRAVEL_START_KST_DATE
+        description: "항공 여행 시작 KST 날짜"
+        data_type: DATE
+      - name: HOTEL_CAMPAIGN_ID
+        description: "호텔 캠페인 ID"
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DT
+        description: "확인 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DATE
+        description: "확인 KST 날짜"
+        data_type: DATE
+      - name: CREATE_KST_DATE
+        description: "생성 KST 날짜"
+        data_type: DATE
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NM
+        description: "파트너 이름. partners.partner_account(MASTER)의 name."
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: GPID
+        description: "GPID"
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+      - name: product_title
+        description: "상품 제목"
+        data_type: STRING
+      - name: REGION_TYPE
+        description: "지역 유형. 'Domestic'(Korea) / 'Outbound'(해외 또는 NULL)."
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가 이름. NULL이면 'Others'로 치환."
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름. NULL이면 'Others'로 치환."
+        data_type: STRING
+      - name: JEJU_FLAG
+        description: "제주도 여부 (Y/N). CITY_NM='Jeju' AND COUNTRY_NM='Korea, Republic of'이면 'Y'."
+        data_type: STRING
+      - name: COUPON_ID
+        description: "대표 쿠폰 ID. 사용 이력 > 상품쿠폰 > 예약 이력 template_id > 프로모션쿠폰 순"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 템플릿 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 템플릿 ID"
+        data_type: INTEGER
+      - name: COUPON_TITLE
+        description: "쿠폰명. COUPON_ID 매핑 순서와 동일. 쿠폰 금액이 있지만 매핑 불가 시 'UNKNOWN'."
+        data_type: STRING
+      - name: COUPON_PUBLISH_TEAM_NM
+        description: "쿠폰 발행 팀. MART_COUPON_RESVE_D 기반. 매핑 불가 시 'UNKNOWN'."
+        data_type: STRING
+      - name: COUPON_PUBLISH_PURPOSE_NM
+        description: "쿠폰 발행 목적. MART_COUPON_RESVE_D 기반. 매핑 불가 시 'UNKNOWN'."
+        data_type: STRING
+      - name: CROSS_SELL_FLAG
+        description: "크로스 셀 여부 (Y/N). NULL이면 'N'으로 치환."
+        data_type: STRING
+      - name: COMMISSION_RATE
+        description: |
+          커미션 비율 (VAT 제외 기준). 기존 다단계 CASE WHEN 로직으로 산출.
+          fallback 산출식: FLOOR((CASE분기) / 1.1 * 100) / 100 (소수 둘째자리 절사, VAT 1.1 제외).
+        data_type: FLOAT
+      - name: SALES_COMMISSION_PRICE
+        description: "MART_SALE_D 원본의 COMMISSION_PRICE. 참고용으로 패스스루."
+        data_type: FLOAT
+      - name: PARTNER_SETTLE_TYPE
+        description: "파트너 정산 유형"
+        data_type: STRING
+      - name: PARTNER_SALES_TYPE
+        description: "파트너 판매 유형"
+        data_type: STRING
+      - name: PARTNERSHIP_CD
+        description: "파트너십 코드"
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 파트너십 코드"
+        data_type: STRING
+      - name: PG_NM
+        description: "PG사 이름. 결제 수단 기반 (TOSSPAYMENTS/KCP/CCNP 등). 해외카드는 '_해외' suffix."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "고객 결제 금액 (KRW, GMV). MART_SALE_D.SALES_KRW_PRICE 패스스루."
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE
+        description: |
+          판매 수수료 금액 (VAT 제외). 기존 역산 로직으로 산출.
+          fallback 산출식: FLOOR(CASE분기 / 1.1 * 100) / 100. 주요 분기: 키즈 TR, 맞춤여행 정산율, 내부정산 commission_rate * GMV, 연동상품 공급가 차감, 커머스 옵션가, 별도정산 매핑, 기본 3% * GMV.
+          NULL이면 0으로 치환(IFNULL).
+        data_type: FLOAT
+      - name: MRT_SALES_PRICE_TYPE
+        description: |
+          MRT_SALES_PRICE 산출에 적용된 분기 번호 (검증/디버깅용).
+          1=키즈CIC TR, 2=키즈CIC MADE, 3-5=맞춤여행, 6-11=내부/별도정산,
+          12=연동파트너 commission_rate, 13=Sanctum 공급가, 14-19=연동/avg_tr,
+          20=서비스 NET_PRICE, 21-22=커머스 재고단가/옵션가,
+          23-25=별도정산 매핑, 26=commission_rate=1(3%폴백), 99=기타(3%폴백).
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: |
+          쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분).
+          상품쿠폰 부담분과 주문쿠폰 부담분을 각각 계산해 합산한 최종값.
+          - 상품쿠폰: fpna_coupon_info(type='2.0 product', '3.0 product')의 mrt_rate 또는 mrt_value 적용
+          - 3.0 쿠폰: fpna_coupon_info(type='3.0 product')와 COUPON_EXTRA_INFO의 mrt_value 또는 mrt_contribution_rate 적용
+          - 파트너 분담이 있는 쿠폰은 마이리얼트립 부담분만 산출하고, 매핑이 없으면 fallback 부담분 사용
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분). COUPON_PRICE 구성 요소"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 비용 금액(VAT 제외, 마이리얼트립 부담분). COUPON_PRICE 구성 요소"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "포인트 사용 금액. MART_SALE_D.point_price 패스스루. NULL이면 0."
+        data_type: INTEGER
+      - name: EXCLUDED_POINT_PRICE
+        description: |
+          비용에서 제외할 포인트 금액.
+          FPNA_EXCEPTED_POINT_INFO의 template_id에 해당하는 포인트만 대상.
+          해당 건이면 POINT_PRICE 전액, 아니면 0.
+        data_type: INTEGER
+      - name: DISCOUNT_PRICE
+        description: "할인 금액 (VAT 제외). SAFE_DIVIDE(MART_SALE_D.DISCOUNT_PRICE, 1.1). NULL이면 0."
+        data_type: FLOAT
+      - name: CHANNEL_FEE_PRICE
+        description: |
+          PG/채널 수수료 금액.
+          네이버 스마트스토어 상품(FPNA_TNA_NAVER_SMARTSTORE_OFFERS): GMV * 5.63%.
+          그 외: GMV * PG 수수료율(FPNA_PG_INFO, 기본 2%).
+          FLOOR 절사 후 IFNULL(0).
+        data_type: FLOAT
+      - name: AGENCY_FEE
+        description: "제휴여행사 수수료. payment_product_closing의 partnership_commission 합계."
+        data_type: INTEGER
+      - name: MARKETING_PARTNER_FEE
+        description: "마케팅 파트너 수수료. payment_product_closing의 marketing_partnership_commission 합계."
+        data_type: INTEGER
+      - name: AFFILIATE_POINT_FEE
+        description: "B2B 제휴 포인트 수수료. B2B 포인트 사용 건에 한해 POINT_PRICE * 2%."
+        data_type: FLOAT
+      - name: NET_PRICE
+        description: |
+          공급가/원가(파트너/공급처 지급금 성격).
+          - TNA 도메인에서만 일부 케이스에 산출된다(그 외/미매핑 케이스는 0 또는 NULL 가능).
+          - 산식(모델 내부): `COALESCE(CNP.NET_PRICE, cup.TOTAL_NET_PRICE, OP.NET_PRICE)`
+          - 값이 유효한 케이스에서는 `SALES_KRW_PRICE - NET_PRICE = MRT_SALES_PRICE * 1.1` (VAT 포함 기준) 관계로 해석 가능하다.
+        data_type: FLOAT
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

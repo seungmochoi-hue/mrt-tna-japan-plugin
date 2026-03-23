@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: ads
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: ad_cpc_exposure
+    identifier: DW_MRT_ADS_AD_CPC_EXPOSURE
+    description: 검색광고 CPC 노출.
+    columns:
+    - name: id
+      description: ID
+    - name: exposure_metadata_id
+      description: 노출 메타데이터 ID
+    - name: inventory_id
+      description: 인벤토리 ID
+    - name: ad_product_keyword_id
+      description: 광고 상품 키워드 ID
+    - name: keyword
+      description: 키워드
+    - name: expose_start_at
+      description: 노출 시작 일시
+    - name: expose_end_at
+      description: 노출 종료 일시
+    - name: weight
+      description: 가중치
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted
+      description: 삭제 여부
+    - name: dw_load_dt
+      description: DW 적재 일시

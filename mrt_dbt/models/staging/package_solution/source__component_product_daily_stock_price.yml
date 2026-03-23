@@ -1,0 +1,60 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: component_product_daily_stock_price
+    identifier: DW_MRT_PACKAGE_SOLUTION_COMPONENT_PRODUCT_DAILY_STOCK_PRICE
+    description: 구성상품 일별 재고 가격. 마지막 적재일 2025-12-10. 최근 90일 기준 신규 적재 미확인.
+    columns:
+    - name: id
+      description: ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: arrival_date
+      description: Arrival date
+    - name: component_product_id
+      description: 구성상품 상품 ID
+    - name: air_price
+      description: Air 금액
+    - name: fuel_surcharge
+      description: Fuel surcharge
+    - name: tax
+      description: Tax
+    - name: total_supply_price
+      description: Total supply 금액
+    - name: package_assigned_quantity
+      description: Package assigned quantity
+    - name: registered_stock
+      description: Registered 재고
+    - name: actual_stock
+      description: Actual 재고
+    - name: using_date
+      description: Using date
+    - name: version
+      description: Version
+    - name: tasf
+      description: Tasf
+    - name: sale_air_price
+      description: Sale air 금액
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: additional_information
+      description: Additional 정보
+    - name: component_product_option_id
+      description: 구성상품 상품 옵션 ID
+    - name: origin_total_supply_price
+      description: Origin total supply 금액
+    - name: origin_total_supply_price_currency_type
+      description: Origin total supply 금액 currency 타입

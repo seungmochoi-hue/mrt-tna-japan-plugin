@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: MART_PRODUCT_LOG_AGG_D
+    description: "상품(GID) 단위 로그 지표 일별 집계(노출/클릭/상세UV/체크아웃UV/구매완료UV)"
+    config:
+      tags: ["MART", "PRODUCT"]
+    columns:
+      - name: BASIS_DT
+        description: "기준일자"
+        data_type: DATE
+      - name: GID
+        description: "상품 GID"
+        data_type: STRING
+      - name: OFFER_IMPRESSION_CNT
+        description: "상품 노출 수"
+        data_type: INT64
+      - name: OFFER_CLICK_CNT
+        description: "상품 클릭 수"
+        data_type: INT64
+      - name: OFFER_DETAIL_UV
+        description: "상품 상세 유니크 방문자 수"
+        data_type: INT64
+      - name: CHECKOUT_UV
+        description: "체크아웃 유니크 방문자 수"
+        data_type: INT64
+      - name: CHECKOUT_COMPLETE_UV
+        description: "구매완료 유니크 방문자 수"
+        data_type: INT64
+

@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: VIEW_FPNA_PROFIT_VS_CLOSING_TNA_M
+    description: |
+      T&A 월별 CGMV/Revenue 비교 View: Profit vs Closing.
+
+      ## 목적
+      T&A 버티컬에 대해 FPNA(Profit) vs 매관(Closing)을 월x파트너x정산타입 그레인으로 비교한다.
+
+      ## 원천
+      - Profit: `MART_FPNA_NONAIR_PROFIT_M` (FPNA_TYPE_LV_1 = 'T&A')
+      - Closing: `MART_FPNA_CONFIRMATION_CLOSING_D` (전체 NONAIR, vertical 컬럼 없음)
+
+      ## Profit 필터
+      - `FPNA_TYPE_LV_1 = 'T&A'`로 Profit 소스를 필터하여 T&A 데이터만 집계
+
+      ## Profit 환불 기준
+      - Profit 환불 이벤트월: **REFUND_MONTH**(매관 확정일 기준) 사용
+      - Profit CANCEL CGMV/Revenue는 매관 기준 실제 환불액(`REFUND_GMV`/`REFUND_REVENUE`)을 사용
+      - CONFIRM Revenue는 SHEET_SOURCE에서 이미 VAT 포함(*1.1 적용 완료)
+      - CANCEL Revenue는 SHEET_SOURCE `REFUND_REVENUE`를 사용 (VAT 포함)
+
+      ## Closing 이벤트월 기준
+      - 결제/환불 모두 확정일(BASIS_DATE) 기준으로 월 배정
+      - Closing에는 vertical 컬럼이 없어 파트너별 전체 NONAIR 집계
+      - CGMV: 구성요소 합산 (쿠폰+즉시할인+포인트+PG금액)
+      - Revenue: `SALE_COMMISSION + MRT_CANCEL_COMMISSION` (매관 기준, VAT 포함)
+
+      ## 권장 비교 지표
+      - CGMV: `PROFIT_NET_CGMV` vs `CLOSING_NET_CGMV`
+      - Revenue: `PROFIT_NET_REVENUE_INC_VAT` vs `CLOSING_NET_REVENUE_INC_VAT`
+    config:
+      tags: [ "MART", "FPNA", "VIEW" ]
+    columns:
+      - name: EVENT_MONTH
+        description: "월 단위 비교 기준 월"
+        data_type: DATE
+      - name: PARTNER_ID
+        data_type: STRING
+      - name: SETTLE_TYPE_KEY
+        description: "정산타입 키(internal/external/unknown)"
+        data_type: STRING
+
+      - name: PROFIT_CONFIRM_CGMV
+        data_type: FLOAT
+      - name: PROFIT_CANCEL_CGMV
+        description: "Profit 환불 CGMV 합 (매관 기준 REFUND_GMV, 음수)"
+        data_type: FLOAT
+      - name: PROFIT_NET_CGMV
+        description: "Profit net CGMV (CONFIRM + CANCEL, 매관 기준)"
+        data_type: FLOAT
+
+      - name: PROFIT_CONFIRM_REVENUE_INC_VAT
+        description: "Profit 확정 Revenue 합 (VAT 포함)"
+        data_type: FLOAT
+      - name: PROFIT_CANCEL_REVENUE_INC_VAT
+        description: "Profit 환불 Revenue 합 (VAT 포함, 음수)"
+        data_type: FLOAT
+      - name: PROFIT_NET_REVENUE_INC_VAT
+        description: "Profit net Revenue (VAT 포함)"
+        data_type: FLOAT
+
+      - name: CLOSING_PAYMENT_CGMV
+        data_type: FLOAT
+      - name: CLOSING_REFUND_CGMV
+        description: "Closing 환불 CGMV 합 (음수)"
+        data_type: FLOAT
+      - name: CLOSING_NET_CGMV
+        data_type: FLOAT
+
+      - name: CLOSING_PAYMENT_REVENUE_INC_VAT
+        data_type: FLOAT
+      - name: CLOSING_REFUND_REVENUE_INC_VAT
+        description: "Closing 환불 Revenue 합 (음수)"
+        data_type: FLOAT
+      - name: CLOSING_NET_REVENUE_INC_VAT
+        data_type: FLOAT
+
+      - name: PROFIT_CONFIRM_ORDER_CNT
+        data_type: INTEGER
+      - name: PROFIT_CANCEL_ORDER_CNT
+        data_type: INTEGER
+      - name: PROFIT_NET_ORDER_CNT
+        data_type: INTEGER
+
+      - name: CLOSING_PAYMENT_ORDER_CNT
+        data_type: INTEGER
+      - name: CLOSING_REFUND_ORDER_CNT
+        data_type: INTEGER
+      - name: CLOSING_NET_ORDER_CNT
+        data_type: INTEGER
+
+      - name: CLOSING_SALE_TYPE
+        description: "Closing 판매유형: TOTAL=사입, COMMISSION=위탁"
+        data_type: STRING

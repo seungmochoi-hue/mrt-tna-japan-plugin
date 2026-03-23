@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: MART_BANNER_AGG_D
+    description: "배너 집계 데이터"
+    config:
+      tags: ["BANNER", "MART"]
+    columns:
+      - name: basis_dt
+        description: "기준 일자"
+        data_type: DATE
+      - name: screen_name
+        description: "화면 이름"
+        data_type: STRING
+      - name: banner_name
+        description: "배너 이름"
+        data_type: STRING
+      - name: imp_uv_web
+        description: "웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_ios_mweb
+        description: "iOS 모바일 웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_aos_mweb
+        description: "Android 모바일 웹 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_ios
+        description: "iOS 노출 UV"
+        data_type: INTEGER
+      - name: imp_uv_aos
+        description: "Android 노출 UV"
+        data_type: INTEGER
+      - name: click_cnt_web
+        description: "웹 클릭 수"
+        data_type: INTEGER
+      - name: click_cnt_ios_mweb
+        description: "iOS 모바일 웹 클릭 수"
+        data_type: INTEGER
+      - name: click_cnt_aos_mweb
+        description: "Android 모바일 웹 클릭 수"
+        data_type: INTEGER
+      - name: click_cnt_ios
+        description: "iOS 클릭 수"
+        data_type: INTEGER
+      - name: click_cnt_aos
+        description: "Android 클릭 수"
+        data_type: INTEGER
+      - name: click_uv_web
+        description: "웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_uv_ios_mweb
+        description: "iOS 모바일 웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_uv_aos_mweb
+        description: "Android 모바일 웹 클릭 UV"
+        data_type: INTEGER
+      - name: click_uv_ios
+        description: "iOS 클릭 UV"
+        data_type: INTEGER
+      - name: click_uv_aos
+        description: "Android 클릭 UV"
+        data_type: INTEGER
+

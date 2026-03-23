@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: MART_PRODUCT_AGG_D
+    description: |
+      GID별 예약 및 퍼널 지표를 포함한 집계 테이블.
+      BigQuery 물리 최적화: partition(BASIS_DT, month) + cluster(GID)
+    columns:
+      - name: BASIS_DT
+        description: 기준 일자
+        data_type: DATE
+
+      - name: GID
+        description: "상품 아이디. BNB 숙소는 union_product_id로 매핑"
+        data_type: STRING
+
+      - name: TOTAL_RESERVATION_CNT
+        description: "GID별 확정 예약 건수. KIND=1 기준"
+        data_type: INTEGER
+
+      - name: TOTAL_RESERVATION_USER_CNT
+        description: "GID별 확정 예약 유저수"
+        data_type: INTEGER
+
+      - name: TOTAL_SALE_PRICE
+        description: "GID별 확정 예약 판매 총액(원). KIND=1 기준"
+        data_type: INTEGER
+
+      - name: OFFER_IMPRESSION_CNT
+        description: 오퍼 노출수
+        data_type: INTEGER
+
+      - name: OFFER_CLICK_CNT
+        description: 오퍼 클릭수
+        data_type: INTEGER
+
+      - name: OFFER_CLICK_RT
+        description: "오퍼 클릭률(%). OFFER_CLICK_CNT / OFFER_IMPRESSION_CNT * 100"
+        data_type: FLOAT
+
+      - name: OFFER_DETAIL_UV
+        description: 오퍼 상세 조회 UV
+        data_type: INTEGER
+
+      - name: OFFER_TO_CHECKOUT_RT
+        description: "상세 조회 대비 체크아웃 전환율(%). CHECKOUT_UV / OFFER_DETAIL_UV * 100"
+        data_type: FLOAT
+
+      - name: CHECKOUT_UV
+        description: 체크아웃 UV
+        data_type: INTEGER
+
+      - name: CHECKOUT_TO_COMPLETE_RT
+        description: "체크아웃 대비 구매 완료 전환율(%). CHECKOUT_COMPLETE_UV / CHECKOUT_UV * 100"
+        data_type: FLOAT
+
+      - name: CHECKOUT_COMPLETE_UV
+        description: 구매 완료 UV
+        data_type: INTEGER
+
+      - name: DW_LOAD_DT
+        description: DW 적재 일시
+        data_type: TIMESTAMP
+

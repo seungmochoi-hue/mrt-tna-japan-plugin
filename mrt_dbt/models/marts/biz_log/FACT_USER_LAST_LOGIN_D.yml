@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: FACT_USER_LAST_LOGIN_D
+    description: "사용자 기준 log 데이터 정보 Fact 테이블"
+    config:
+      tags: [ "BIZ_LOG", "FACT" ]
+      docs:
+          node_color: "#FF5733"
+    columns:
+      - name: user_id
+        description: "사용자 ID"
+        data_type: string
+      - name: is_install_app
+        description: "앱 설치 여부"
+        data_type: string
+      - name: last_login_dt_kst
+        description: "최근 마리트 로그인 일시 (KST)"
+        data_type: timestamp
+      - name: last_login_platform
+        description: "최근 마리트 로그인 플랫폼"
+        data_type: string
+      - name: dw_load_dt
+        description: "DW 적재 일시"
+        data_type: timestamp
+

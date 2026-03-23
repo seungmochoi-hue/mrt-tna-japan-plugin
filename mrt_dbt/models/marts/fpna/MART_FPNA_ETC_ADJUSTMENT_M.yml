@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: MART_FPNA_ETC_ADJUSTMENT_M
+    description: |
+      [시트 원천] FPNA 기타조정 수수료(원화) 월 집계 MART.
+
+      ## 목적
+      - `MART_FPNA_ETC_ADJUSTMENT_D`를 `BASIS_MONTH + PARTNER_ID` 그레인으로 집계한다.
+      - FP&A 팀이 월마감 시 파트너별 Revenue 후처리 합산값을 바로 사용할 수 있도록 한다.
+
+      ## 집계 규칙
+      - `BASIS_MONTH`: `DATE_TRUNC(ADJUSTMENT_DATE, MONTH)`
+      - `ADJUSTMENT_COMMISSION_KRW`: 월/파트너별 기타조정 수수료 합계
+      - `ADJUSTMENT_ROW_COUNT`: 월/파트너별 원천 상세 건수
+    config:
+      tags: [ "MART", "FPNA", "SHEET" ]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BASIS_MONTH
+            - PARTNER_ID
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_MONTH
+        description: "집계 기준 월(월 시작일)."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: PARTNER_ID
+        description: "파트너 ID."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ADJUSTMENT_COMMISSION_KRW
+        description: "월/파트너 기준 기타조정 수수료(원화) 합계."
+        data_type: INT64
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: ADJUSTMENT_ROW_COUNT
+        description: "월/파트너 기준 기타조정 상세 건수."
+        data_type: INT64
+        tests:
+          - not_null:
+              config:
+                severity: warn

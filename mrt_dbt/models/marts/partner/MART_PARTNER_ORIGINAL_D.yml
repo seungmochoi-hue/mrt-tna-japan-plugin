@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: MART_PARTNER_ORIGINAL_D
+    description: 파트너 정보 테이블입니다.
+    columns:
+    - name: PARTNER_ID
+      description: "파트너 아이디"
+      data_type: STRING
+    - name: PARTNER_NAME
+      description: "파트너 명"
+      data_type: STRING
+    - name: PARTNER_SOURCE
+      description: "파트너 소스"
+      data_type: STRING
+    - name: COMPANY_FLAG
+      description: "회사 여부 플래그"
+      data_type: STRING
+    - name: COMPANY_NM
+      description: "회사 명"
+      data_type: STRING
+    - name: REPRESENTATIVE_NM
+      description: "대표자 명"
+      data_type: STRING
+    - name: BUSINESS_LICENSE_NUMBER
+      description: "사업자 등록 번호"
+      data_type: STRING
+    - name: USER_ID
+      description: "사용자 아이디"
+      data_type: INTEGER
+    - name: EMAIL
+      description: "파트너 이메일"
+      data_type: STRING
+    - name: TAX_INVOICE_EMAIL
+      description: "세금계산서 이메일"
+      data_type: STRING
+    - name: COMMISSION_RATE
+      description: "커미션 비율"
+      data_type: FLOAT
+    - name: PARTNER_STATUS
+      description: "파트너 상태"
+      data_type: STRING
+    - name: PROFIT_CURRENCY_CODE
+      description: "수익 통화 코드"
+      data_type: STRING
+    - name: ALLOW_MESSAGE
+      description: "메시지 허용 여부"
+      data_type: BOOLEAN
+    - name: SUBSCRIPTION_SETTING
+      description: "구독 설정"
+      data_type: STRING
+    - name: CURRENT_VISA_STATUS
+      description: "현재 비자 상태"
+      data_type: STRING
+    - name: LENGTH_OF_RESIDENCE
+      description: "거주 기간"
+      data_type: STRING
+    - name: SETTLE_TYPE
+      description: "정산 유형"
+      data_type: STRING
+    - name: SALES_TYPE
+      description: "매출 유형"
+      data_type: STRING
+    - name: CREATE_KST_DATE
+      description: "생성 KST 일시"
+      data_type: DATE
+    - name: CREATE_KST_DT
+      description: "생성 KST 일시"
+      data_type: TIMESTAMP
+    - name: UPDATE_KST_DATE
+      description: "수정 KST 일시"
+      data_type: DATE
+    - name: FIRST_ACTIVATED_KST_DATE
+      description: "최초 활성화 KST 일시"
+      data_type: DATE
+    - name: CURRENT_ACTIVATED_KST_DATE
+      description: "현재 활성화 KST 일시"
+      data_type: DATE
+    - name: NOTICE_READ_KST_DATE
+      description: "공지 읽음 KST 일시"
+      data_type: DATE
+    - name: DW_LOAD_DT
+      description: "Dw 적재 일시"
+      data_type: TIMESTAMP
+

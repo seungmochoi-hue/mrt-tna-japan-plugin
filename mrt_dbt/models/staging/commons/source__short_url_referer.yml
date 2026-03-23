@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "commons"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "short_url_referer"
+        identifier: "DW_MRT_COMMONS_SHORT_URL_REFERER"
+        description: "Short URL 리퍼러"
+        columns:
+          - name: "id"
+            description: "Sequential ID"
+          - name: "short_url_id"
+            description: "Short URL ID"
+          - name: "referer_url"
+            description: "리퍼러 URL"
+          - name: "created_at"
+            description: "생성일시"
+          - name: "created_by"
+            description: "생성자"
+          - name: "updated_at"
+            description: "수정시각"
+          - name: "updated_by"
+            description: "수정자"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

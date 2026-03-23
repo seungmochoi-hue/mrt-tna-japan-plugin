@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_AIR_INTERNATIONAL_VI"
+        identifier: "FPNA_AIR_INTERNATIONAL_VI"
+        description: "항공 - 항공사 VI (국제선) 관리 시트 (스프레드시트관리)"
+        columns:
+          - name: "TRAVEL_DATE"
+            description: "여행 날짜"
+          - name: "STOCK_AIRLINE_CD"
+            description: "항공사 코드"
+          - name: "ACTUAL_VI_RATE"
+            description: "실제 V/I 비율"
+          - name: "MRT_PERFORMANCE"
+            description: "MRT 성과"
+          - name: "PERFORMANCE_VI_RATE"
+            description: "성과 V/I 비율"
+          - name: "ACTUAL_VI_AMOUNT_WO_VAT"
+            description: "실제 V/I 금액 (VAT 제외)"
+          - name: "UPDATE_DATE"
+            description: "업데이트 날짜"
+          - name: "REMARK"
+            description: "비고"
+          - name: "ACTUAL_VI_RATE_API"
+            description: "ACTUAL VI RATE API"

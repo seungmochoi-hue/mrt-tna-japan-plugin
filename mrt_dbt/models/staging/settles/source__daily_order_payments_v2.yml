@@ -1,0 +1,96 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: daily_order_payments_v2
+        identifier: DW_MRT_SETTLES_DAILY_ORDER_PAYMENTS_V2
+        description: |
+          일자 기준 주문 결제 상세(SETTLES V2) 원천. 주문 결제건별 금액/수단 정보를 제공하며, 결제일 기준 패키지 결제(대체) 전표 대사 쿼리에서 결제 전표 금액 비교에 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: created_by
+            description: "생성자(개인정보 - null 처리)"
+          - name: deleted_at
+            description: "삭제일"
+          - name: updated_at
+            description: "수정일"
+          - name: updated_by
+            description: "수정자(개인정보 - null 처리)"
+          - name: canceled_at
+            description: "취소일"
+          - name: first_payment_date
+            description: "첫 결제일"
+          - name: foreign_currency
+            description: "외화 환율 코드"
+          - name: foreign_currency_payment_amount
+            description: "주문 결제 금액(USD)"
+          - name: foreign_currency_sale_price
+            description: "주문 판매 금액(USD)"
+          - name: krw_converted_order_price
+            description: "원화 결제 요청 금액(pg)"
+          - name: order_payment_amount
+            description: "주문 결제 금액"
+          - name: payment_id
+            description: "결제 ID"
+          - name: payment_installment_plan
+            description: "주결제수단할부정보"
+          - name: payment_method
+            description: "결제 방법"
+          - name: payment_method_info
+            description: "결제 방법 정보"
+          - name: payment_status
+            description: "결제 상태"
+          - name: payment_status_msg
+            description: "결제 상태 메세지"
+          - name: pg
+            description: "PG사"
+          - name: pg_authorized_at
+            description: "PG 승인일"
+          - name: pg_tid
+            description: "PG TID"
+          - name: external_tid
+            description: "결제 TID"
+          - name: point_payment_amount
+            description: "포인트 결제 금액"
+          - name: instant_discount_amount
+            description: "즉시 할인 금액"
+          - name: prediction_discount_amount
+            description: "청구 후 예상되는 할인 금액"
+          - name: instant_discount_mrt_rate
+            description: "마리트 즉시할인 분담비율"
+          - name: refund_instant_discount_amount
+            description: "즉시 할인 환불 금액"
+          - name: point_payment_status
+            description: "포인트 결제 상태"
+          - name: point_payment_status_msg
+            description: "포인트 결제 상태 메시지"
+          - name: refund_payment_amount
+            description: "환불 결제 금액"
+          - name: refund_point_amount
+            description: "환불 포인트 금액"
+          - name: status
+            description: "상태"
+          - name: total_refund_amount
+            description: "총 환불 금액"
+          - name: total_sale_price
+            description: "총 판매 금액"
+          - name: user_id
+            description: "USER ID"
+          - name: order_id
+            description: "주문 ID"
+          - name: payment_detail_method
+            description: "결제 상세 수단"
+          - name: margin_discount_amount
+            description: "상품 할인 금액"
+          - name: refund_margin_discount_amount
+            description: "상품 할인 취소 금액"
+          - name: canceled_instant_discount
+            description: "즉시 할인 실취소 여부"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

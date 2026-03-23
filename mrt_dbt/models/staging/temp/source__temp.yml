@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: temp_mart
+    database: mrtdata
+    schema: edw_mart
+    description: 히스토리를 위해 남겨두는 임시 테이블

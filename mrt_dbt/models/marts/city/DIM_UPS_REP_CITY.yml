@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: DIM_UPS_REP_CITY
+    description: "GID 기반 지역 정보 테이블"
+    config:
+      tags: ["CITY", "DIM", "UPS"]
+    columns:
+      - name: GID
+        description: "GID"
+      - name: REPRESENTATIVE_FLAG
+        description: "대표 여부"
+      - name: CONTINENT_NM
+        description: "대륙 이름"
+      - name: COUNTRY_NM
+        description: "국가 이름"
+      - name: CITY_NM
+        description: "도시 이름"
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+

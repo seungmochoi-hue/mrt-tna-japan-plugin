@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: MART_TAB_PAGE_PV_TOP_D
+    description: >
+      사용성
+      - 유저 이탈 많은 화면
+      - 화면별 PV
+      
+      pageview 로그 기준으로 pid, seesion_id 집계
+      다음 화면(screen) 으로의 이동이 있는지 없는지 여부도 확인하여 집계
+    config:
+      tags: ["tableau", "MART"]
+    columns:
+      - name: BASIS_DATE
+        description: 기준 일자
+        data_type: DATE
+      - name: PLATFORM
+        description: 플랫폼
+        data_type: STRING
+      - name: SCREEN_NAME
+        description: 화면 이름
+        data_type: STRING
+      - name: VISIT_PID_CNT
+        description: 방문 pid 수
+        data_type: INTEGER
+      - name: INFLOW_PID_CNT
+        description: 유입 PID 건수
+        data_type: INTEGER
+      - name: VISIT_SESSION_ID_CNT
+        description: 방문 session_id 수
+        data_type: INTEGER
+      - name: INFLOW_SESSION_ID_CNT
+        description: 유입 세션 아이디 건수
+        data_type: INTEGER
+      - name: VISIT_CNT
+        description: 방문 건수
+        data_type: INTEGER
+      - name: INFLOW_CNT
+        description: 유입 건수
+        data_type: INTEGER
+

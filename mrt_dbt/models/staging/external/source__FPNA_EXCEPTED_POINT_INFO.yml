@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_EXCEPTED_POINT_INFO"
+        identifier: "FPNA_EXCEPTED_POINT_INFO"
+        description: "FPNA 포인트 예외/가치 환산 관련 설정 정보"
+        columns:
+          - name: "template_id"
+            description: "템플릿 ID"
+          - name: "template_name"
+            description: "템플릿 이름"
+          - name: "mrt_value_rate"
+            description: "MRT 가치 환산 비율"
+          - name: "remark_1"
+            description: "비고 1"
+          - name: "remark_2"
+            description: "비고 2"
+          - name: "remark_3"
+            description: "비고 3"

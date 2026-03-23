@@ -1,0 +1,189 @@
+version: 2
+
+models:
+  - name: MART_PACKAGE_OPTION_RESVE_D
+    description: "신규 패키지 예약 마트 테이블"
+
+    config:
+      tags: ["MART", "PACKAGE", "RESVE"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 날짜"
+        data_type: DATE
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: OPTION_ID
+        description: "옵션 ID"
+        data_type: STRING
+      - name: RESVE_OPTION_ID
+        description: "예약 옵션 ID"
+        data_type: STRING
+      - name: KIND
+        description: "1=결제행, 2=취소행"
+        data_type: INTEGER
+      - name: RESVE_MAPPING_ID
+        description: "예약 매핑 ID"
+        data_type: STRING
+      - name: RESVE_MAPPING_TYPE
+        description: "예약 매핑 타입"
+        data_type: STRING
+      - name: RESVE_MAPPING_CHANGE_ID
+        description: "예약 매핑 변경 ID"
+        data_type: STRING
+      - name: RESVE_VERSION_VALUE
+        description: "예약 버전 값"
+        data_type: INTEGER
+      - name: PRODUCT_ID
+        description: "상품 ID"
+        data_type: STRING
+      - name: OPTION_PRODUCT_ID
+        description: "옵션 상품 ID"
+        data_type: STRING
+      - name: PACKAGE_GID
+        description: "패키지 GID"
+        data_type: STRING
+      - name: PACKAGE_OPTION_GID
+        description: "패키지 옵션 GID"
+        data_type: STRING
+      - name: LINK_ID
+        description: "링크 ID"
+        data_type: STRING
+      - name: CANCELED_AT
+        description: "취소 시간"
+        data_type: TIMESTAMP
+      - name: CANCEL_REASON_TYPE
+        description: "취소 이유 종류"
+        data_type: STRING
+      - name: PAYMENT_ID
+        description: "결제 ID"
+        data_type: STRING
+      - name: RESVE_TITLE
+        description: "예약 제목"
+        data_type: STRING
+      - name: OPTION_RESVE_TITLE
+        description: "예약 옵션 제목"
+        data_type: STRING
+      - name: RESVE_TYPE
+        description: "예약 종류"
+        data_type: STRING
+      - name: OPTION_RESVE_TYPE
+        description: "옵션 예약 종류"
+        data_type: STRING
+      - name: RECENT_RESVE_STATUS
+        description: "최근 예약 상태"
+        data_type: STRING
+      - name: RECENT_OPTION_RESVE_STATUS
+        description: "최근 옵션 예약 상태"
+        data_type: STRING
+      - name: RESVE_TRAVEL_START_KST_DATE
+        description: "예약 시작 KST 날짜"
+        data_type: DATE
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작 KST 날짜"
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료 KST 날짜"
+        data_type: DATE
+      - name: PG_NM
+        description: "PG 이름"
+        data_type: STRING
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 결제 KST 날짜"
+        data_type: TIMESTAMP
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 명"
+        data_type: STRING
+      - name: AIR_PNR_NO
+        description: "항공 PNR 번호"
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "생성 KST 날짜"
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "수정 KST 날짜"
+        data_type: TIMESTAMP
+      - name: PACKAGE_PARTNER_ID
+        description: "패키지 파트너 ID"
+        data_type: STRING
+      - name: PACKAGE_OPTION_PARTNER_ID
+        description: "패키지 옵션 파트너 ID"
+        data_type: STRING
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 방법 값"
+        data_type: STRING
+      - name: SALES_PRICE
+        description: "판매 금액"
+        data_type: INTEGER
+      - name: PAID_PRICE
+        description: "결제 금액"
+        data_type: INTEGER
+      - name: COUPON_PRICE
+        description: "총 쿠폰 금액"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 금액"
+        data_type: INTEGER
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 금액"
+        data_type: INTEGER
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "포인트 금액"
+        data_type: INTEGER
+      - name: PAYMENT_COMMISSION_RATE
+        description: "결제 수수료 비율"
+        data_type: NUMERIC
+      - name: PAYMENT_COMMISSION_PRICE
+        description: "결제 수수료 금액"
+        data_type: INTEGER
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료 비율"
+        data_type: FLOAT
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액"
+        data_type: INTEGER
+      - name: SUPPLY_PRICE
+        description: "공급 가격"
+        data_type: INTEGER
+      - name: CITY_NM
+        description: "도시 이름"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "나라 이름"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 이름"
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: DIM_TEST_PRODUCT
+    description: >
+      마리트 테스트 상품 [테스트 상품](https://docs.google.com/spreadsheets/d/1rHPugjhFCWY5i5Y4QfYaPAyvILBdeAabZNEkfzPPxtE/edit?gid=0#gid=0)
+
+    config:
+      meta:
+        owner: "파트너"
+    columns:
+      - name: GID
+        description: "GID"
+      - name: PARTNER_ID
+        description: "파트너 ID"
+      - name: PARTNER_EMAIL
+        description: "파트너 이메일 (테스트 계정, 개인정보 X)"
+      - name: DOMAIN_NM
+        description: "도메인명"
+      - name: CATEGORY
+        description: "카테고리"
+      - name: SUB_CATEGORY
+        description: "서브 카테고리"
+      - name: PRODUCT_URL
+        description: "상품 URL"
+

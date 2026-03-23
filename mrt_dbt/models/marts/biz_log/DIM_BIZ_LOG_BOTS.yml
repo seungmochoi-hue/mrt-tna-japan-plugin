@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: DIM_BIZ_LOG_BOTS
+    description: "Biz Log의 봇 정보"
+    config:
+      tags: ["BIZ_LOG", "DIM"]
+    columns:
+      - name: key_type
+        data_type: string
+        description: 키 타입 (ip, pid)
+        data_tests:
+          - accepted_values:
+              values: ['ip', 'pid']
+
+      - name: bot_key
+        data_type: string
+        description: 키 값 (IP 또는 pid)
+
+      - name: detail
+        data_type: string
+        description: 상세 정보
+
+      - name: dw_load_dt
+        data_type: timestamp
+        description: DW 적재 일시
+

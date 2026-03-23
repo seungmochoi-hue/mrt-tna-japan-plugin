@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: MART_BIZ_LOG_MYLINK_ROW_D
+    description: 마이링크 기반 제휴 성과 측정을 위한 로그 데이터 테이블입니다.
+    config:
+      tags: [ 'MYLINK', 'MART' ]
+    columns:
+      - name: BASIS_DATE
+        description: '기준 날짜'
+        data_type: DATE
+      - name: PID
+        description: 'PID'
+        data_type: STRING
+      - name: PLATFORM
+        description: '플랫폼'
+        data_type: STRING
+      - name: ITEM_ID
+        description: '아이템 ID'
+        data_type: STRING
+      - name: MYLINK_ID
+        description: '마이링크 ID'
+        data_type: STRING
+      - name: OFFER_DETAIL_KST_DT
+        description: '오퍼 디테일 발생 시간 (KST)'
+        data_type: TIMESTAMP
+      - name: CHECKOUT_KST_DT
+        description: '체크아웃 발생 시간 (KST)'
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_KST_DT
+        description: '체크아웃 완료 시간 (KST)'
+        data_type: TIMESTAMP
+

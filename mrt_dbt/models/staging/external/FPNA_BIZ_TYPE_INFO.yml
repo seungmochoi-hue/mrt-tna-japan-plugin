@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: FPNA_BIZ_TYPE_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [BIZ_TYPE 구분](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1298006184#gid=1298006184)
+    columns:
+      - name: TYPE
+        description: "BIZ_TYPE"
+      - name: MRT_TYPE
+        description: "MRT 타입"
+      - name: BIZ_TYPE
+        description: "BIZ_TYPE 이름"
+      - name: PARTNER_ID
+        description: "파트너 ID"
+      - name: PARTNER_NM
+        description: "파트너 이름"
+      - name: GID
+        description: "GID"
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+      - name: REMARK_1
+        description: "비고"
+      - name: REMARK_2
+        description: "비고2"
+      - name: REMARK_3
+        description: "비고3"
+

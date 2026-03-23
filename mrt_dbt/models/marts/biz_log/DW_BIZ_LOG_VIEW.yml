@@ -1,0 +1,108 @@
+version: 2
+
+models:
+  - name: DW_BIZ_LOG_VIEW
+    description: "DW_BIZ_LOG(date suffix 와일드카드) 기준 최근 93일 데이터 조회용 뷰"
+    config:
+      tags: ["BIZ_LOG", "VIEW"]
+    columns:
+      - name: basis_dt
+        description: "기준 날짜"
+        data_type: date
+      - name: event_timestamp
+        description: "이벤트 발생 타임스탬프 (UTC)"
+        data_type: timestamp
+      - name: event_timestamp_kst
+        description: "이벤트 발생 타임스탬프 (KST)"
+        data_type: timestamp
+      - name: received_timestamp
+        description: "이벤트 수신 타임스탬프 (UTC)"
+        data_type: timestamp
+      - name: received_timestamp_kst
+        description: "이벤트 수신 타임스탬프 (KST)"
+        data_type: timestamp
+      - name: platform
+        description: "플랫폼 정보"
+        data_type: string
+      - name: session_id
+        description: "세션 고유 식별자"
+        data_type: string
+      - name: pid
+        description: "유저 구분 ID"
+        data_type: string
+      - name: udid
+        description: "고유 디바이스 식별자"
+        data_type: string
+      - name: adid
+        description: "광고 ID"
+        data_type: string
+      - name: mylink_id
+        description: "마이링크 ID"
+        data_type: string
+      - name: user_id
+        description: "사용자 ID"
+        data_type: string
+      - name: client_ip
+        description: "클라이언트 IP 주소"
+        data_type: string
+      - name: event_type
+        description: "이벤트 타입"
+        data_type: string
+      - name: screen_name
+        description: "화면명"
+        data_type: string
+      - name: event_name
+        description: "이벤트명"
+        data_type: string
+      - name: event_key
+        description: "이벤트 키(같은 페이지에서 발생하는 이벤트 구분용)"
+        data_type: string
+      - name: url
+        description: "페이지 URL"
+        data_type: string
+      - name: ref_url
+        description: "이전 페이지 URL"
+        data_type: string
+      - name: abtest
+        description: "A/B 테스트 정보"
+        data_type: string
+      - name: page_category
+        description: "페이지 카테고리"
+        data_type: string
+      - name: item_kind
+        description: "아이템 종류"
+        data_type: string
+      - name: item_id
+        description: "아이템 고유 식별자"
+        data_type: string
+      - name: item_category
+        description: "아이템 카테고리"
+        data_type: string
+      - name: item_name
+        description: "아이템명"
+        data_type: string
+      - name: item_type
+        description: "아이템 타입"
+        data_type: string
+      - name: ds
+        description: "이벤트 부가 필드(STRUCT)"
+        data_type: record
+      - name: data
+        description: "추가 데이터(JSON 문자열)"
+        data_type: string
+      - name: utm
+        description: "UTM 파라미터(JSON 문자열)"
+        data_type: string
+      - name: geo
+        description: "위치 정보"
+        data_type: string
+      - name: device
+        description: "디바이스 정보"
+        data_type: string
+      - name: ua
+        description: "User Agent 정보(STRUCT)"
+        data_type: record
+      - name: dw_load_dt
+        description: "로드 일시"
+        data_type: datetime
+

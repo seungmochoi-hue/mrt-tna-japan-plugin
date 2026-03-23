@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: MART_HOTEL_PRODUCT_ORIGINAL_D
+    description: 상품 관련 정보 테이블입니다.
+    columns:
+      - name: PRODUCT_ID
+        description: 상품_아이디
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: 도메인_명
+        data_type: STRING
+      - name: PRODUCT_NO
+        description: 상품_번호
+        data_type: STRING
+      - name: GLOBAL_PRODUCT_ID
+        description: 글로벌_상품_아이디
+        data_type: STRING
+      - name: PRODUCT_NM
+        description: 상품_명
+        data_type: STRING
+      - name: PARTNER_ID
+        description: 파트너_아이디
+        data_type: STRING
+      - name: PARTNER_NM
+        description: 파트너_명
+        data_type: STRING
+      - name: PRODUCT_TYPE
+        description: 상품_유형
+        data_type: STRING
+      - name: RECENT_STATUS
+        description: 최근_상태
+        data_type: STRING
+      - name: MRT_TYPE
+        description: 마이리얼트립_유형
+        data_type: STRING
+      - name: CATEGORY_CD
+        description: 카테고리_코드
+        data_type: STRING
+      - name: SUB_CATEGORY_CD
+        description: 서브_카테고리_코드
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: 생성_KST_일시
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: 수정_KST_일시
+        data_type: TIMESTAMP
+      - name: FIRST_PUBLISHED_KST_DT
+        description: 최초_출판_KST_일시
+        data_type: TIMESTAMP
+      - name: LATITUDE_COORDINATE
+        description: 위도_좌표
+        data_type: FLOAT
+      - name: LONGITUDE_COORDINATE
+        description: 경도_좌표
+        data_type: FLOAT
+      - name: CITY_CD
+        description: 도시_코드
+        data_type: STRING
+      - name: COMMISSION_RATE
+        description: 커미션_비율
+        data_type: INTEGER
+      - name: DURATION_UNIT
+        description: 지속_단위
+        data_type: STRING
+      - name: DURATION_SIZE
+        description: 지속_크기
+        data_type: INTEGER
+      - name: ALLOW_QUICK_RESERVATION
+        description: 허용_빠른_예약
+        data_type: BOOLEAN
+      - name: LOCALE
+        description: 지역
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: DW_적재_일시
+        data_type: TIMESTAMP
+

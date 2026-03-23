@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_TNA_NAVER_SMARTSTORE_OFFERS"
+        identifier: "FPNA_TNA_NAVER_SMARTSTORE_OFFERS"
+        description: "T&A 네이버 스마트스토어 오퍼 정보 (스프레드시트관리)"
+        columns:
+          - name: "PRODUCT_ID"
+            description: "상품 ID"
+          - name: "PRODUCT_NM"
+            description: "상품 이름"

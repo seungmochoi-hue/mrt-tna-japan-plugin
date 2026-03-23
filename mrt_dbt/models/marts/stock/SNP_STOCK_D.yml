@@ -1,0 +1,128 @@
+version: 2
+
+models:
+  - name: SNP_STOCK_D
+    description: "옵션별 재고 상태 일별 요약 테이블"
+    config:
+      tags: [ "STOCK", "SNP" ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준_일자"
+        data_type: DATE
+
+      - name: PRODUCT_ID
+        description: "상품_아이디"
+        data_type: STRING
+
+      - name: OPTION_ID
+        description: "옵션_아이디"
+        data_type: STRING
+
+      - name: OPTION_NM
+        description: "옵션_이름"
+        data_type: STRING
+
+      - name: VOUCHER_TYPE
+        description: "바우처_유형"
+        data_type: STRING
+
+      - name: UPLOAD_STATUS_CNT
+        description: "업로드_상태_건수"
+        data_type: INTEGER
+
+      - name: UPLOAD_STATUS_STOCK_PRICE
+        description: "업로드_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: SOLD_STATUS_CNT
+        description: "판매_상태_건수"
+        data_type: INTEGER
+
+      - name: SOLD_STATUS_STOCK_PRICE
+        description: "판매_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: RESTORE_STATUS_CNT
+        description: "복구_상태_건수"
+        data_type: INTEGER
+
+      - name: RESTORE_STATUS_STOCK_PRICE
+        description: "복구_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: END_STATUS_CNT
+        description: "종료_상태_건수"
+        data_type: INTEGER
+
+      - name: END_STATUS_STOCK_PRICE
+        description: "종료_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: DELETE_STATUS_CNT
+        description: "삭제_상태_건수"
+        data_type: INTEGER
+
+      - name: DELETE_STATUS_STOCK_PRICE
+        description: "삭제_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: CANCEL_STATUS_CNT
+        description: "취소_상태_건수"
+        data_type: INTEGER
+
+      - name: CANCEL_STATUS_STOCK_PRICE
+        description: "취소_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_UPLOAD_STATUS_CNT
+        description: "오늘_업로드_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_SOLD_STATUS_CNT
+        description: "오늘_판매_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_RESTORE_STATUS_CNT
+        description: "오늘_복구_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_END_STATUS_CNT
+        description: "오늘_종료_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_DELETE_STATUS_CNT
+        description: "오늘_삭제_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_CANCEL_STATUS_CNT
+        description: "오늘_취소_상태_건수"
+        data_type: INTEGER
+
+      - name: TODAY_UPLOAD_STATUS_STOCK_PRICE
+        description: "오늘_업로드_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_SOLD_STATUS_STOCK_PRICE
+        description: "오늘_판매_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_RESTORE_STATUS_STOCK_PRICE
+        description: "오늘_복구_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_END_STATUS_STOCK_PRICE
+        description: "오늘_종료_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_DELETE_STATUS_STOCK_PRICE
+        description: "오늘_삭제_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: TODAY_CANCEL_STATUS_STOCK_PRICE
+        description: "오늘_취소_상태_재고_금액"
+        data_type: FLOAT
+
+      - name: DW_LOAD_DT
+        description: "DW_적재_일시"
+        data_type: TIMESTAMP
+

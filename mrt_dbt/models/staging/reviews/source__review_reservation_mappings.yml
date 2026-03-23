@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: "reviews"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "review_reservation_mappings"
+        identifier: "DW_MRT_REVIEWS_REVIEW_RESERVATION_MAPPINGS"
+        description: "후기 생성조건 관련 테이블"
+        columns:
+          - name: "id"
+            description: "pk"
+          - name: "created_at"
+            description: "생성 시각"
+          - name: "created_by"
+            description: "생성 주체"
+          - name: "deleted_at"
+            description: "삭제 시각"
+          - name: "updated_at"
+            description: "수정 시각"
+          - name: "updated_by"
+            description: "수정 주체"
+          - name: "external_review_id"
+            description: "외부 후기 마이그레이션인 경우 외부 후기 id"
+          - name: "reservation_no"
+            description: "마리트 예약 넘버"
+          - name: "review_id"
+            description: "후기 id"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

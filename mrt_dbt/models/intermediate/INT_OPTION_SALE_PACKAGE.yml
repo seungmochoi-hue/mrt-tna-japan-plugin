@@ -1,0 +1,158 @@
+version: 2
+
+models:
+  - name: INT_OPTION_SALE_PACKAGE
+    description: |
+      패키지(PACKAGE) 도메인 옵션 판매 데이터 정규화 뷰.
+      MART_PACKAGE_SALE_D를 MART_OPTION_SALE_D UNION 구조에 맞는 표준 스키마로 변환.
+      패키지는 예약(RESVE_ID) + 옵션(RESVE_OPTION_ID)이 분리된 구조.
+      GID는 PACKAGE_GID, OPTION_GID는 PAKAGE_OPTION_GID 원천 컬럼 사용.
+      결제/정산 수수료 정보가 모두 제공되는 도메인.
+      Grain: RESVE_OPTION_ID (예약-옵션 복합 키).
+      Downstream: MART_OPTION_SALE_D.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - RESVE_OPTION_ID
+            - KIND
+          config:
+            severity: warn
+    columns:
+      - name: BASIS_DATE
+        description: "집계 기준일자."
+        data_type: DATE
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_ID
+        description: "패키지 예약 ID."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: RESVE_OPTION_ID
+        description: "옵션 단위 예약 ID (행 고유 식별자). 패키지는 예약-옵션 복합 키."
+        data_type: STRING
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: USER_ID
+        description: "예약자 사용자 ID."
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID."
+        data_type: STRING
+      - name: KIND
+        description: "예약 구분 (신규/취소 등)."
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "패키지 상품 ID."
+        data_type: STRING
+      - name: OPTION_ID
+        description: "패키지 옵션 ID."
+        data_type: STRING
+      - name: GID
+        description: "패키지 상품 그룹 ID. MART_PACKAGE_SALE_D.PACKAGE_GID 기준."
+        data_type: STRING
+      - name: OPTION_GID
+        description: "패키지 옵션 그룹 ID. MART_PACKAGE_SALE_D.PAKAGE_OPTION_GID 기준."
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 명칭. 패키지 고정값: 'PACKAGE'."
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "패키지 상품명. MART_PACKAGE_SALE_D.PACKAGE_TITLE 기준."
+        data_type: STRING
+      - name: OPTION_TITLE
+        description: "패키지 옵션명. MART_PACKAGE_SALE_D.PACKAGE_OPTION_TITLE 기준."
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: RECENT_STATUS
+        description: "최근 예약 상태 코드. MART_PACKAGE_SALE_D.RESVE_RECENT_STATUS 기준."
+        data_type: STRING
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 출발일 (KST)."
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 귀국일 (KST)."
+        data_type: DATE
+      - name: PG_NM
+        description: "PG사 명칭."
+        data_type: STRING
+      - name: PLATFORM
+        description: "결제 플랫폼."
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "결제 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 1단계 코드. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_1_CD 기준."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 1단계 명칭. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_1_NM 기준."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 2단계 코드. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_2_CD 기준."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 2단계 명칭. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_2_NM 기준."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 3단계 코드. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_3_CD 기준."
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 3단계 명칭. MART_PACKAGE_SALE_D.PACKAGE_STANDARD_CATEGORY_LV_3_NM 기준."
+        data_type: STRING
+      - name: OPTION_PARTNER_ID
+        description: "패키지 옵션 파트너 ID. MART_PACKAGE_SALE_D.PACKAGE_OPTION_PARTNER_ID 기준."
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "판매 금액 (원화). MART_PACKAGE_SALE_D.SALES_PRICE 기준."
+        data_type: INT64
+      - name: PAID_PRICE
+        description: "실 결제 금액."
+        data_type: INT64
+      - name: COUPON_PRICE
+        description: "쿠폰 할인 금액."
+        data_type: INT64
+      - name: POINT_PRICE
+        description: "포인트 사용 금액."
+        data_type: INT64
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 수단 상세값."
+        data_type: STRING
+      - name: PAYMENT_COMMISSION_RATE
+        description: "결제 수수료율."
+        data_type: FLOAT64
+      - name: PAYMENT_COMMISSION_PRICE
+        description: "결제 수수료 금액."
+        data_type: INT64
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료율."
+        data_type: FLOAT64
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액."
+        data_type: INT64
+      - name: CITY_NM
+        description: "도시명."
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가명."
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역명."
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형."
+        data_type: STRING
+      - name: CREATE_KST_DT
+        description: "예약 생성 일시 (KST)."
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "예약 최종 수정 일시 (KST)."
+        data_type: TIMESTAMP

@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: "external_st"
+    database: "mrtdata"
+    schema: "edw_st"
+    description: "외부데이터"
+    tables:
+      - name: "ST_DIM_CITY"
+        identifier: "ST_DIM_CITY"
+        description: "도시 정보 테이블 ( 스프레드 시트 관리 )"
+        columns:
+          - name: "code"
+            description: "도시 코드"
+          - name: "city"
+            description: "도시 이름"
+          - name: "country"
+            description: "국가 이름"
+          - name: "region"
+            description: "지역 이름"
+          - name: "source"
+            description: "사용처"

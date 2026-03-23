@@ -1,0 +1,260 @@
+version: 2
+
+models:
+  - name: MART_TRANS_OPTION_SALE_D
+    description: >
+      교통 예약 상세 테이블입니다. [위키](https://myrealtrip.atlassian.net/wiki/spaces/DP/pages/4422042134/TRANSLATE+MART)
+
+    config:
+      tags: ["MART", "TRANS"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 날짜. KIND=1: 최초 결제일, KIND=2: 최초 환불일. 분할환불 시 전체 금액이 최초 환불일에 귀속"
+        data_type: DATE
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: RESVE_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: RESVE_OPTION_ID
+        description: "예약 옵션 ID"
+        data_type: STRING
+      - name: TRANS_RESVE_ID
+        description: "교통 예약 ID"
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: TRIP_ORDER_ID
+        description: "여행 주문 ID"
+        data_type: STRING
+      - name: RESVE_ITEM_ID
+        description: "예약 아이템 ID"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: "도메인 이름"
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: GPID
+        description: "GPID"
+        data_type: STRING
+      - name: KIND
+        description: "1=판매, 2=취소. KIND=2는 옵션당 최대 1건, 분할환불 합산"
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: PROVIDER_ID
+        description: "제공자 ID"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: CANCEL_KST_DT
+        description: "취소 KST 날짜"
+        data_type: TIMESTAMP
+      - name: ROUTE_NM
+        description: "노선 이름"
+        data_type: STRING
+      - name: CONFIRM_KST_DT
+        description: "확인 KST 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_TIMEZONE_DT
+        description: "여행 시작 시간대 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_TIMEZONE_NM
+        description: "여행 시작 시간대 이름"
+        data_type: STRING
+      - name: TRAVEL_END_TIMEZONE_DT
+        description: "여행 종료 시간대 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_END_TIMEZONE_NM
+        description: "여행 종료 시간대 이름"
+        data_type: STRING
+      - name: TRAVEL_START_KST_DT
+        description: "여행 시작 KST 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_END_KST_DT
+        description: "여행 종료 KST 날짜"
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작 KST 날짜"
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료 KST 날짜"
+        data_type: DATE
+      - name: PRODUCT_TYPE
+        description: "상품 유형"
+        data_type: STRING
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형"
+        data_type: STRING
+      - name: RESVE_ITEM_TYPE
+        description: "예약 아이템 유형"
+        data_type: STRING
+      - name: TRAVEL_TYPE
+        description: "여행 유형"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: "표준 카테고리 레벨 1 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 명"
+        data_type: STRING
+      - name: UPS_REPRESENTATIVE_FLAG
+        description: "UPS 대표 플래그"
+        data_type: STRING
+      - name: UPS_START_CITY_CD
+        description: "UPS 시작 도시 코드"
+        data_type: STRING
+      - name: START_COUNTRY_CD
+        description: "시작 국가 코드"
+        data_type: STRING
+      - name: END_COUNTRY_CD
+        description: "종료 국가 코드"
+        data_type: STRING
+      - name: START_COUNTRY_NM
+        description: "시작 국가 이름"
+        data_type: STRING
+      - name: END_COUNTRY_NM
+        description: "종료 국가 이름"
+        data_type: STRING
+      - name: START_CITY_CD
+        description: "시작 도시 코드"
+        data_type: STRING
+      - name: END_CITY_CD
+        description: "종료 도시 코드"
+        data_type: STRING
+      - name: START_CITY_NM
+        description: "시작 도시 이름"
+        data_type: STRING
+      - name: END_CITY_NM
+        description: "종료 도시 이름"
+        data_type: STRING
+      - name: CREATE_KST_DATE
+        description: "생성 KST 날짜"
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DATE
+        description: "수정 KST 날짜"
+        data_type: TIMESTAMP
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 결제 KST 날짜"
+        data_type: TIMESTAMP
+      - name: PARTNERSHIP_CD
+        description: "제휴 코드"
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형"
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드"
+        data_type: STRING
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 ID"
+        data_type: STRING
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 ID"
+        data_type: STRING
+      - name: PG_NM
+        description: "PG 이름"
+        data_type: STRING
+      - name: PAYMENT_METHOD_VALUE
+        description: "결제 방법 값"
+        data_type: STRING
+      - name: FIXED_FEE_SUPPLY_PRICE
+        description: "고정 수수료 공급 가격"
+        data_type: FLOAT
+      - name: TICKET_SUPPLY_PRICE
+        description: "티켓 공급 가격"
+        data_type: FLOAT
+      - name: SUPPLY_PRICE
+        description: "공급 가격"
+        data_type: FLOAT
+      - name: FIXED_FEE_SALES_PRICE
+        description: "고정 수수료 판매 가격"
+        data_type: FLOAT
+      - name: TICKET_SALES_PRICE
+        description: "티켓 판매 가격"
+        data_type: FLOAT
+      - name: SALES_PRICE
+        description: "판매 가격"
+        data_type: FLOAT
+      - name: SALES_PRICE_CUR_TYPE
+        description: "판매 가격 통화 유형"
+        data_type: STRING
+      - name: FIXED_FEE_SUPPLY_KRW_PRICE
+        description: "고정 수수료 공급 KRW 가격"
+        data_type: FLOAT
+      - name: TICKET_SUPPLY_KRW_PRICE
+        description: "티켓 공급 KRW 가격"
+        data_type: FLOAT
+      - name: SUPPLY_KRW_PRICE
+        description: "공급 KRW 가격"
+        data_type: FLOAT
+      - name: FIXED_FEE_SALES_KRW_PRICE
+        description: "고정 수수료 판매 KRW 가격"
+        data_type: FLOAT
+      - name: TICKET_SALES_KRW_PRICE
+        description: "티켓 판매 KRW 가격"
+        data_type: FLOAT
+      - name: SALES_KRW_PRICE
+        description: "판매 KRW 금액. KIND=2: SUM(refund_amount) 부호 반전, 분할환불 합산액"
+        data_type: FLOAT
+      - name: PAID_KRW_PRICE
+        description: "결제 KRW 가격"
+        data_type: FLOAT
+      - name: COUPON_KRW_PRICE
+        description: "쿠폰 KRW 가격"
+        data_type: FLOAT
+      - name: POINT_KRW_PRICE
+        description: "포인트 KRW 가격"
+        data_type: FLOAT
+      - name: MARGIN_PRICE
+        description: "마진 가격"
+        data_type: FLOAT
+      - name: COMMISSION_PRICE
+        description: "수수료 가격"
+        data_type: FLOAT
+      - name: MARGIN_KRW_PRICE
+        description: "마진 KRW 가격"
+        data_type: FLOAT
+      - name: COMMISSION_KRW_PRICE
+        description: "수수료 KRW 가격"
+        data_type: FLOAT
+      - name: MARGIN_RATE
+        description: "마진 비율"
+        data_type: INTEGER
+      - name: COMMISSION_RATE
+        description: "수수료 비율"
+        data_type: FLOAT
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "어린이 예약 인원 수"
+        data_type: INTEGER
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 예약 인원 수"
+        data_type: INTEGER
+      - name: RESVE_PRSNL_CNT
+        description: "총 예약 인원 수"
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+

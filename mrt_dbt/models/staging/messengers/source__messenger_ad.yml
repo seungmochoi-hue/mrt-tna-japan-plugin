@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: messengers
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: messenger_ad
+    identifier: DW_MRT_MESSENGERS_MESSENGER_AD
+    description: 메신저 광고. 마지막 적재일 2026-02-27.
+    columns:
+    - name: id
+      description: ID
+    - name: campaign_name
+      description: 캠페인 이름
+    - name: group_name
+      description: 그룹 이름
+    - name: content_name
+      description: Content 이름
+    - name: ad_date
+      description: Ad 일자
+    - name: web_url
+      description: Web URL
+    - name: deeplink
+      description: Deeplink
+    - name: partner_id
+      description: 파트너 ID
+    - name: cta_button_text
+      description: Cta button text
+    - name: image_url
+      description: 이미지 URL
+    - name: messages
+      description: Messages
+    - name: created_at
+      description: 생성일시
+    - name: updated_at
+      description: 수정일시
+    - name: deleted
+      description: 삭제 여부
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

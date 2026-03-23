@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: MART_MKT_BRAZE_EMAIL_RESULT
+    description: "MART_MKT_BRAZE_EMAIL_RESULT"
+    config:
+      tags: ["BRAZE"]
+

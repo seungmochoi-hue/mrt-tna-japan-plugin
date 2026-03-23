@@ -1,0 +1,30 @@
+version: 2
+sources:
+- name: orders
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: estimate_reservation_mapping
+    identifier: DW_MRT_ORDERS_ESTIMATE_RESERVATION_MAPPING
+    description: 견적 예약 매핑.
+    columns:
+    - name: id
+      description: ID
+    - name: estimate_proposal_id
+      description: 견적 proposal ID
+    - name: mapping_reservation_id
+      description: 매핑 예약 ID
+    - name: mapping_option_reservation_id
+      description: 매핑 옵션 예약 ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: dw_load_dt
+      description: DW 적재 일시

@@ -1,0 +1,59 @@
+version: 2
+sources:
+- name: settles
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: etc_adjustments
+    identifier: DW_MRT_SETTLEMENTS_ETC_ADJUSTMENTS
+    description: 정산 기타조정 원천. 하위 모델 MART_FPNA_ETC_ADJUSTMENT_D에서 사용함. 주요 타입값 ETC_COMMISSION_DEDUCTION/TRAVELER_COMPENSATION_ADDITION_BY_MRT_REBATE
+      확인.
+    columns:
+    - name: id
+      description: 기타조정 ID
+    - name: settlement_id
+      description: 파트너 정산 id
+    - name: ups_id
+      description: GID(UPS ID)
+    - name: product_no
+      description: 상품 NO
+    - name: product_title
+      description: 상품명
+    - name: partner_id
+      description: 파트너 ID
+    - name: partner_name
+      description: 파트너명
+    - name: adjustment_type
+      description: 조정 유형
+    - name: division_type
+      description: 조정 구분, 가산, 차감
+    - name: adjustment_amount
+      description: 조정 금액
+    - name: adjustment_commission
+      description: 조정 수수료(원화)
+    - name: reason
+      description: 조정 사유
+    - name: payment_due_date
+      description: 지급예정일
+    - name: created_at
+      description: 생성일
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시(소프트삭제)
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: adjustment_date
+      description: 조정일
+    - name: currency_type
+      description: 통화
+    - name: currency_exchange_rate
+      description: 환율
+    - name: adjustment_currency_exchange_amount
+      description: 외화 조정 금액
+    - name: adjustment_currency_exchange_commission
+      description: 외화 조정 수수료

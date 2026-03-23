@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: coupon
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: coupon_accommodation_war_user
+    identifier: DW_MRT_COUPONS_COUPON_ACCOMMODATION_WAR_USER
+    description: 숙소 쿠폰 WAR 사용자. 마지막 적재일 2026-03-16.
+    columns:
+    - name: id
+      description: ID
+    - name: user_id
+      description: 사용자 ID
+    - name: ci
+      description: Ci
+    - name: birth_year
+      description: Birth year
+    - name: gender
+      description: Gender
+    - name: termsT1Yn
+      description: TermsT1Yn
+    - name: termsT2Yn
+      description: TermsT2Yn
+    - name: residenceCode1
+      description: ResidenceCode1
+    - name: residenceCode2
+      description: ResidenceCode2
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

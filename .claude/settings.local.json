@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": [
+    "gsheets"
+  ],
+  "enableAllProjectMcpServers": true
+}

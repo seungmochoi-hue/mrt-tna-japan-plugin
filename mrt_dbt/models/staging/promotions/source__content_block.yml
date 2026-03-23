@@ -1,0 +1,56 @@
+version: 2
+sources:
+- name: promotions
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: content_block
+    identifier: DW_MRT_PROMOTIONS_CONTENT_BLOCK
+    description: 콘텐츠 블록. 주요 타입값 MAIN_HEADER 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: code
+      description: 코드
+    - name: name
+      description: 이름
+    - name: content_block_type
+      description: Content 블록 타입
+    - name: title
+      description: 제목
+    - name: sub_title
+      description: Sub 제목
+    - name: image_url
+      description: 이미지 URL
+    - name: is_time_deal_block
+      description: Is 시간 deal 블록
+    - name: time_deal_start_at
+      description: 시간 deal 시작 at
+    - name: time_deal_end_at
+      description: 시간 deal 종료 at
+    - name: display_start_at
+      description: 노출 시작 at
+    - name: display_end_at
+      description: 노출 종료 at
+    - name: display_order
+      description: 노출 주문
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: system_provider
+      description: System 제공자
+    - name: target_type
+      description: Target 타입
+    - name: category_filter
+      description: 카테고리 filter
+    - name: display_tag
+      description: 노출 tag

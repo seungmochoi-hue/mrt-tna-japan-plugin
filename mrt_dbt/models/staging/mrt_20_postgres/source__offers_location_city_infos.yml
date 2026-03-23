@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: "mrt_20"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "offers_location_city_infos"
+        identifier: "DW_MRT_SERVICE_OFFERS_LOCATION_CITY_INFOS"
+        description: "MRT 2.0 상품-도시 매핑"
+        columns:
+          - name: "offer_id"
+            description: "Offer ID"
+          - name: "city_info_id"
+            description: "City Info ID"
+          - name: "is_representative"
+            description: "Is Representative"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

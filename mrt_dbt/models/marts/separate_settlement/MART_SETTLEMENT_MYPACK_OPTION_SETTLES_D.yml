@@ -1,0 +1,175 @@
+version: 2
+
+models:
+  - name: MART_SETTLEMENT_MYPACK_OPTION_SETTLES_D
+    description: >
+      마이팩 옵션 판매 마트
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자"
+        data_type: DATE
+      - name: TYPE
+        description: "조회 기준"
+        data_type: STRING
+      - name: VIEW_TYPE
+        description: "조회 구분"
+        data_type: STRING
+      - name: OPTION_TYPE
+        description: "구성 상품 유형"
+        data_type: STRING
+      - name: CLOSING_TYPE
+        description: "마감유형"
+        data_type: STRING
+      - name: ORDER_ID
+        description: "주문 ID"
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: INTEGER
+      - name: ORDER_GROUP_NO
+        description: "주문 그룹 번호"
+        data_type: STRING
+      - name: MYPACK_PARTNER_ID
+        description: "마이팩 파트너 ID"
+        data_type: STRING
+      - name: PARTNER_ID
+        description: "원예약 파트너 ID"
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: MYPACK_RESERVATION_ID
+        description: "마이팩 예약 ID"
+        data_type: STRING
+      - name: MYPACK_RESERVATION_NO
+        description: "마이팩 예약 번호"
+        data_type: STRING
+      - name: MYPACK_OPTION_RESERVATION_ID
+        description: "마이팩 옵션 예약 ID"
+        data_type: STRING
+      - name: RESERVATION_ID
+        description: "예약 ID"
+        data_type: STRING
+      - name: RESERVATION_NO
+        description: "예약 번호"
+        data_type: INTEGER
+      - name: RESERVATION_REFUND_ID
+        description: "예약 환불 ID"
+        data_type: STRING
+      - name: OPTION_RESERVATION_ID
+        description: "옵션 예약 ID"
+        data_type: STRING
+      - name: OPTION_RESERVATION_REFUND_ID
+        description: "옵션 환불 ID"
+        data_type: STRING
+      - name: ORIGINAL_RESERVATION_STATUS
+        description: "원 예약 상태"
+        data_type: STRING
+      - name: OPTION_ID
+        description: "상품 옵션 ID"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품 명"
+        data_type: STRING
+      - name: SETTLEMENT_TYPE
+        description: "정산 타입"
+        data_type: STRING
+      - name: SALE_TYPE
+        description: "매출 타입"
+        data_type: STRING
+      - name: SYSTEM_PROVIDER
+        description: "버티컬"
+        data_type: STRING
+      - name: ACCOUNTING_PROJECT_CD
+        description: "회계 프로젝트 코드"
+        data_type: STRING
+      - name: STATUS
+        description: "여행 상태값"
+        data_type: STRING
+      - name: SALE_PRICE
+        description: "판매 금액"
+        data_type: INTEGER
+      - name: SUPPLY_PRICE
+        description: "공급가"
+        data_type: INTEGER
+      - name: PRODUCT_PRICE
+        description: "주문 금액 상품가"
+        data_type: INTEGER
+      - name: PG_AMOUNT
+        description: "PG 결제 금액"
+        data_type: INTEGER
+      - name: AFFILIATE_INSTANT_DISCOUNT_AMOUNT
+        description: "즉시 할인 카드사"
+        data_type: INTEGER
+      - name: MRT_INSTANT_DISCOUNT_AMOUNT
+        description: "즉시 할인 마리트"
+        data_type: INTEGER
+      - name: MRT_COUPON_DISCOUNT_AMOUNT
+        description: "마리트 부담 쿠폰"
+        data_type: INTEGER
+      - name: PARTNER_COUPON_DISCOUNT_AMOUNT
+        description: "파트너 부담 쿠폰"
+        data_type: INTEGER
+      - name: PAID_POINT_PAYMENT_PRICE
+        description: "유료 포인트 결제 금액"
+        data_type: INTEGER
+      - name: FREE_POINT_AMOUNT
+        description: "무료 포인트 결제 금액"
+        data_type: INTEGER
+      - name: SALE_COMMISSION_RATE
+        description: "수수료율"
+        data_type: FLOAT
+      - name: SALE_COMMISSION
+        description: "판매 수수료"
+        data_type: INTEGER
+      - name: MRT_CANCEL_COMMISSION
+        description: "마리트 취소 수수료"
+        data_type: INTEGER
+      - name: PARTNER_CANCEL_COMMISSION
+        description: "파트너 취소 수수료"
+        data_type: INTEGER
+      - name: PARTNER_SETTLE_MAYMENT
+        description: "파트너 정산 대금"
+        data_type: INTEGER
+      - name: COMMISSION_SETTLE_TYPE
+        description: "대금 정산 방법 상계 캐쉬백"
+        data_type: STRING
+      - name: PAYMENT_TYPE
+        description: "지급 방법"
+        data_type: STRING
+      - name: TRIP_STARTED_AT
+        description: "여행 시작일"
+        data_type: TIMESTAMP
+      - name: TRIP_STARTED_AT_KST
+        description: "여행 시작일 (KST)"
+        data_type: TIMESTAMP
+      - name: TRIP_ENDED_AT
+        description: "여행 종료일"
+        data_type: TIMESTAMP
+      - name: TRIP_ENDED_AT_KST
+        description: "여행 종료일 (KST) "
+        data_type: TIMESTAMP
+      - name: SETTLED_AT_KST
+        description: "정산 기준일"
+        data_type: TIMESTAMP
+      - name: FINISHED_AT_KST
+        description: "마감일"
+        data_type: TIMESTAMP
+      - name: CANCELED_AT_KST
+        description: "취소일"
+        data_type: TIMESTAMP
+      - name: PAYMENT_DUE_DATE
+        description: "지급 예정 일"
+        data_type: DATE
+      - name: SLIP_NO
+        description: "전표 번호"
+        data_type: INTEGER
+      - name: PAYMENT_PRODUCT_CLOSING_ID
+        description: "결제 상품 마감 ID"
+        data_type: STRING
+      - name: CREATED_AT_KST
+        description: "생성 시간"
+        data_type: TIMESTAMP
+      - name: UPDATED_AT_KST
+        description: "수정 시간"
+        data_type: TIMESTAMP

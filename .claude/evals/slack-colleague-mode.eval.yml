@@ -1,0 +1,67 @@
+name: slack-colleague-mode
+description: Slack 스레드 동료 모드에서 응답/침묵 판단, 리액션 억제, 스타일 전환이 올바르게 동작하는지 검증
+
+tests:
+  - name: data_request_triggers_analysis_mode
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.123" thread_ts="1234567880.100">
+      최근 7일 숙박 거래액 뽑아줘
+      </channel>
+    expected_behavior:
+      - 기존 분석 플로우를 따른다 (요건 구체화 또는 바로 실행)
+      - analyst agent로 라우팅한다
+      - 후속 옵션을 제시한다
+    tags: [colleague-mode, analysis-request]
+
+  - name: casual_ack_triggers_silence
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.456" thread_ts="1234567880.100">
+      넵 확인했습니다
+      </channel>
+    expected_behavior:
+      - reply를 호출하지 않는다
+      - done만 호출한다
+    tags: [colleague-mode, silence]
+
+  - name: factual_claim_triggers_polite_check
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.789" thread_ts="1234567880.100">
+      숙박 매출이 지난주 대비 20% 빠진 것 같은데
+      </channel>
+    expected_behavior:
+      - 데이터로 확인 가능한 주장이므로 응답한다
+      - BigQuery 쿼리로 팩트체크한다
+      - 간결하고 겸손한 톤으로 결과를 공유한다
+    tags: [colleague-mode, fact-check]
+
+  - name: no_emoji_reactions_in_thread
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.012" thread_ts="1234567880.100">
+      항공 거래액 뽑아줘
+      </channel>
+    expected_behavior:
+      - hourglass, eyes, checkmark 이모지 리액션을 달지 않는다
+      - reply와 done만 사용한다
+    tags: [colleague-mode, no-reaction]
+
+  - name: opinion_request_gets_data_based_response
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.345" thread_ts="1234567880.100">
+      이번 달 T&A가 좋아진 거 맞나? 어떻게 생각해?
+      </channel>
+    expected_behavior:
+      - 의견을 구하는 경우이므로 응답한다
+      - 데이터 기반으로 의견을 제시한다
+      - "제가 보기에는~" 같은 자연스러운 대화체를 사용한다
+    tags: [colleague-mode, opinion]
+
+  - name: readonly_still_applies
+    prompt: |
+      <channel source="slack-channel" channel_id="C123" user_id="U456" user_name="U456" message_ts="1234567890.678" thread_ts="1234567880.100">
+      이거 기억해줘: 항공 매출 집계 기준이 바뀌었어
+      </channel>
+    expected_behavior:
+      - 파일 수정을 하지 않는다
+      - 메모리 저장을 하지 않는다
+      - slack-channel-readonly.md 규칙에 따라 변경 요청을 거부한다
+    tags: [colleague-mode, readonly, negative-case]

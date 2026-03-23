@@ -1,0 +1,116 @@
+name: slack-share-formatting
+description: slack-share skill의 메시지 포맷 규칙 준수 여부 검증
+
+tests:
+  - name: no_bold_in_message
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 채널 메시지 본문 초안만 보여줘.
+      분석 주제: 최근 7일 항공 거래액 분석
+      결과: 총 거래액 323.47억, 전주 대비 4.9% 증가, GDS 채널이 62% 차지
+    expected_output:
+      not_contains:
+        - "*"
+    tags: [formatting, no-bold]
+
+  - name: no_italic_formatting
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 채널 메시지 본문 초안만 보여줘.
+      분석 주제: 숙박 거래액 추이 분석
+      결과: 숙박 거래액 152.3억, 전주 대비 2.1% 감소
+    expected_output:
+      not_contains:
+        - "_분석_"
+        - "_추이_"
+        - "_감소_"
+    tags: [formatting, no-italic]
+
+  - name: backtick_for_table_names
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 채널 메시지 본문 초안만 보여줘.
+      분석 주제: MART_SALE_D에서 항공 거래액 조회
+      결과: 항공 거래액 89.2억
+    expected_output:
+      contains:
+        - "`MART_SALE_D`"
+    tags: [formatting, backtick]
+
+  - name: blockquote_for_section_title
+    prompt: |
+      아래 내용을 Slack 배포 공지 메시지로 작성해줘. 메시지 본문만 보여줘.
+      제목: v0.7.2 배포
+      기능1: 사내 지식 검색 추가 - Slack, Confluence, Jira에서 검색 가능
+      기능2: 거래액 질의 개선 - 거래액 요청 시 바로 조회
+    expected_output:
+      contains:
+        - ">"
+        - "•"
+      not_contains:
+        - "◦"
+    tags: [formatting, bullet-structure]
+
+  - name: no_nested_bullets
+    prompt: |
+      아래 내용을 Slack 메시지로 작성해줘. 메시지 본문만 보여줘.
+      주제: 데이터 Agent 업데이트
+      항목1: 검색 기능 - Slack 검색, Confluence 검색, Jira 검색 지원
+      항목2: 매출 질의 - 거래액은 바로 조회, 매출은 확인 질문
+    expected_output:
+      not_contains:
+        - "◦"
+        - "    •"
+    tags: [formatting, flat-bullets]
+
+  - name: underscore_table_protected
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 채널 메시지 본문 초안만 보여줘.
+      분석 주제: DW_MRT_PRODUCTS_PRODUCT_ACCOMMODATION_META 테이블 조회
+      결과: 총 12,345건의 숙박 상품 메타 데이터 확인
+    expected_output:
+      contains:
+        - "`DW_MRT_PRODUCTS_PRODUCT_ACCOMMODATION_META`"
+      not_contains:
+        - "_PRODUCTS_"
+        - "_ACCOMMODATION_"
+    tags: [formatting, underscore-protection]
+
+  - name: number_formatting_billions
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 채널 메시지 본문 초안만 보여줘.
+      분석 주제: 전체 거래액
+      결과: 총 거래액 32347000000원, 건수 1234567건
+    expected_output:
+      contains:
+        - "억"
+    tags: [formatting, number-format]
+
+  - name: code_block_for_query
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 사용한 쿼리도 포함해줘. 메시지 본문만 보여줘.
+      분석 주제: MART_SALE_D 항공 거래액
+      결과: 89.2억
+      쿼리: SELECT SUM(SALES_KRW_PRICE) FROM MART_SALE_D WHERE KIND = 1
+    expected_output:
+      contains:
+        - "```"
+    tags: [formatting, code-block]
+
+  - name: link_formatting
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. Google Sheets 링크도 포함해줘. 메시지 본문만 보여줘.
+      분석 주제: 항공 거래액
+      결과: 89.2억
+      시트 링크: https://docs.google.com/spreadsheets/d/abc123
+    expected_output:
+      contains:
+        - "https://docs.google.com/spreadsheets/d/abc123"
+    tags: [formatting, link]
+
+  - name: korean_polite_tone
+    prompt: |
+      아래 분석 결과를 Slack 메시지로 작성해줘. 메시지 본문만 보여줘.
+      분석 주제: 최근 7일 전체 거래액
+      결과: 323.47억, 전주 대비 4.9% 증가
+    expected_output:
+      contains:
+        - "요"
+    tags: [formatting, korean-tone]

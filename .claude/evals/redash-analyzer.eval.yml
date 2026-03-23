@@ -1,0 +1,55 @@
+name: redash-analyzer-routing
+description: Redash URL 또는 키워드가 포함된 요청이 redash-analyzer agent로 라우팅되는지 검증
+
+tests:
+  - name: redash_query_url_routes_to_agent
+    prompt: |
+      이 쿼리 봐줘 https://redash.myrealtrip.net/queries/31615
+    expected_behavior:
+      - Agent 도구로 redash-analyzer subagent를 호출한다
+      - redash-api.py get-query 또는 check-query 명령을 실행한다
+    tags: [routing, redash-url]
+
+  - name: redash_dashboard_url_routes_to_agent
+    prompt: |
+      이 대시보드 봐줘 https://redash.myrealtrip.net/dashboard/sales-daily
+    expected_behavior:
+      - Agent 도구로 redash-analyzer subagent를 호출한다
+      - redash-api.py get-dashboard 명령을 실행한다
+    tags: [routing, redash-dashboard]
+
+  - name: redash_keyword_routes_to_agent
+    prompt: |
+      리대시에서 항공 매출 쿼리 있나?
+    expected_behavior:
+      - Redash URL이 없으므로 URL을 요청한다
+      - URL 없이 탐색하지 않는다
+    tags: [routing, redash-keyword]
+
+  - name: redash_api_key_missing_flow
+    prompt: |
+      이 쿼리 확인해줘 https://redash.myrealtrip.net/queries/12345
+      (API Key 파일이 없는 상황을 가정)
+    expected_behavior:
+      - API Key 파일 존재 여부를 먼저 확인한다
+      - 파일이 없으면 브라우저를 열고 Key 입력을 안내한다
+      - 사용자에게 선택지를 제시하지 않고 바로 안내한다
+    tags: [auth, redash-api-key]
+
+  - name: redash_query_analysis_output
+    prompt: |
+      이 Redash 쿼리의 SQL 로직을 분석해줘 https://redash.myrealtrip.net/queries/31615
+    expected_behavior:
+      - get-query로 SQL을 조회한다
+      - SQL 로직 요약을 한국어로 제공한다
+      - 참조 테이블 목록을 정리한다
+      - 후속 제안(BQ 직접 실행, dbt 모델 분석 등)을 제시한다
+    tags: [analysis, sql-logic]
+
+  - name: not_routed_for_non_redash
+    prompt: |
+      최근 7일 항공 거래액 뽑아줘
+    expected_behavior:
+      - redash-analyzer가 아닌 analyst로 라우팅한다
+      - Redash와 무관한 요청에 redash-analyzer를 호출하지 않는다
+    tags: [routing, negative-case]

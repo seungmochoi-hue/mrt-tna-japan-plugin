@@ -1,0 +1,32 @@
+name: analyze-model-dbt
+description: dbt 모델 분석 시 SQL과 YAML 양쪽 모두 읽기, ref()/source()에서 lineage 추출 등 분석 절차 준수 여부 검증
+
+tests:
+  - name: sql_and_yaml_both_read
+    prompt: |
+      MART_SALE_D 모델의 로직을 분석해줘
+    expected_behavior:
+      - SQL 파일(.sql)과 YAML 파일(.yml/.yaml)을 모두 읽는다
+      - SQL만 읽고 YAML을 건너뛰지 않는다
+      - YAML만 읽고 SQL을 건너뛰지 않는다
+      - YAML에서 description, column description, meta, tests를 확인한다
+    tags: [dbt, sql-yaml-pair]
+
+  - name: lineage_from_ref_source
+    prompt: |
+      MART_SALE_D의 upstream/downstream 모델을 알려줘
+    expected_behavior:
+      - SQL 내 ref() 호출에서 upstream 모델명을 추출한다
+      - SQL 내 source() 호출에서 소스 테이블을 추출한다
+      - ASCII 다이어그램으로 lineage를 시각화한다 (Mermaid 사용 금지)
+    tags: [dbt, lineage, ref-source]
+
+  - name: cte_structure_analysis
+    prompt: |
+      MART_SALE_D의 CTE 구조와 핵심 로직을 설명해줘
+    expected_behavior:
+      - 각 CTE의 역할(staging, filtering, aggregation, join 등)을 정리한다
+      - config(materialized, partition_by, cluster_by)를 확인한다
+      - 핵심 로직(WHERE, CASE WHEN, 집계/윈도우 함수)을 설명한다
+      - 하드코딩된 값(매직 넘버, 하드코딩 날짜 등)이 있으면 기록한다
+    tags: [dbt, cte, logic-analysis]

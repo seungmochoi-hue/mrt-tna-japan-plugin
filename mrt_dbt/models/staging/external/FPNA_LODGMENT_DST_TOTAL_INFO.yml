@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: FPNA_LODGMENT_DST_TOTAL_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [DST] 2023 Main Tracker [DST_OKR_MONITORING_DST_TOTAL](https://docs.google.com/spreadsheets/d/1oA2cDUFK6-ZRvHnsuXV6NL8PCGI62lv-NWl0r1ZGc68/edit?gid=690282974#gid=690282974)
+    columns:
+      - name: PROMOTION_NO
+        description: "프로모션 번호"
+      - name: ACCOUNT_NAME
+        description: "계정 이름"
+      - name: OSP_ID
+        description: "OSP(온다) ID"
+      - name: OSP_NM
+        description: "OSP 이름"
+      - name: GID
+        description: "GID"
+      - name: SETTLE_TYPE
+        description: "정산 타입"
+      - name: MRT_TAKE_RATE
+        description: "MRT 수수료율"
+      - name: OPEN_DATE
+        description: "오픈 날짜"
+      - name: CLOSE_DATE
+        description: "종료 날짜"
+      - name: ACCOUNT_TYPE
+        description: "계정 타입"
+      - name: PROMOTION_TYPE
+        description: "프로모션 타입"
+      - name: DST_TEAM_TYPE
+        description: "DST(Direct Sales Team) 타입"
+      - name: DST_STATUS
+        description: "DST 상태"
+      - name: ROW_NO
+        description: "행 번호"
+

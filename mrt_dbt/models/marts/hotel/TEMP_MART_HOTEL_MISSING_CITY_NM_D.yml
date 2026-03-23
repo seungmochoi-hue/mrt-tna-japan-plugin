@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: TEMP_MART_HOTEL_MISSING_CITY_NM_D
+    description: "임시 호텔 도시 누락 데이터 self join 용"
+    config:
+      tags: ["TEMP"]
+    columns:
+      - name: AFFILIATE_NM
+        description: "제휴사 이름"
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 이름"
+        data_type: STRING
+      - name: SEND_SLACK_MESSAE_FLAG
+        description: "슬랙 메시지 전송 플래그"
+        data_type: STRING

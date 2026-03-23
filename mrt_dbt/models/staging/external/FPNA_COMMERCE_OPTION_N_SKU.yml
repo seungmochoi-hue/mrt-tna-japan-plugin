@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: FPNA_COMMERCE_OPTION_N_SKU
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      FP&A 재고수불부 자동화 시트 정리 [OPTION_AND_SKU](https://docs.google.com/spreadsheets/d/1ep-gH5pL_7b0JJjynnbKpyh0CRluqKPQI0MJzVM3MQo/edit?gid=974903277#gid=974903277)
+    columns:
+      - name: PRODUCT_ID
+        description: "상품 ID"
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+      - name: OPTION_ID
+        description: "옵션 ID"
+      - name: OPTION_TITLE
+        description: "옵션 제목"
+      - name: SKU_ID_1
+        description: "SKU ID 1"
+      - name: SKU_ID_2
+        description: "SKU ID 2"
+      - name: SKU_ID_3
+        description: "SKU ID 3"
+      - name: status
+        description: "상태"
+

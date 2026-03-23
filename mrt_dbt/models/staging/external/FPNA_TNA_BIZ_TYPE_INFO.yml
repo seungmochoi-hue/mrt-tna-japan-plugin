@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: FPNA_TNA_BIZ_TYPE_INFO
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [T&A BIZ_TYPE 구분](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=1821969121#gid=1821969121)
+    columns:
+      - name: PARTNER_ID
+        description: "파트너 ID"
+      - name: PARTNER_NM
+        description: "파트너 이름"
+      - name: BIZ_TYPE_PARTNER
+        description: "파트너 BIZ_TYPE"
+      - name: REMART_PARTNER
+        description: "파트너 비고"
+      - name: "NULL"
+        description: "NULL"
+      - name: PRODUCT_ID
+        description: "상품 ID"
+      - name: PRODUCT_NM
+        description: "상품 이름"
+      - name: BIZ_TYPE_PRODUCT
+        description: "상품 BIZ_TYPE"
+      - name: REMART_PRODUCT
+        description: "상품 비고"
+

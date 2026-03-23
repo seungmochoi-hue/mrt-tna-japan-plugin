@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "localstay"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "onda_supplier_mapping"
+        identifier: "DW_HOTEL_ONDA_SUPPLIER_MAPPING"
+        description: "ONDA 공급사 매핑"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "vendor_id"
+            description: "Vendor ID"
+          - name: "vendor_name"
+            description: "Vendor Name"
+          - name: "vendor_pid"
+            description: "Vendor Pid"
+          - name: "child_pid"
+            description: "Child Pid"
+          - name: "premise_id"
+            description: "Premise ID"
+          - name: "in_use"
+            description: "In Use"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"

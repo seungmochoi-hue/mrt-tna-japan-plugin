@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: MART_MYLINK_REFER_D
+    description: 파트너별 상품 유입 분석용 데이터 테이블입니다.
+    config:
+      tags: [ 'MYLINK', 'MART' ]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 날짜"
+        data_type: DATE
+      - name: PARTNER_ID
+        description: "파트너 ID"
+        data_type: STRING
+      - name: PARTNER_NM
+        description: "파트너 이름"
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: PRODUCT_NM
+        description: "상품 이름"
+        data_type: STRING
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: REFERER_URL
+        description: "유입 URL"
+        data_type: STRING
+      - name: PID_CNT
+        description: "유입된 PID 수"
+        data_type: INTEGER
+      - name: DW_LOAD_DT
+        description: "DW 로드 시간"
+        data_type: TIMESTAMP

@@ -1,0 +1,30 @@
+version: 2
+sources:
+- name: cartographer
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: trip_route_theme_poi_mapping
+    identifier: DW_MRT_CARTOGRAPHER_TRIP_ROUTE_THEME_POI_MAPPING
+    description: 여행경로 테마 POI 매핑. 마지막 적재일 2024-10-07. 최근 90일 기준 신규 적재 미확인.
+    columns:
+    - name: theme_id
+      description: 테마 ID
+    - name: poi_id
+      description: POI ID
+    - name: route_order
+      description: Route order
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시

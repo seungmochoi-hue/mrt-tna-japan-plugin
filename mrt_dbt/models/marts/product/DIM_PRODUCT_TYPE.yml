@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: DIM_PRODUCT_TYPE
+    description: |
+      상품 기준 상품 유형 분류 dimension.
+      MART_PRODUCT_ORIGINAL_D에서 GID + DOMAIN_NM 단위로 상품 유형을 분류한다.
+      MRT_TYPE은 classify_mrt_type 매크로로 산출한다.
+      downstream: DIM_PRODUCT_FPNA_TYPE.
+      BigQuery 물리 최적화: cluster(DOMAIN_NM)
+    columns:
+      - name: GID
+        description: "상품/파트너 범용 ID. ticket_rentalcar 파트너 비교 시에도 사용."
+        data_type: STRING
+        tests:
+          - not_null
+      - name: DOMAIN_NM
+        description: "도메인명. 2.0 PRODUCT, 3.0 PRODUCT 등."
+        data_type: STRING
+        tests:
+          - not_null
+      - name: MRT_TYPE
+        description: |
+          MRT 상품 유형 분류. classify_mrt_type 매크로 기반.
+          분류값: ticket_rentalcar, ticket_lodging, ticket_flight, tour, kids,
+          ticket, hotdeal, lodging, pension, rentalcar, hotel, insurance, flight, unclassified.
+          분류 우선순위: ticket_rentalcar > ticket_lodging > kids > ticket_flight > 2.0 ticket/hotdeal > 3.0 hotdeal > lodging > pension > 2.0 tour > rentalcar > hotel > 3.0 T&A > unclassified.
+          3.0 T&A fallback: offer_type IS NULL 시 STANDARD_CATEGORY_LV_2_CD 기반 tour/ticket 분류.
+          standard_category_lv_3_cd 전달 시 lodging/rentalcar 추가 분류 경로 적용.
+        data_type: STRING
+      - name: TEAM_DIVISION
+        description: |
+          팀 배분 분류값. classify_team_division 매크로 기반.
+          분류값: flight, insurance, bdka, accommodation, transport, new_biz, bdx, unclassified.
+          분류 우선순위: flight(domain_nm='AIR' 또는 partner_id=100525) > insurance > bdka > accommodation > transport > new_biz > bdx(domain_nm IN ('2.0 PRODUCT', '3.0 PRODUCT')) > unclassified.
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: DW_적재_일시
+        data_type: TIMESTAMP
+

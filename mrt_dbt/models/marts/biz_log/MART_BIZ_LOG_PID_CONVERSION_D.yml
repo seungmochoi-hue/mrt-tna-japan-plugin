@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: MART_BIZ_LOG_PID_CONVERSION_D
+    description: |
+      PID 기준 전환 퍼널(offer_detail → checkout → checkout_complete) 일별 집계.
+      BigQuery 물리 최적화: partition(BASIS_DATE, day, 기적용)
+    config:
+      tags: ["MART", "BIZ_LOG"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준일자"
+        data_type: DATE
+      - name: PID
+        description: "PID"
+        data_type: STRING
+      - name: USER_ID
+        description: "사용자 ID"
+        data_type: STRING
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: ITEM_ID
+        description: "상품/아이템 ID"
+        data_type: STRING
+      - name: REF_URL
+        description: "당일 PID 기준 첫 유입 ref_url"
+        data_type: STRING
+      - name: UTM_SOURCE
+        description: "UTM source(최근값 우선)"
+        data_type: STRING
+      - name: UTM_CAMPAIGN
+        description: "UTM campaign(최근값 우선)"
+        data_type: STRING
+      - name: UTM_MEDIUM
+        description: "UTM medium(최근값 우선)"
+        data_type: STRING
+      - name: UTM_CONTENT
+        description: "UTM content(최근값 우선)"
+        data_type: STRING
+      - name: N_AD
+        description: "네이버 광고 이름(최근값 우선)"
+        data_type: STRING
+      - name: N_CAMPAIGN_TYPE
+        description: "네이버 캠페인 타입(최근값 우선)"
+        data_type: STRING
+      - name: OFFER_DETAIL_REF_URL
+        description: "offer_detail 최초 진입 ref_url"
+        data_type: STRING
+      - name: OFFER_DETAIL_FLAG
+        description: "offer_detail 발생 여부(1/0)"
+        data_type: INT64
+      - name: OFFER_DETAIL_FIRST_ACCESS_DT
+        description: "offer_detail 최초 접근 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_FLAG
+        description: "checkout 발생 여부(1/0)"
+        data_type: INT64
+      - name: CHECKOUT_FIRST_ACCESS_DT
+        description: "checkout 최초 접근 시각"
+        data_type: TIMESTAMP
+      - name: WITH_EVENT_CHECKOUT_FLAG
+        description: "offer_detail 이후 checkout 발생 여부(1/0)"
+        data_type: INT64
+      - name: WITH_EVENT_CHECKOUT_FIRST_ACCESS_DT
+        description: "offer_detail 이후 checkout 최초 접근 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_FLAG
+        description: "checkout_complete 발생 여부(1/0)"
+        data_type: INT64
+      - name: CHECKOUT_COMPLETE_FIRST_ACCESS_DT
+        description: "checkout_complete 최초 접근 시각"
+        data_type: TIMESTAMP
+      - name: WITH_EVENT_CHECKOUT_COMPLETE_FLAG
+        description: "checkout 이후 checkout_complete 발생 여부(1/0)"
+        data_type: INT64
+      - name: WITH_EVENT_CHECKOUT_COMPLETE_FIRST_ACCESS_DT
+        description: "checkout 이후 checkout_complete 최초 접근 시각"
+        data_type: TIMESTAMP
+      - name: CHECKOUT_COMPLETE_RESVE_ID
+        description: "checkout_complete 시점 예약 ID"
+        data_type: STRING
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

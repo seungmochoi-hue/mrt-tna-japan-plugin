@@ -1,0 +1,90 @@
+version: 2
+
+models:
+  - name: DIM_USER_INFO
+    description: 유저 기본 정보 테이블
+    config:
+      tags: ["DIM", "USER"]
+    columns:
+      - name: USER_ID
+        description: 유저 아이디
+        data_type: STRING
+        data_tests:
+          - unique
+
+      - name: JOIN_KST_DT
+        description: 가입일
+        data_type: TIMESTAMP
+
+      - name: JOIN_PLATFORM
+        description: 가입시 기기 플랫폼
+        data_type: STRING
+
+      - name: JOIN_OAUTH_TYPE
+        description: 가입시 인증 플랫폼
+        data_type: STRING
+
+      - name: SMS_RECV_AGREE
+        description: SMS 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: PUSH_RECV_AGREE
+        description: PUSH 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: MAIL_RECV_AGREE
+        description: Mail 수신 동의 여부
+        data_type: BOOLEAN
+
+      - name: POSITION_ARGREEMENT_FLAG
+        description: 위치 정보 동의 여부
+        data_type: BOOLEAN
+
+      - name: PHONE_VALID_FLAG
+        description: 핸드폰 검증 여부
+        data_type: BOOLEAN
+
+      - name: DORMANT_FLAG
+        description: 휴면 여부
+        data_type: BOOLEAN
+
+      - name: DORMANT_KST_DT
+        description: 휴면 날짜
+        data_type: DATE
+
+      - name: LEAVE_FLAG
+        description: 탈퇴 여부
+        data_type: BOOLEAN
+
+      - name: LEAVE_KST_DT
+        description: 탈퇴 날짜
+        data_type: TIMESTAMP
+
+      - name: MRT_STAFF_FLAG
+        description: 마리트 직원 여부(메일이 @myrealtrip.com)
+        data_type: BOOLEAN
+
+      - name: TEST_FLAG
+        description: 테스트 계정 여부
+        data_type: BOOLEAN
+
+      - name: APP_INSTALL_FLAG
+        description: 앱 설치 여부
+        data_type: BOOLEAN
+
+      - name: GUIDE_FLAG
+        description: 파트너 여부
+        data_type: BOOLEAN
+
+      - name: STATUS
+        description: 유저 상태
+        data_type: STRING
+
+      - name: UPDATE_KST_DT
+        description: 데이터 변경 날짜
+        data_type: TIMESTAMP
+
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시(KST)"
+        data_type: DATETIME
+

@@ -1,0 +1,119 @@
+name: chart-builder-gcs-only
+description: chart-builder agent가 JavaScript 없이 순수 HTML/SVG로 대시보드를 생성하고, GCS에만 업로드하며, storage.googleapis.com URL을 사용하는지 검증
+
+tests:
+  - name: no_local_save_in_terminal
+    prompt: |
+      너는 chart-builder agent야. 아래 데이터로 대시보드를 만들고 저장/안내 방법을 설명해줘.
+      세션 환경: 터미널
+      데이터: 일별 거래액 7일치 (임의 데이터)
+      저장 및 안내 절차만 설명해줘. HTML 코드는 생략해.
+    expected_output:
+      contains:
+        - "gs://mrt-data-dashboards"
+        - "storage.googleapis.com"
+      not_contains:
+        - "Downloads"
+        - "~/Downloads"
+        - "$HOME/Downloads"
+        - "로컬 저장"
+        - "Downloads 폴더"
+        - "d3js.org"
+        - "D3.js"
+    tags: [gcs-only, no-local, no-js]
+
+  - name: no_local_save_in_slack
+    prompt: |
+      너는 chart-builder agent야. 아래 데이터로 대시보드를 만들고 저장/안내 방법을 설명해줘.
+      세션 환경: Slack 채널
+      데이터: 도메인별 거래액 비교 (임의 데이터)
+      저장 및 안내 절차만 설명해줘. HTML 코드는 생략해.
+    expected_output:
+      contains:
+        - "gs://mrt-data-dashboards"
+        - "storage.googleapis.com"
+      not_contains:
+        - "Downloads"
+        - "~/Downloads"
+        - "로컬 저장"
+        - "로컬에 저장"
+        - "로컬 경로"
+        - "d3js.org"
+    tags: [gcs-only, slack, no-local, no-js]
+
+  - name: no_javascript_dependency
+    prompt: |
+      너는 chart-builder agent야. 대시보드 HTML을 생성하는 기술 방식을 설명해줘.
+      어떤 기술 스택을 사용하는지, JavaScript 라이브러리를 쓰는지 설명해줘.
+    expected_output:
+      contains:
+        - "SVG"
+        - "Python"
+      not_contains:
+        - "D3.js"
+        - "d3.v7"
+        - "d3js.org"
+        - "<script src"
+        - "CDN"
+    tags: [no-js, static-svg]
+
+  - name: macos_terminal_uses_tmpdir_and_text_link_only
+    prompt: |
+      너는 chart-builder agent야. macOS 터미널 세션에서 대시보드를 GCS에 업로드한 뒤 안내 절차를 설명해줘.
+      GCS URL: https://storage.googleapis.com/mrt-data-dashboards/dashboards/20260322/test_dashboard.html
+      임시 파일 경로와 사용자에게 줄 안내 문구를 포함해줘.
+    expected_output:
+      contains:
+        - "${TMPDIR:-/tmp}"
+        - "https://storage.googleapis.com/mrt-data-dashboards/dashboards/20260322/test_dashboard.html"
+      not_contains:
+        - "Downloads"
+        - "open https://"
+        - "Start-Process"
+        - "xdg-open"
+        - "storage.cloud.google.com"
+    tags: [gcs-only, macos, text-link]
+
+  - name: windows_terminal_uses_env_temp_and_text_link_only
+    prompt: |
+      너는 chart-builder agent야. Windows PowerShell 터미널 세션에서 대시보드를 GCS에 업로드한 뒤 안내 절차를 설명해줘.
+      GCS URL: https://storage.googleapis.com/mrt-data-dashboards/dashboards/20260322/test_dashboard.html
+      임시 파일 경로와 사용자에게 줄 안내 문구를 포함해줘.
+    expected_output:
+      contains:
+        - "$env:TEMP"
+        - "https://storage.googleapis.com/mrt-data-dashboards/dashboards/20260322/test_dashboard.html"
+      not_contains:
+        - "Downloads"
+        - "${TMPDIR:-/tmp}"
+        - "xdg-open"
+        - "Start-Process"
+        - "open https://"
+        - "storage.cloud.google.com"
+    tags: [gcs-only, windows, text-link]
+
+  - name: public_acl_step
+    prompt: |
+      너는 chart-builder agent야. 대시보드 HTML을 생성하고 GCS에 업로드하는 절차를 설명해줘.
+      업로드 후 접근 권한 설정과 임시 파일 처리 방법도 포함해줘.
+    expected_output:
+      contains:
+        - "AllUsers"
+        - "삭제"
+      not_contains:
+        - "Downloads"
+        - "로컬 저장"
+        - "storage.cloud.google.com"
+    tags: [gcs-only, cleanup, public-acl]
+
+  - name: gcs_url_format
+    prompt: |
+      너는 chart-builder agent야. 2026년 3월 22일에 숙박 거래액 대시보드를 만들었어.
+      파일명은 accommodation_gmv_20260322_dashboard.html이야.
+      GCS 공유 링크를 알려줘.
+    expected_output:
+      contains:
+        - "https://storage.googleapis.com/mrt-data-dashboards/dashboards/20260322/accommodation_gmv_20260322_dashboard.html"
+      not_contains:
+        - "storage.cloud.google.com"
+    tags: [gcs-only, url-format]

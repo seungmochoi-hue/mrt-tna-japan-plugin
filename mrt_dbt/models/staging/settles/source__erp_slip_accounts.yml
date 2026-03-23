@@ -1,0 +1,136 @@
+version: 2
+
+sources:
+  - name: settles
+    database: mrtdata
+    schema: edw
+    tables:
+      - name: erp_slip_accounts
+        identifier: DW_MRT_SETTLES_ERP_SLIP_ACCOUNTS
+        description: |
+          전표 계정 상세 원천. 전표의 계정과목/금액 상세를 제공하며, 파트너 정산 원예약 대체 금액 쿼리에서 계정 단위 금액 대사에 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: created_by
+            description: "생성자"
+          - name: deleted_at
+            description: "삭제일"
+          - name: updated_at
+            description: "수정일"
+          - name: updated_by
+            description: "수정자"
+          - name: slip_account_status
+            description: "전표 계정 상태"
+          - name: slip_id
+            description: "전표 마스터 ID"
+          - name: slip_type
+            description: "전표 구분"
+          - name: debit_amount
+            description: "차변 금액"
+          - name: credit_amount
+            description: "대변 금액"
+          - name: COMPANY_CD
+            description: "회사코드"
+          - name: PC_CD
+            description: "회계단위코드"
+          - name: DOCU_NO
+            description: "전표번호"
+          - name: DOLINE_SQ
+            description: "전표라인순번"
+          - name: DRCRFG_CD
+            description: "차대구분코드"
+          - name: ACCT_CD
+            description: "계정코드"
+          - name: NOTE_DC
+            description: "적요내역"
+          - name: DOCU_AMT
+            description: "전표금액"
+          - name: DOCU_AMT2
+            description: "전표외화금액"
+          - name: EXCH_CD
+            description: "통화"
+          - name: EXRT_RT
+            description: "환율"
+          - name: PARTNER_CD
+            description: "거래처코드"
+          - name: PARTNER_NM
+            description: "거래처명"
+          - name: CC_CD
+            description: "비용센터코드"
+          - name: CC_NM
+            description: "비용센터명"
+          - name: PJT_CD
+            description: "프로젝트코드"
+          - name: PJT_NM
+            description: "프로젝트명"
+          - name: RELATION1_CD
+            description: "연동항목1코드"
+          - name: RELATION2_CD
+            description: "연동항목2코드"
+          - name: RELATION3_CD
+            description: "연동항목3코드"
+          - name: RELATION4_CD
+            description: "연동항목4코드"
+          - name: RELATION5_CD
+            description: "연동항목5코드"
+          - name: RELATION6_CD
+            description: "연동항목6코드"
+          - name: RELATION7_CD
+            description: "연동항목7코드"
+          - name: RELATION8_CD
+            description: "연동항목8코드"
+          - name: RELATION1_MNDR_YN
+            description: "연동항목1필수여부"
+          - name: RELATION2_MNDR_YN
+            description: "연동항목2필수여부"
+          - name: RELATION3_MNDR_YN
+            description: "연동항목3필수여부"
+          - name: RELATION4_MNDR_YN
+            description: "연동항목4필수여부"
+          - name: RELATION5_MNDR_YN
+            description: "연동항목5필수여부"
+          - name: RELATION6_MNDR_YN
+            description: "연동항목6필수여부"
+          - name: RELATION7_MNDR_YN
+            description: "연동항목7필수여부"
+          - name: RELATION8_MNDR_YN
+            description: "연동항목8필수여부"
+          - name: RELATION1_INSR_YN
+            description: "연동항목1입력여부"
+          - name: RELATION2_INSR_YN
+            description: "연동항목2입력여부"
+          - name: RELATION3_INSR_YN
+            description: "연동항목3입력여부"
+          - name: RELATION4_INSR_YN
+            description: "연동항목4입력여부"
+          - name: RELATION5_INSR_YN
+            description: "연동항목5입력여부"
+          - name: RELATION6_INSR_YN
+            description: "연동항목6입력여부"
+          - name: RELATION7_INSR_YN
+            description: "연동항목7입력여부"
+          - name: RELATION8_INSR_YN
+            description: "연동항목8입력여부"
+          - name: BUDGET_MNDR_YN
+            description: "예산필수여부"
+          - name: BG_CD
+            description: "예산코드"
+          - name: BIZPLAN_CD
+            description: "사업계획코드"
+          - name: BGACCT_CD
+            description: "예산계정코드"
+          - name: DEPT_CD
+            description: "부서코드"
+          - name: INSERT_ID
+            description: "등록ID"
+          - name: UPDATE_ID
+            description: "수정ID"
+          - name: STD_DT
+            description: "기준일"
+          - name: NO_SQ
+            description: "번호순번"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

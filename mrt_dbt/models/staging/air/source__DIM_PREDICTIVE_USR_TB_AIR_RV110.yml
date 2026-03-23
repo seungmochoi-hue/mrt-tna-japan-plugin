@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: "air"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "DIM_PREDICTIVE_USR_TB_AIR_RV110"
+        identifier: "DIM_PREDICTIVE_USR_TB_AIR_RV110"
+        description: "TB_AIR_RV110 중 일부 데이터 활용"
+        columns:
+          - name: "PNR_SEQNO"
+            description: "PNR 일련번호"
+          - name: "PAX_NO"
+            description: "탑승객 번호"
+          - name: "REG_USR_ID"
+            description: "등록 사용자 ID"
+          - name: "PAX_SEX"
+            description: "탑승객 성별"
+          - name: "PAX_BIRTH_YEAR"
+            description: "탑승객 생년월일"
+          - name: "REG_DTM"
+            description: "등록 일시"
+          - name: "UPD_DTM"
+            description: "수정 일시"
+          - name: "DW_LOAD_DT"
+            description: "DW LOAD Date"

@@ -1,0 +1,42 @@
+version: 2
+sources:
+- name: unionstay
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: property_b2b_info
+    identifier: DW_MRT_STAY_PROPERTY_B2B_INFO
+    description: 숙소 B2B 정보. 마지막 적재일 2026-03-11.
+    columns:
+    - name: id
+      description: ID
+    - name: gid
+      description: GID
+    - name: applicable
+      description: Applicable
+    - name: affiliate_type
+      description: Affiliate 타입
+    - name: sale_begin_at
+      description: Sale begin at
+    - name: sale_end_at
+      description: Sale end at
+    - name: checkin_from
+      description: Checkin from
+    - name: checkin_to
+      description: Checkin to
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: dw_load_dt
+      description: DW 적재 일시
+    - name: affiliate_types
+      description: Affiliate types

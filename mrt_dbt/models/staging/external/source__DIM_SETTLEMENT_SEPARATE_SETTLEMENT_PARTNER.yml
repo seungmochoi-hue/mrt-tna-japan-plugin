@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: "external_settlement"
+    database: "mrtdata"
+    schema: "settlement"
+    description: "외부데이터 ( 스프레드시트 등 )"
+    tables:
+      - name: "DIM_SETTLEMENT_SEPARATE_SETTLEMENT_PARTNER"
+        identifier: "DIM_SETTLEMENT_SEPARATE_SETTLEMENT_PARTNER"
+        description: "외부 정산 파트너 분리 기준 매핑 테이블"
+        columns:
+          - name: "GUIDE_ID"
+            description: "가이드 ID"
+          - name: "PARTNER_NAME"
+            description: "파트너 이름"
+          - name: "ISTANBUL_KEY_FIELD_NAME"
+            description: "Istanbul key field 이름"
+          - name: "ISTANBUL_REG_EXP"
+            description: "Istanbul 정규식"
+          - name: "PARTNER_DATA_LEVEL"
+            description: "파트너 데이터 레벨"
+          - name: "CREATE_DT"
+            description: "생성 일자"

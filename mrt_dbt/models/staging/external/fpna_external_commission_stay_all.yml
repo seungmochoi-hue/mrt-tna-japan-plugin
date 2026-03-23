@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fpna_external_commission_stay_all
+    config:
+      meta:
+        owner: "FPNA"
+    description: >
+      [손익DB] 버티컬 별 손익 관리시트 [숙박](https://docs.google.com/spreadsheets/d/1-MB8WaYrk11Mqc_CWw_iK9JyGYza_58zStuxLERPw50/edit?gid=878441994#gid=878441994)
+    columns:
+      - name: mrt_type
+        description: "마리트 타입"
+      - name: gid
+        description: "GID"
+      - name: prodict_title
+        description: "상품 제목"
+      - name: commission_rate
+        description: "커미션 비율"
+      - name: remark
+        description: "비고"
+

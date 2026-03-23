@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: "external_business"
+    database: "mrtdata"
+    schema: "business"
+    description: "외부데이터 ( 스프레드 시트 등 )"
+    tables:
+      - name: "FPNA_REGION_TNA_MAPPING"
+        identifier: "FPNA_REGION_TNA_MAPPING"
+        description: "FPNA 팀 실적 분류용 Region 매핑 - T&A 팀 기준 REGION_TNA_NM (스프레드시트 관리)"
+        columns:
+          - name: "CITY_NM"
+            description: "도시명 (조인 키)"
+          - name: "COUNTRY_NM"
+            description: "국가명 (조인 키)"
+          - name: "REGION_NM"
+            description: "전사 Region (조인 키)"
+          - name: "REGION_TNA_NM"
+            description: "T&A 팀 기준 Region (결과값)"

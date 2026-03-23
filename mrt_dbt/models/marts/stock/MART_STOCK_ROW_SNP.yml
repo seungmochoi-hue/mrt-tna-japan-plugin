@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: MART_STOCK_ROW_SNP
+    description: "옵션별 재고 기록 테이블"
+    config:
+      tags: ["STOCK", "MART"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준_일자"
+        data_type: DATE
+
+      - name: RECORD_ID
+        description: "레코드_아이디"
+        data_type: INTEGER
+
+      - name: PRODUCT_ID
+        description: "상품_아이디"
+        data_type: STRING
+
+      - name: OPTION_ID
+        description: "옵션_아이디"
+        data_type: STRING
+
+      - name: OPTION_NM
+        description: "옵션_이름"
+        data_type: STRING
+
+      - name: RECORD_RECENT_STATUS
+        description: "레코드_최근_상태"
+        data_type: STRING
+
+      - name: VOUCHER_TYPE
+        description: "바우처_유형"
+        data_type: STRING
+
+      - name: STOCK_UNIT_PRICE
+        description: "재고_단가"
+        data_type: FLOAT
+
+      - name: DW_LOAD_DT
+        description: "DW_적재_일시"
+        data_type: TIMESTAMP
+
+

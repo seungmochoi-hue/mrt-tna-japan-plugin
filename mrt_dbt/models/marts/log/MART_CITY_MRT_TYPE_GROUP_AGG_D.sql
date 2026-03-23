@@ -1,0 +1,93 @@
+{{
+    config(
+        materialized = 'incremental',
+        incremental_strategy = 'insert_overwrite',
+        schema='batch',
+        alias='MART_CITY_MRT_TYPE_GROUP_AGG_D',
+        partition_by={
+            'field': 'BASIS_DT',
+            'data_type': 'date',
+            'granularity': 'day',
+            'copy_partitions': true
+        }
+    )
+}}
+
+SELECT
+    T.BASIS_DT AS BASIS_DT
+    , T.COUNTRY_NM AS COUNTRY_NM
+    , T.CITY_NM AS CITY_NM
+    , T.MRT_TYPE_GROUP AS MRT_TYPE_GROUP
+    , MAX(T.TOTAL_RESERVATION_CNT) AS TOTAL_RESERVATION_CNT
+    , MAX(T.TOTAL_RESERVATION_USER_CNT) AS TOTAL_RESERVATION_USER_CNT
+    , MAX(T.TOTAL_SALE_PRICE) AS TOTAL_SALE_PRICE
+    , MAX(T.OFFER_IMPRESSION_CNT) AS OFFER_IMPRESSION_CNT
+    , MAX(T.OFFER_CLICK_CNT) AS OFFER_CLICK_CNT
+    , SAFE_DIVIDE(MAX(OFFER_CLICK_CNT), MAX(OFFER_IMPRESSION_CNT)) * 100 AS OFFER_CLICK_RT
+    , MAX(OFFER_DETAIL_UV) AS OFFER_DETAIL_UV
+    , SAFE_DIVIDE(MAX(CHECKOUT_UV), MAX(OFFER_DETAIL_UV)) * 100 AS OFFER_TO_CHECKOUT_RT
+    , MAX(CHECKOUT_UV) AS CHECKOUT_UV
+    , SAFE_DIVIDE(MAX(CHECKOUT_COMPLETE_UV), MAX(CHECKOUT_UV)) * 100 AS CHECKOUT_TO_COMPLETE_RT
+    , MAX(CHECKOUT_COMPLETE_UV) AS CHECKOUT_COMPLETE_UV
+    , MAX(VIEW_ITEM_CNT) AS VIEW_ITEM_CNT
+    , SAFE_DIVIDE(MAX(VIEW_ITEM_CNT), MAX(OFFER_DETAIL_UV)) AS AVG_VIEW_ITEM_CNT
+    , DATETIME_ADD(CURRENT_TIMESTAMP(), INTERVAL 9 HOUR) AS DW_LOAD_DT
+FROM (
+         -- 예약
+         SELECT
+             S.BASIS_DATE AS BASIS_DT
+             , MP.COUNTRY_NM AS COUNTRY_NM
+             , MP.CITY_NM AS CITY_NM
+             , CASE
+                  WHEN MP.MRT_TYPE IN ('tour', 'ticket') THEN 'TNA'
+                  WHEN MP.MRT_TYPE IN ('hotel', 'pension', 'lodging', 'ticket_lodging') THEN 'STAY'
+                  WHEN MP.MRT_TYPE IN ('rentalcar', 'ticket_rentalcar') THEN 'RIDE'
+                  ELSE 'ETC'
+                  END AS MRT_TYPE_GROUP
+             , COUNT(DISTINCT S.RESVE_ID) AS TOTAL_RESERVATION_CNT
+             , COUNT(DISTINCT S.USER_ID) AS TOTAL_RESERVATION_USER_CNT
+             , CAST(SUM(S.SALES_KRW_PRICE) AS BIGINT) AS TOTAL_SALE_PRICE
+             , NULL AS OFFER_IMPRESSION_CNT
+             , NULL AS OFFER_CLICK_CNT
+             , NULL AS OFFER_DETAIL_UV
+             , NULL AS CHECKOUT_UV
+             , NULL AS CHECKOUT_COMPLETE_UV
+             , NULL AS VIEW_ITEM_CNT
+         FROM {{ ref('MART_SALE_D') }} S
+         LEFT JOIN {{ source("products", "products") }} AS P
+                   ON S.PRODUCT_ID = CONCAT('BNB', P.ID)
+                       AND S.DOMAIN_NM = '3.0 PRODUCT'
+                       AND S.CATEGORY_NM = 'LODGING'
+         LEFT JOIN {{ source ('mrt_mart_view', 'MART_PRODUCT_D') }} AS MP
+                   ON COALESCE(S.GID, P.UNION_PRODUCT_ID) = MP.GID
+         WHERE KIND = 1
+           AND S.DOMAIN_NM NOT IN ('AIR', 'HOTEL', 'INSURANCE')
+           AND BASIS_DATE = '{{ var("logical_start_date_kst") }}'
+GROUP BY 1, 2, 3, 4
+
+UNION ALL
+
+-- 로그
+SELECT
+    L.BASIS_DT AS BASIS_DT
+    , L.COUNTRY_NM AS COUNTRY_NM
+    , L.CITY_NM AS CITY_NM
+    , L.MRT_TYPE_GROUP AS MRT_TYPE_GROUP
+    , NULL AS TOTAL_RESERVATION_CNT
+    , NULL AS TOTAL_RESERVATION_USER_CNT
+    , NULL AS TOTAL_SALE_PRICE
+    , SUM(CASE WHEN PLATFORM NOT IN ('ios') THEN L.OFFER_IMPRESSION_CNT END) AS OFFER_IMPRESSION_CNT
+    , SUM(CASE WHEN PLATFORM NOT IN ('ios') THEN L.OFFER_CLICK_CNT END) AS OFFER_CLICK_CNT
+    , SUM(L.OFFER_DETAIL_UV) AS OFFER_DETAIL_UV
+    , SUM(L.CHECKOUT_UV) AS CHECKOUT_UV
+    , SUM(L.CHECKOUT_COMPLETE_UV) AS CHECKOUT_COMPLETE_UV
+    , SUM(L.VIEW_ITEM_CNT) AS VIEW_ITEM_CNT
+FROM {{ ref('MART_CITY_MRT_TYPE_GROUP_LOG_D') }} L
+WHERE L.BASIS_DT = '{{ var("logical_start_date_kst") }}'
+GROUP BY 1, 2, 3, 4
+    ) T
+GROUP BY
+    T.BASIS_DT,
+    T.COUNTRY_NM,
+    T.CITY_NM,
+    T.MRT_TYPE_GROUP

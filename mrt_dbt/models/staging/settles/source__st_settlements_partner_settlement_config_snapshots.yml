@@ -1,0 +1,84 @@
+version: 2
+
+sources:
+  - name: settles_st
+    database: mrtdata
+    schema: edw_st
+    tables:
+      - name: st_settlements_partner_settlement_config_snapshots
+        identifier: ST_MRT_SETTLEMENTS_PARTNER_SETTLEMENT_CONFIG_SNAPSHOTS
+        description: |
+          정산 도메인 스테이징 파트너 정산 설정 스냅샷 테이블. 잔액 추출 보조 쿼리에서 파트너 정책 시점값 대조에 사용함.
+        columns:
+          - name: id
+            description: "스냅샷 ID"
+          - name: partner_id
+            description: "파트너 ID"
+          - name: region_type
+            description: "지역 구분"
+          - name: currency_type
+            description: "통화 구분"
+          - name: snapshot_date
+            description: "스냅샷 일자"
+          - name: created_at
+            description: "생성일"
+          - name: created_by
+            description: "생성자"
+          - name: deleted_at
+            description: "삭제일"
+          - name: updated_at
+            description: "수정일"
+          - name: updated_by
+            description: "수정자"
+          - name: criteria_type
+            description: "정산 기준 구분"
+          - name: cancel_criteria_type
+            description: "취소 정산 기준 구분"
+          - name: commission_type
+            description: "수수료 정산 구분"
+          - name: commission_settlement_type
+            description: "수수료 정산 방식"
+          - name: sale_commission_rate
+            description: "판매 수수율"
+          - name: sales_type
+            description: "매출 구분"
+          - name: enuri_type
+            description: "매출 에누리 구분"
+          - name: settlement_type
+            description: "정산 구분"
+          - name: tax_invoice_type
+            description: "세금계산서 구분"
+          - name: payment_type
+            description: "지급타입"
+          - name: date_calculation_type
+            description: "정산 일 계산 구분"
+          - name: period_type
+            description: "정산 기간 구분"
+          - name: monthly_fixed_date
+            description: "월 단위 고정일"
+          - name: plus_days_after_settlement_period
+            description: "정산 기간 계산일"
+          - name: partner_status
+            description: "파트너 상태"
+          - name: accounting_client_code
+            description: "회계정산 클라이언트 코드"
+          - name: accounting_client_type
+            description: "회계정산 클라이언트 구분"
+          - name: accounting_project_code
+            description: "회계정산 프로젝트 코드"
+          - name: accounting_project_name
+            description: "회계정산 프로젝트명"
+          - name: time_zone_type
+            description: "정산표준시"
+          - name: partnership_code
+            description: "제휴사 코드"
+          - name: partnership_type
+            description: "제휴사 구분"
+          - name: partnership_distribution_rate
+            description: "제휴사 배분율"
+          - name: dw_load_dt
+            description: "DW 적재 일시"
+          - name: account_criteria_type
+            description: "회계(매출) 기준 구분"
+          - name: account_cancel_criteria_type
+            description: "회계(매출) 취소 기준 구분"

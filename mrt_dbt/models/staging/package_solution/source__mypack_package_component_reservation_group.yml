@@ -1,0 +1,34 @@
+version: 2
+sources:
+- name: package_solution
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: mypack_package_component_reservation_group
+    identifier: DW_MRT_PACKAGE_SOLUTION_MYPACK_PACKAGE_COMPONENT_RESERVATION_GROUP
+    description: 마이팩 예약 그룹. 마지막 적재일 2026-03-19. 주요 타입값 PERSONAL/SHARED 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: package_reservation_id
+      description: 패키지 예약 ID
+    - name: title
+      description: 제목
+    - name: allocation_type
+      description: Allocation 타입
+    - name: age_type
+      description: Age 타입
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: deleted_at
+      description: 삭제일시
+    - name: deleted_by
+      description: 삭제자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: dw_load_dt
+      description: DW 적재 일시

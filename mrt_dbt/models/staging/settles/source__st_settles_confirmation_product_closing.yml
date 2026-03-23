@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: settles_st
+    database: mrtdata
+    schema: edw_st
+    tables:
+      - name: st_settles_confirmation_product_closing
+        identifier: ST_MRT_SETTLES_CONFIRMATION_PRODUCT_CLOSING
+        description: |
+          정산 도메인 스테이징 확정 상품 마감 테이블. 잔액 추출 보조 집계에서 확정일 기준 ST 데이터 정합성 확인과 본 테이블 대비 대사에 사용함.
+        columns:
+          - name: id
+            description: "ID"
+          - name: created_at
+            description: "생성일"
+          - name: updated_at
+            description: "변경일시"
+          - name: deleted_at
+            description: "삭제일"
+          - name: confirmation_date
+            description: "예약 확정일"
+          - name: closing_type
+            description: "마감 구분"
+          - name: partner_id
+            description: "파트너 ID"
+          - name: partner_snapshot_id
+            description: "파트너 스냅샷 ID"
+          - name: reservation_id
+            description: "예약 ID"
+          - name: reservation_no
+            description: "예약 NO"
+          - name: reservation_refund_id
+            description: "예약 환불 ID"
+          - name: payment_product_closing_id
+            description: "결제 상품 마감 ID"
+          - name: dw_load_dt
+            description: "DW 적재 일시"

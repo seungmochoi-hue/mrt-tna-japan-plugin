@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: MART_TAB_USER_FLOW_D
+    description: >
+      사용성
+        - 화면간 이동
+      division "move" 로 from - to screen 확인
+      division "inflow" 로 to - from screen 확인
+    config:
+      tags: [ "tableau", "MART" ]
+    columns:
+        - name: BASIS_DATE
+          description: 기준 일자
+          data_type: DATE
+        - name: event_timestamp
+          description: 이벤트 발생 일시
+          data_type: TIMESTAMP
+        - name: session_id
+          description: 세션 아이디
+          data_type: STRING
+        - name: user_id
+          description: 유저 아이디
+          data_type: STRING
+        - name: platform
+          description: 플랫폼
+          data_type: STRING
+        - name: pid
+          description: PID
+          data_type: STRING
+        - name: source_screen_name
+          description: 소스 화면 이름
+          data_type: STRING
+        - name: target_screen_name
+          description: 타겟 화면 이름
+          data_type: STRING
+        - name: division
+          description: 구분
+          data_type: STRING
+

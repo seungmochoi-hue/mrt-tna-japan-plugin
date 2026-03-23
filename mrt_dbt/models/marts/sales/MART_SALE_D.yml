@@ -1,0 +1,381 @@
+version: 2
+
+models:
+  - name: MART_SALE_D
+    description: |
+      도메인 통합 판매 마트. 이 테이블로 산출하는 금액은 거래액(GMV)임.
+      FP&A/매출관리팀 기준 매출(Revenue)과는 다르므로 혼동하지 않는다.
+      도메인별 원천 키 체계를 정규화해 단일 스키마로 제공한다.
+      ORDER_ID는 도메인별 생성 규칙을 따르는 통합 식별자이며, 원천 주문키와 1:1을 항상 보장하지 않는다.
+      특히 INSURANCE는 policy 기반 가공 키(im*/ia*)가 포함될 수 있다.
+      매출 조회 시 확정일(CONFIRM_KST_DATE) 기준이 아닌 BASIS_DATE(기준 일자) 기준으로 집계함.
+      BigQuery 물리 최적화: partition(BASIS_DATE, month) + cluster(DOMAIN_NM, KIND, RECENT_STATUS)
+    config:
+      tags: ["MART", "SALE"]
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자"
+        data_type: DATE
+        data_tests:
+          - not_null
+
+      - name: RESVE_ID
+        description: "예약 아이디"
+        data_type: STRING
+        data_tests:
+          - unique:
+              config:
+                where: "KIND = 1"
+
+      - name: ORDER_ID
+        description: |
+          통합 주문 식별자(정규화 키).
+          도메인별 생성 규칙이 다르며 원천 주문키와 불일치할 수 있다.
+          예) AIR=f{PNR}, HOTEL=h{RESVE_ID}, 2.0 PRODUCT=o{RESVE_ID}, INSURANCE=i{RESVE_ID}(MERITZ는 policy 기반).
+        data_type: STRING
+      - name: ORDER_NO
+        description: "주문 번호"
+        data_type: STRING
+      - name: USER_ID
+        description: "유저 아이디"
+        data_type: STRING
+      - name: KIND
+        description: |
+          거래 구분. 1=결제행, 2=취소행.
+          거래액 조회 시 기본적으로 KIND=1(결제행)만 필터함.
+          순거래액이 필요하면 KIND 1,2를 모두 포함해 합산함(취소행은 음수 금액으로 상계됨).
+        data_type: INTEGER
+      - name: RECENT_STATUS
+        description: "최근 상태"
+        data_type: STRING
+      - name: DOMAIN_NM
+        description: >
+          도메인 명. 파이프라인 소스 구분용 컬럼으로, 버티컬 분석에는 사용하지 않음.
+          버티컬 분류에는 STANDARD_CATEGORY_LV_1_CD를 사용할 것.
+          값: AIR, AIR ANCILLARY, 3.0 PRODUCT, INSURANCE, OVERSEAS RENTALCAR.
+        data_type: STRING
+      - name: PRODUCT_ID
+        description: "상품 아이디"
+        data_type: STRING
+      - name: GID
+        description: "GID"
+        data_type: STRING
+      - name: GPID
+        description: "GPID"
+        data_type: STRING
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+        data_type: STRING
+      - name: CONFIRM_KST_DT
+        description: "확정 KST 일시"
+        data_type: TIMESTAMP
+      - name: CONFIRM_KST_DATE
+        description: "확정 KST 일자"
+        data_type: DATE
+      - name: CREATE_KST_DATE
+        description: "생성 KST 일자"
+        data_type: DATE
+      - name: CANCEL_KST_DT
+        description: "취소 KST 일시"
+        data_type: TIMESTAMP
+      - name: TRAVEL_START_KST_DATE
+        description: "여행 시작 KST 일자"
+        data_type: DATE
+      - name: TRAVEL_END_KST_DATE
+        description: "여행 종료 KST 일자"
+        data_type: DATE
+      - name: RESV_TO_START_DATE_DIFF_VALUE
+        description: "예약부터 시작까지의 날짜 차이 값"
+        data_type: INTEGER
+      - name: RESVE_TYPE
+        description: "예약 유형"
+        data_type: STRING
+      - name: ORDER_RESVE_TYPE
+        description: "주문 예약 유형"
+        data_type: STRING
+      - name: SALE_FORM_CD
+        description: "판매 형태 코드"
+        data_type: STRING
+      - name: SALE_FORM_TYPE
+        description: "판매 형태 타입"
+        data_type: STRING
+      - name: SALE_AGG_TYPE
+        description: "판매 집계 유형"
+        data_type: STRING
+      - name: BRANCH_CD
+        description: "지점 코드"
+        data_type: STRING
+      - name: CATEGORY_NM
+        description: "카테고리 명"
+        data_type: STRING
+      - name: CATEGORY_ID
+        description: "카테고리 아이디"
+        data_type: INTEGER
+      - name: CATEGORY_CD
+        description: "카테고리 코드"
+        data_type: STRING
+      - name: SUB_CATEGORY_ID
+        description: "하위 카테고리 아이디"
+        data_type: INTEGER
+      - name: SUB_CATEGORY_CD
+        description: "하위 카테고리 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_CD
+        description: |
+          표준 카테고리 레벨 1 코드. 버티컬 분류의 기준 컬럼임.
+          값: FLIGHT(항공), ACCOMMODATION(숙소), TOUR(투어), TICKET(티켓), ACTIVITY(액티비티),
+          CONVENIENCE(여행 편의), SNAP(스냅촬영), CLASS(클래스), TRANSPORTATION_V2(교통),
+          AIR_ANCILLARY(항공 부가서비스), INSURANCE(보험), PACKAGE(마이팩).
+          버티컬 그룹핑:
+            항공 = FLIGHT, AIR_ANCILLARY.
+            T&A = TOUR, TICKET, ACTIVITY, CLASS, CONVENIENCE, SNAP.
+            숙박 = ACCOMMODATION.
+            마이팩(패키지) = STANDARD_CATEGORY_LV_1_CD='PACKAGE' AND STANDARD_CATEGORY_LV_2_CD IN ('PKG_TOUR','PKG_FIT','PKG_THEME','PKG_AIR','PKG_TNA','KIDS_ABROAD_PACKAGE'). 비즈니스 카테고리는 더 이상 로직 업데이트되지 않으므로 STANDARD_CATEGORY 기준으로 조회할 것.
+            보험 = INSURANCE.
+            교통 = TRANSPORTATION_V2.
+          숙박 하위 세그먼트 — 한인 민박: STANDARD_CATEGORY_LV_1_CD='ACCOMMODATION' AND STANDARD_CATEGORY_LV_2_CD='MINBAK' AND STANDARD_CATEGORY_LV_3_CD='KOREAN_MINBAK' AND PROVIDER_CD='STAYNET'.
+          현재 적재 데이터 기준 COUNTRY_NM='Korea, Republic of'는 없으며, 별도 버티컬이 아니라 숙박 내 세부 필터링 조건임.
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_1_NM
+        description: "표준 카테고리 레벨 1 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_CD
+        description: "표준 카테고리 레벨 2 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_2_NM
+        description: "표준 카테고리 레벨 2 명"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_CD
+        description: "표준 카테고리 레벨 3 코드"
+        data_type: STRING
+      - name: STANDARD_CATEGORY_LV_3_NM
+        description: "표준 카테고리 레벨 3 명"
+        data_type: STRING
+      - name: MRT_TYPE
+        description: "MRT 유형"
+        data_type: STRING
+      - name: TEAM_DIVISION
+        description: "팀 구분. deprecated - 사용하지 않음"
+        data_type: STRING
+      - name: PG_NM
+        description: "PG 명"
+        data_type: STRING
+      - name: RESVE_PAID_KST_DT
+        description: "예약 결제 KST 일시"
+        data_type: TIMESTAMP
+      - name: SALES_PRICE
+        description: "매출 금액"
+        data_type: FLOAT
+      - name: SALES_PRICE_CUR_TYPE
+        description: "매출 금액 통화 유형"
+        data_type: STRING
+      - name: SALES_KRW_PRICE
+        description: "매출 금액 KRW"
+        data_type: FLOAT
+      - name: COMMISSION_RATE
+        description: "수수료 비율"
+        data_type: FLOAT
+      - name: COMMISSION_PRICE
+        description: "수수료 금액"
+        data_type: FLOAT
+      - name: SETTLEMENT_COMMISSION_PRICE
+        description: "정산 수수료 금액"
+        data_type: INTEGER
+      - name: SETTLEMENT_COMMISSION_RATE
+        description: "정산 수수료 비율"
+        data_type: FLOAT
+      - name: PAID_PRICE
+        description: "결제 금액"
+        data_type: FLOAT
+      - name: PAID_PRICE_CUR_TYPE
+        description: "결제 금액 통화 유형"
+        data_type: STRING
+      - name: PAID_KRW_PRICE
+        description: "결제 금액 KRW"
+        data_type: FLOAT
+      - name: COUPON_PRICE
+        description: "총 쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: PRODUCT_COUPON_PRICE
+        description: "상품쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: ORDER_COUPON_PRICE
+        description: "주문쿠폰 할인 금액"
+        data_type: NUMERIC
+      - name: PRODUCT_COUPON_ID
+        description: "상품쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: ORDER_COUPON_ID
+        description: "주문쿠폰 대표 ID"
+        data_type: INTEGER
+      - name: POINT_PRICE
+        description: "포인트 사용 금액"
+        data_type: INTEGER
+      - name: DISCOUNT_PRICE
+        description: "할인 금액"
+        data_type: FLOAT
+      - name: PARTNER_ID
+        description: "파트너 아이디"
+        data_type: STRING
+      - name: PAYMENT_LATER_FLAG
+        description: "후불 결제 여부"
+        data_type: STRING
+      - name: PAYMENT_LIMIT_KST_DT
+        description: "결제 마감 KST 일시"
+        data_type: TIMESTAMP
+      - name: PARTNERSHIP_CD
+        description: "제휴 코드"
+        data_type: STRING
+      - name: PARTNERSHIP_TYPE
+        description: "제휴 유형"
+        data_type: STRING
+      - name: MARKETING_PARTNERSHIP_CD
+        description: "마케팅 제휴 코드"
+        data_type: STRING
+      - name: MARKETING_LINK_ID
+        description: "마케팅 링크 아이디"
+        data_type: STRING
+      - name: PARTNERSHIP_PARTNER_ID
+        description: "제휴 파트너 아이디"
+        data_type: STRING
+      - name: PROVIDER_CD
+        description: "제공자 코드"
+        data_type: STRING
+      - name: CITY_CD
+        description: "도시 코드"
+        data_type: STRING
+      - name: CITY_REPRESENTATIVE_FLAG
+        description: "도시 대표 여부"
+        data_type: STRING
+      - name: CITY_NM
+        description: "도시 명"
+        data_type: STRING
+      - name: COUNTRY_NM
+        description: "국가 명"
+        data_type: STRING
+      - name: REGION_NM
+        description: "지역 명"
+        data_type: STRING
+      - name: REGION_TNA_NM
+        description: "T&A 팀 기준 Region 명 (구글 시트 매핑)"
+        data_type: STRING
+      - name: RESVE_PURPOSE_TYPE
+        description: "예약 목적 유형"
+        data_type: STRING
+      - name: CHILD_RESVE_PRSNL_CNT
+        description: "소아 예약 인원. PACKAGE는 reservation_travelers 기준, 누락 시 option_reservations fallback"
+        data_type: INTEGER
+      - name: ADULT_RESVE_PRSNL_CNT
+        description: "성인 예약 인원. PACKAGE는 reservation_travelers 기준, 누락 시 option_reservations fallback"
+        data_type: INTEGER
+      - name: RESVE_PRSNL_CNT
+        description: "예약 인원. PACKAGE는 reservation_travelers 기준, 누락 시 option_reservations fallback"
+        data_type: INTEGER
+      - name: PLATFORM
+        description: "플랫폼"
+        data_type: STRING
+      - name: FIRST_UTM_MEDIUM
+        description: "첫번째 UTM 매체"
+        data_type: STRING
+      - name: FIRST_UTM_SOURCE
+        description: "첫번째 UTM 소스"
+        data_type: STRING
+      - name: FIRST_UTM_CAMPAIGN
+        description: "첫번째 UTM 캠페인"
+        data_type: STRING
+      - name: FIRST_UTM_TERM
+        description: "첫번째 UTM 키워드"
+        data_type: STRING
+      - name: FIRST_UTM_CONTENT
+        description: "첫번째 UTM 콘텐츠"
+        data_type: STRING
+      - name: RESVE_UTM_MEDIUM
+        description: "UTM 매체"
+        data_type: STRING
+      - name: RESVE_UTM_SOURCE
+        description: "UTM 소스"
+        data_type: STRING
+      - name: RESVE_UTM_CAMPAIGN
+        description: "UTM 캠페인"
+        data_type: STRING
+      - name: RESVE_UTM_TERM
+        description: "UTM 용어"
+        data_type: STRING
+      - name: RESVE_UTM_CONTENT
+        description: "UTM 콘텐츠"
+        data_type: STRING
+      - name: RESVE_N_AD
+        description: "예약 네이버 광고"
+        data_type: STRING
+      - name: RESVE_N_AD_GROUP
+        description: "예약 네이버 광고 그룹"
+        data_type: STRING
+      - name: RESVE_N_CAMPAIGN_TYPE
+        description: "예약 네이버 캠페인 유형"
+        data_type: STRING
+      - name: RESVE_N_KEYWORD
+        description: "예약 네이버 키워드"
+        data_type: STRING
+      - name: RESVE_N_KEYWORD_ID
+        description: "예약 네이버 키워드 아이디"
+        data_type: STRING
+      - name: RESVE_MRT_CONTENTS_VALUE
+        description: "예약 MRT 콘텐츠 값"
+        data_type: STRING
+      - name: TRAVEL_ID
+        description: "여행 아이디"
+        data_type: STRING
+      - name: TRAVEL_DETAIL_ID
+        description: "여행 상세 아이디"
+        data_type: INTEGER
+      - name: CROSS_SELL_FLAG
+        description: "크로스 셀 여부"
+        data_type: STRING
+      - name: FLIGHT_PURPOSE_TYPE
+        description: "항공 목적 유형"
+        data_type: STRING
+      - name: INCLUDE_FLIGHT_FLAG
+        description: "항공 포함 여부"
+        data_type: STRING
+      - name: FLIGHT_RESVE_ID
+        description: "항공 예약 아이디"
+        data_type: STRING
+      - name: FLIGHT_CREATE_KST_DT
+        description: "항공 생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: FLIGHT_TRAVEL_START_KST_DATE
+        description: "항공 여행 시작 KST 일자"
+        data_type: DATE
+      - name: FLIGHT_TO_RESV_DATE_DIFF_VALUE
+        description: "항공 예약부터 시작까지의 날짜 차이 값"
+        data_type: INTEGER
+      - name: FLIGHT_SALE_FORM_CD
+        description: "항공 판매 형태 코드"
+        data_type: STRING
+      - name: FLIGHT_IND_GROUP_FLAG
+        description: "항공 인디 그룹 여부"
+        data_type: STRING
+      - name: PARTNER_SETTLE_TYPE
+        description: "파트너 정산 유형"
+        data_type: STRING
+      - name: PARTNER_SALES_TYPE
+        description: "파트너 판매 유형"
+        data_type: STRING
+      - name: HOTEL_AFFILIATE_NM
+        description: "호텔 제휴 명"
+        data_type: STRING
+      - name: HOTEL_CAMPAIGN_ID
+        description: "호텔 캠페인 아이디"
+        data_type: STRING
+      - name: PACKAGE_PNR_NO
+        description: "패키지 pnr no"
+        data_type: INTEGER
+      - name: CREATE_KST_DT
+        description: "생성 KST 일시"
+        data_type: TIMESTAMP
+      - name: UPDATE_KST_DT
+        description: "업데이트 KST 일시"
+        data_type: TIMESTAMP
+      - name: DW_LOAD_DT
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP

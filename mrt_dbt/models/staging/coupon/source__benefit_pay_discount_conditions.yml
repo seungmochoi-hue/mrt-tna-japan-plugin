@@ -1,0 +1,36 @@
+version: 2
+sources:
+- name: coupon
+  database: mrtdata
+  schema: edw
+  tables:
+  - name: benefit_pay_discount_conditions
+    identifier: DW_MRT_COUPONS_BENEFIT_PAY_DISCOUNT_CONDITIONS
+    description: 혜택 결제 할인 조건. 주요 타입값 FLAT 확인.
+    columns:
+    - name: id
+      description: ID
+    - name: discount_type
+      description: 할인 타입
+    - name: flat_amount
+      description: Flat 금액
+    - name: discount_rate
+      description: 할인 rate
+    - name: min_product_amount
+      description: Min 상품 금액
+    - name: max_discount_amount
+      description: Max 할인 금액
+    - name: template_id
+      description: Template ID
+    - name: created_at
+      description: 생성일시
+    - name: created_by
+      description: 생성자
+    - name: updated_at
+      description: 수정일시
+    - name: updated_by
+      description: 수정자
+    - name: deleted_at
+      description: 삭제일시
+    - name: dw_load_dt
+      description: DW 적재 일시

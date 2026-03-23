@@ -1,0 +1,109 @@
+version: 2
+
+models:
+  - name: DW_HOTEL_RESERVATION
+    description: "호텔 예약"
+    config:
+      tags: ["HOTEL"]
+    columns:
+      - name: id
+        description: "예약 ID"
+        data_type: STRING
+      - name: history_id
+        description: "예약 이력 ID"
+        data_type: INTEGER
+      - name: ota_id
+        description: "OTA ID"
+        data_type: STRING
+      - name: created_at
+        description: "예약 생성 일시"
+        data_type: TIMESTAMP
+      - name: created_at_kst
+        description: "예약 생성 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: updated_at
+        description: "예약 수정 일시"
+        data_type: TIMESTAMP
+      - name: updated_at_kst
+        description: "예약 수정 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: reserv_id
+        description: "예약 ID (외부 시스템)"
+        data_type: STRING
+      - name: reserv_date
+        description: "예약 일시"
+        data_type: TIMESTAMP
+      - name: reserv_date_kst
+        description: "예약 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: reservation_kst_date
+        description: "예약 KST 날짜"
+        data_type: DATE
+      - name: last_modified
+        description: "마지막 수정 일시"
+        data_type: TIMESTAMP
+      - name: last_modified_kst
+        description: "마지막 수정 일시 (KST)"
+        data_type: TIMESTAMP
+      - name: status
+        description: "예약 상태"
+        data_type: STRING
+      - name: user_id
+        description: "사용자 ID"
+        data_type: STRING
+      - name: country
+        description: "국가"
+        data_type: STRING
+      - name: city
+        description: "도시"
+        data_type: STRING
+      - name: hotel_id
+        description: "호텔 ID"
+        data_type: STRING
+      - name: title
+        description: "호텔 제목"
+        data_type: STRING
+      - name: type
+        description: "호텔 유형"
+        data_type: STRING
+      - name: check_in
+        description: "체크인 날짜"
+        data_type: DATE
+      - name: check_out
+        description: "체크아웃 날짜"
+        data_type: DATE
+      - name: travel_nights
+        description: "여행 숙박 일수"
+        data_type: INTEGER
+      - name: booking_window
+        description: "예약 창"
+        data_type: INTEGER
+      - name: ttv
+        description: "총 거래 금액"
+        data_type: FLOAT
+      - name: ttv_currency
+        description: "총 거래 통화"
+        data_type: STRING
+      - name: ttv_won
+        description: "총 거래 금액 (원화)"
+        data_type: FLOAT
+      - name: coupon
+        description: "쿠폰"
+        data_type: STRING
+      - name: platform
+        description: "플랫폼"
+        data_type: STRING
+      - name: affiliate
+        description: "제휴사"
+        data_type: STRING
+      - name: cid
+        description: "광고 캠페인 ID"
+        data_type: STRING
+      - name: campaign
+        description: "광고 캠페인 이름"
+        data_type: STRING
+      - name: dw_load_dt
+        description: "DW 적재 일시"
+        data_type: TIMESTAMP
+
+

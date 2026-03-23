@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: "mrt_20"
+    database: "mrtdata"
+    schema: "edw"
+    tables:
+      - name: "mapping_airport_cities"
+        identifier: "DW_MRT_SERVICE_MAPPING_AIRPORT_CITIES"
+        description: "공항 코드별 도시 후보 매핑"
+        columns:
+          - name: "id"
+            description: "ID"
+          - name: "code"
+            description: "Code"
+          - name: "city_name"
+            description: "City Name"
+          - name: "airport_name"
+            description: "Airport Name"
+          - name: "country_name"
+            description: "Country Name"
+          - name: "location_city_info_id"
+            description: "Location City Info ID"
+          - name: "dw_load_dt"
+            description: "DW 적재 일시"
