@@ -16,7 +16,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/gmail-triage"
+        "./skills/gmail-triage",
+        "./skills/caret-meeting-action-dm"
       ]
     }
   ]
