@@ -17,7 +17,8 @@
       "strict": false,
       "skills": [
         "./skills/gmail-triage",
-        "./skills/caret-meeting-action-dm"
+        "./skills/caret-meeting-action-dm",
+        "./skills/caret-saoemiting-confluence"
       ]
     }
   ]

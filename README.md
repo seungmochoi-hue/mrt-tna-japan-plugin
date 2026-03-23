@@ -8,6 +8,7 @@
 |------|------|--------|
 | [caret-meeting-action-dm](./skills/caret-meeting-action-dm/) | Caret 사내미팅 회의록에서 액션 아이템 추출 + Slack DM 발송 | "오늘 회의 정리해줘", "회의 액션 아이템 DM" |
 | [gmail-triage](./skills/gmail-triage/) | Gmail 읽지 않은 메일 분류 + 라벨 + Slack 요약 | "메일 정리해줘", "inbox triage" |
+| [caret-saoemiting-confluence](./skills/caret-saoemiting-confluence/) | Caret 사외미팅 회의록을 Confluence 위키 페이지로 자동 생성 | "사외미팅 위키 올려줘", "파트너 미팅 페이지 만들어줘" |
 
 ## 설치
 
