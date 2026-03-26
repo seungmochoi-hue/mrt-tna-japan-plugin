@@ -1,0 +1,135 @@
+version: 2
+
+models:
+  - name: MART_ANCHOR_SCORE_D
+    description: |
+      T&A 상품별 Anchor Score + 4-Tier 자동 분류 마트.
+      Anchor Score = 첫구매율(%) × 크로스셀유발율(%) / 100.
+      Rolling 90일 기준으로 일별 갱신되며, T&A 전 지역을 자동 산출한다.
+      Grain: COUNTRY_NM × CITY_NM × GID.
+      대상: T&A 카테고리 (TOUR/TICKET/ACTIVITY/CLASS/CONVENIENCE/SNAP), KIND=1.
+    config:
+      tags: ["ANCHOR_SCORE"]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - COUNTRY_NM
+            - CITY_NM
+            - GID
+    columns:
+      - name: BASIS_DATE
+        description: "기준 일자 (산출 기준일, KST)"
+        data_type: DATE
+        data_tests:
+          - not_null
+
+      - name: COUNTRY_NM
+        description: "국가명"
+        data_type: STRING
+        data_tests:
+          - not_null
+
+      - name: CITY_NM
+        description: "도시명"
+        data_type: STRING
+        data_tests:
+          - not_null
+
+      - name: GID
+        description: "상품 GID"
+        data_type: STRING
+        data_tests:
+          - not_null
+
+      - name: PRODUCT_TITLE
+        description: "상품 제목"
+        data_type: STRING
+
+      - name: CATEGORY
+        description: "표준 카테고리 레벨 1 코드 (TOUR/TICKET/ACTIVITY/CLASS/CONVENIENCE/SNAP)"
+        data_type: STRING
+
+      - name: GMV_RANK
+        description: "도시 내 GMV 순위 (1위부터, 상위 80% 커버 상품만 포함)"
+        data_type: INTEGER
+
+      - name: GMV
+        description: "거래액 (KRW, rolling 90일 합계)"
+        data_type: FLOAT
+
+      - name: GMV_SHARE_PCT
+        description: "도시 내 GMV 비중 (%)"
+        data_type: FLOAT
+
+      - name: CUM_GMV_PCT
+        description: "도시 내 GMV 누적 비중 (%)"
+        data_type: FLOAT
+
+      - name: DIRECT_MARGIN
+        description: "직접 마진 (커미션 합계, KRW)"
+        data_type: FLOAT
+
+      - name: TR_PCT
+        description: "Take Rate (직접 마진 / GMV × 100, %)"
+        data_type: FLOAT
+
+      - name: ORDER_CNT
+        description: "주문 건수 (DISTINCT ORDER_ID)"
+        data_type: INTEGER
+
+      - name: TRAVEL_CNT
+        description: "여행 건수 (DISTINCT TRAVEL_ID)"
+        data_type: INTEGER
+
+      - name: FIRST_PURCHASE_RATE
+        description: "첫구매율 (%). TRAVEL_ID 내 시간순 첫 T&A 구매가 해당 GID인 비율"
+        data_type: FLOAT
+
+      - name: CROSS_SELL_RATE
+        description: "크로스셀유발율 (%). 해당 GID 포함 여행에서 2개+ 상이 GID 구매 비율"
+        data_type: FLOAT
+
+      - name: ANCHOR_SCORE
+        description: "앵커 스코어. 첫구매율 × 크로스셀유발율 / 100"
+        data_type: FLOAT
+
+      - name: FOLLOW_ON_MARGIN
+        description: "후속 마진 (앵커 상품 제외, 같은 여행 내 다른 상품의 커미션 합계, KRW)"
+        data_type: FLOAT
+
+      - name: FO_MARGIN_PER_TRAVEL
+        description: "여행당 후속 마진 (Follow-on Margin / 여행 수, KRW)"
+        data_type: FLOAT
+
+      - name: TOTAL_VALUE
+        description: "총 가치 (직접 마진 + 후속 마진, KRW)"
+        data_type: FLOAT
+
+      - name: TIER
+        description: |
+          4-Tier 분류.
+          S(핵심앵커): Anchor Score >= 15 AND FoM/T >= 20,000.
+          A(성장후보): Anchor Score >= 15 AND FoM/T < 20,000.
+          B(매출기반): Anchor Score < 15 AND FoM/T >= 20,000.
+          C(일반): 그 외.
+        data_type: STRING
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['S', 'A', 'B', 'C']
+
+      - name: MARGIN_BADGE
+        description: "High Margin 뱃지. TR% >= 15%이면 'HM', 아니면 빈 문자열"
+        data_type: STRING
+
+      - name: VOLUME_TAG
+        description: |
+          볼륨 태그.
+          L: 여행 1,000건 이상.
+          M: 여행 100~999건.
+          S: 여행 100건 미만.
+        data_type: STRING
+
+      - name: LABEL
+        description: "통합 라벨 (Tier-Volume-Badge 조합, 예: S-L-HM)"
+        data_type: STRING
